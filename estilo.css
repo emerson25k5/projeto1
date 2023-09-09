@@ -1,0 +1,34 @@
+.nav {
+    background-color: #26a69a;
+}
+
+.box {
+    width: 90% !important;
+    height: 50%;
+}
+
+.userDados {
+    display: grid;
+    grid-template-columns: repeat(2, 100fr); /* Cria 2 colunas com largura igual */
+    gap: 1%;
+}
+
+.unidcarniv {
+    display: grid;
+    grid-template-columns: repeat(2, 100fr);
+    gap: 10%;
+}
+
+.unifcarg {
+    display: grid;
+    grid-template-columns: repeat(3, 100fr);
+    gap: 5%;
+}
+
+.tabelaExibe {
+    float: center;
+}
+
+.page-footer {
+    background-color: #26a69a !important;
+}
