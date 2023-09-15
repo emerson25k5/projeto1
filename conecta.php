@@ -12,5 +12,4 @@ if ($mysqli->connect_error) {
     die("Erro na conexão: " . $mysqli->connect_error);
 }
 
-// Agora você está conectado ao banco de dados e pode realizar consultas e operações nele.
 ?>

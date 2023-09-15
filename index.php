@@ -27,22 +27,22 @@ $complemento = $_POST['complemento'];
 $cargo = $_POST["cargo_escolhido"];
 $unidade = $_POST["unidade_escolhida"];
 
-/*//uniforme
+//uniforme
 $tam_tronco_selecionado = $_POST["tam_tronco"];
 $tam_perna_selecionado = $_POST["tam_perna"];
-$tam_calcado_selecionado = $_POST["tam_calcado"];*/
+$tam_calcado_selecionado = $_POST["tam_calcado"];
 
     // Inserir o usuário
     $cadastrarUser = $mysqli->prepare("INSERT INTO usuarios (nome, email, cpf, senha) VALUES (?, ?, ?, ?)");
-    $cadastrarUser->bind_param("ssii", $nome, $email, $cpf, $cpf);
+    $cadastrarUser->bind_param("ssss", $nome, $email, $cpf, $cpf);
 
     if ($cadastrarUser->execute()) {
         $ultimo_id = $mysqli->insert_id;
         $ultimo_id_inserido = $ultimo_id;
 
         // Inserir o endereço
-        $cadastrarEndereco = $mysqli->prepare("INSERT INTO enderecos (cep, rua, numero, cidade, municipio, bairro, complemento, usuarioID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $cadastrarEndereco->bind_param("isissssi", $cep, $nomeRua, $numero, $cidade, $municipio, $bairro, $complemento, $ultimo_id_inserido);
+        $cadastrarEndereco = $mysqli->prepare("INSERT INTO usedenderecos (cep, rua, numero, cidade, municipio, bairro, complemento, usuarioID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $cadastrarEndereco->bind_param("ssissssi", $cep, $nomeRua, $numero, $cidade, $municipio, $bairro, $complemento, $ultimo_id_inserido);
 
         //inserir cargo
         if($cadastrarEndereco->execute()) {
@@ -51,8 +51,8 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];*/
             $cadastrarCargo = $mysqli->prepare("INSERT INTO usedcargos (nomeCargo, usuarioID) VALUES (?, ?)");
             $cadastrarCargo->bind_param("si", $cargo, $ultimo_id_inserido);
         }else{
-            $mysqli->rollback();
             $_statusCad = "Falha no cadastro do endereço" . " Erro: " . $mysqli->error;
+            $mysqli->rollback();
             $mysqli->close();
         }
         //inserir unidade
@@ -62,23 +62,38 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];*/
             $cadastrarUnidade = $mysqli->prepare("INSERT INTO usedunidades (nomeUnidade, usuarioID) VALUES (?, ?)");
             $cadastrarUnidade->bind_param("si", $unidade, $ultimo_id_inserido);
         }else{
-            $mysqli->rollback();
             $_statusCad = "Falha no cadastro do cargo" . " Erro: " . $mysqli->error;
+            $mysqli->rollback();
+            $mysqli->close();
+        }
+        //inserir uniformes
+        if($cadastrarUnidade->execute()) {
+            $ultimo_id_inserido;
+
+            $cadastrarUniforme = $mysqli->prepare("INSERT INTO useduniformes (tamTronco, tamPerna, tamCalcado, usuarioID) VALUES (?, ?, ?, ?)");
+            $cadastrarUniforme->bind_param("ssii", $tam_tronco_selecionado, $tam_perna_selecionado, $tam_calcado_selecionado, $ultimo_id_inserido);
+        }else{
+            $_statusCad = "Falha no cadastro do uniforme" . " Erro: " . $mysqli->error;
+            $mysqli->rollback();
             $mysqli->close();
         }
 
-        if ($cadastrarUnidade->execute()) {
+        if ($cadastrarUniforme->execute()) {
             $mysqli->commit();
             $_statusCad = "Cadastro realizado com sucesso!";
-
-    } else {
-        $mysqli->rollback();
-        $_statusCad = "Falha no cadastro do usuário!" . " Erro: " . $mysqli->error;
-        $mysqli->close();
-    }
+        } else {
+            $_statusCad = "Falha no cadastro do uniforme!" . " Erro: " . $mysqli->error;
+            $mysqli->rollback();
+            $mysqli->close();
+        }
+}else {
+    $_statusCad = "Falha no cadastro do usuário!" . " Erro: " . $mysqli->error;
+    $mysqli->rollback();
+    $mysqli->close();
 }
 }
 
+include("conecta.php");
 
 $sql = "SELECT idCargo, nomeCargo FROM cargos WHERE status = 1 ORDER BY idCargo";
 $result = $mysqli->query($sql);
@@ -93,56 +108,7 @@ $result2 = $mysqli->query($sql2);
     <HEAD>
         <TITLE>EBDS | Cadastro </TITLE>
 
-        <meta charset="UTF-8">
-        <meta name="description" content="SistemaEBDS">
-        <link rel="icon" type="image/png" href="gravata.png">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <link rel="stylesheet" type="text/css" href="estilo.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
-
-
-        <header>
-
-            <nav class="nav">
-                <div class="nav-wrapper container">
-                <a href="#" class="brand-logo center">EBDS</a>
-                <ul id="sidenav">
-                    <li href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></li>
-                </ul>
-                </div>
-            </nav>
-
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    var dropdowns = document.querySelectorAll('.dropdown-trigger');   //JS do Menu suspenso das cetegorias
-                    var options = {
-                        coverTrigger: false,
-                        openOnClick: true,
-                        outDuration: 100
-                    };
-                    M.Dropdown.init(dropdowns, options);
-                  });
-
-                  //JS para inicializar a sidenav
-                  document.addEventListener('DOMContentLoaded', function() {
-                        var elems = document.querySelectorAll('.sidenav');
-                        var instances = M.Sidenav.init(elems);
-                    });
-            </script>
-
-            <ul id="slide-out" class="sidenav">
-                <li class="center">EBDS Corporation</li>
-                <div class="divider"></div>
-                <li><a href="listausuarios.php">Funcionários</a></li>
-                <li><a href="cadastrocargo.php">Cadastro de cargos</a></li>
-                <li><a href="cadastrounidade.php">Cadastro de unidades</a></li>
-                <li><a href="index.php">Cadastro de funcionários</a></li>
-            </ul>
-
-        </header>
+<?php include("headContent.php"); ?>
 
     </HEAD>
     <body>
@@ -184,16 +150,16 @@ $result2 = $mysqli->query($sql2);
 
                     <br><h5 class="left">Endereço:</h5><br><br><br>
 
-
                     <div class="left input-field col s12 left" style="width: 35%;">
                     <i class="material-icons prefix" style="font-size:125%">place</i>
-                    <input type="number" name="cep" id="cep" maxlength="20" class="validate" required>
+                    <input type="number" name="cep" id="cep" maxlength="20" class="validate" onclick="" required>
                     <label for="cep">CEP</label>
                     </div>
+                    
 
                     <div class="input-field col s12 right" style="width: 60%;">
                     <input type="text" name="nomeRua" id="nomeRua" maxlength="70" class="validate" required>
-                    <label for="nomeRua">Rua</label>
+                    <label for="nomeRua">Logradouro</label>
                     </div>
 
                     <br> <br> <br><br>
@@ -224,11 +190,13 @@ $result2 = $mysqli->query($sql2);
                     <label for="bairro">Bairro</label>
                     </div>
 
+
                     <div class="input-field col s12">
                     <i class="material-icons prefix" style="font-size:135%">edit_note</i>
                     <input type="text" name="complemento" id="complemento" aria-expanded="100" class="validate">
                     <label for="complemento">Complemento</label>
-                    </div>  
+                    </div>
+
 
                 </div>
 
@@ -338,12 +306,8 @@ $result2 = $mysqli->query($sql2);
             <BR>
 
         </main>
-
-        <footer class="page-footer">
-            <div>
-                <p class="center">EDBS all rights reserved</p>
-                <br>
             
-        </footer>
+            <?php include("footerContent.php");?> <!--adiciona o conteúdo do rodapé de modo modular usando o INCLUDE em PHP-->
+
     </body>
 </HTML>

@@ -24,47 +24,7 @@ $result = $mysqli->query($sql);
     <HEAD>
         <TITLE>EBDS | Cadastro Unidade</TITLE>
 
-        <meta charset="UTF-8">
-        <meta name="description" content="SistemaEBDS">
-        <link rel="icon" type="image/png" href="gravata.png">
-        <meta name="keywords" content="HTML, CSS, JavaScript">
-        <link rel="stylesheet" type="text/css" href="estilo.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
-
-
-        <header>
-        <nav class="nav">
-                <div class="nav-wrapper container">
-                <a href="#" class="brand-logo">EBDS</a>
-                <ul id="sidenav" class="right">
-                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Menu<i class="material-icons right">arrow_drop_down</i></a></li>
-                </ul>
-                </div>
-            </nav>
-
-            <ul id="dropdown1" class="dropdown-content">
-                <li><a href="cadastrocargo.php">Cargos</a></li>
-                <li><a href="cadastrounidade.php">Unidades</a></li>
-                <li><a href="listausuarios.php">Funcionários</a></li>
-                <li><a href="index.php">Cadastrar funcionários</a></li>
-            </ul>
-
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    var dropdowns = document.querySelectorAll('.dropdown-trigger');   //JS do Menu suspenso das cetegorias
-                    var options = {
-                        coverTrigger: false,
-                        openOnClick: true,
-                        outDuration: 100
-                    };
-                    M.Dropdown.init(dropdowns, options);
-                  });
-            </script>
-
-        </header>
+        <?php include("headContent.php"); ?>
 
     </HEAD>
     <body>
@@ -141,11 +101,7 @@ $result = $mysqli->query($sql);
 
         </main>
 
-        <footer class="page-footer">
-            <div>
-                <p class="center">EDBS all righst reserved</p>
-                <br>
-            
-        </footer>
+        <?php include("footerContent.php");?> <!--adiciona o conteúdo do rodapé de modo modular usando o INCLUDE em PHP-->
+
     </body>
 </HTML>

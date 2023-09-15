@@ -2,6 +2,11 @@
     background-color: #26a69a;
 }
 
+.btnopcao {
+    color: #26a69a;
+    font-size: 200% !important;
+}
+
 .box {
     width: 90% !important;
     height: 50%;
