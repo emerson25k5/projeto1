@@ -53,7 +53,23 @@ if($result4->num_rows > 0){
     $tamCalcado = "Não atribuído a nenhum uniforme!";
 }
 
+$sql = "SELECT * FROM admissao WHERE usuarioID = $id";
+$result5 = $mysqli->query($sql);
 
+if($result5->num_rows > 0){
+    while ($row = $result5->fetch_assoc()) {
+    $admissao = $row['dataAdmissao'];
+    $sep = explode("-", $admissao);
+
+    $ano = $sep[0];
+    $mes = $sep[1];
+    $dia = $sep[2];
+
+    $admissao = "Funcionário admitido em: " .$dia."/".$mes."/".$ano."";
+}
+}else{
+    $admissao = "Nenhuma data de admissão cadastrada!";
+}
 }
 
 ?>
@@ -78,7 +94,6 @@ if($result4->num_rows > 0){
     <body>
         <main class="box container">
 
-                
 
             <div>
                 <?php //exibição dos dados do usuario
@@ -87,9 +102,18 @@ if($result4->num_rows > 0){
                         $idUsuario = $row['idUsuario'];
                         $nome = $row['nome'];
                         $cpf = $row['cpf'];
+                        $genero = $row['genero'];
                         $email = $row['email'];
                         $dataCadastro = $row['dataCadUsuario'];
                         $status = $row['status'];
+
+                        if($genero == "m"){
+                            $genero = "Masculino";
+                        }elseif($genero == "f"){
+                            $genero = "Feminino";
+                        }elseif($genero == "o"){
+                            $genero = "Outro";
+                        }
 
                         if($status == 1){
                             $status = "Ativo";
@@ -97,13 +121,15 @@ if($result4->num_rows > 0){
                             $status = "Inativo";
                         }
                         
-                        echo '<h4>' . $nome . '</h4>';
+                        echo '<h4>' . $nome . '</h4>'.'<p> '. $admissao .'</p>';
                         echo '<h5>' . $cargo . "  | ". $unidade .'</h5><br><br>';
                         echo '<div class="dadosUser">';
                         echo '<label for="id">Funcionário ID:</label><br>';
                         echo '<input type="text" name="id" id="id" value="'. $idUsuario.'" readonly><br>';
                         echo '<label for="cpf">CPF:</label><br>';
                         echo '<input type="text" name="cpf" id="cpf" value="'. $cpf.'" readonly><br>';
+                        echo '<label for="genero">Genero:</label><br>';
+                        echo '<input type="text" name="genero" id="genero" value="'. $genero.'" readonly><br>';
                         echo '<label for="email">E-mail:</label><br>';
                         echo '<input type="text" name="email" id="email" value="'. $email.'" readonly><br>';
                         echo '<label for="dataCad">Data e hora do cadastro:</label><br>';

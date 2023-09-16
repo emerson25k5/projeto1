@@ -13,6 +13,8 @@ $nome = $_POST["nome"];
 $email = $_POST["email"];
 $cpf = $_POST["cpf"];
 $senha = $cpf;
+$telefone = $_POST['telefone'];
+$genero = $_POST['genero'];
 
 //endereço
 $cep = $_POST['cep'];
@@ -26,6 +28,7 @@ $complemento = $_POST['complemento'];
 //atribuições
 $cargo = $_POST["cargo_escolhido"];
 $unidade = $_POST["unidade_escolhida"];
+$admissao = $_POST['dataAdmissao'];
 
 //uniforme
 $tam_tronco_selecionado = $_POST["tam_tronco"];
@@ -33,8 +36,8 @@ $tam_perna_selecionado = $_POST["tam_perna"];
 $tam_calcado_selecionado = $_POST["tam_calcado"];
 
     // Inserir o usuário
-    $cadastrarUser = $mysqli->prepare("INSERT INTO usuarios (nome, email, cpf, senha) VALUES (?, ?, ?, ?)");
-    $cadastrarUser->bind_param("ssss", $nome, $email, $cpf, $cpf);
+    $cadastrarUser = $mysqli->prepare("INSERT INTO usuarios (nome, email, cpf, senha, telefone, genero) VALUES (?, ?, ?, ?, ?, ?)");
+    $cadastrarUser->bind_param("ssssss", $nome, $email, $cpf, $cpf, $telefone, $genero);
 
     if ($cadastrarUser->execute()) {
         $ultimo_id = $mysqli->insert_id;
@@ -66,14 +69,25 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
             $mysqli->rollback();
             $mysqli->close();
         }
-        //inserir uniformes
+        //inserir admissão
         if($cadastrarUnidade->execute()) {
+            $ultimo_id_inserido;
+
+            $cadastrarAdmissao = $mysqli->prepare("INSERT INTO admissao (dataAdmissao, usuarioID) VALUES (?, ?)");
+            $cadastrarAdmissao->bind_param("ss", $admissao, $ultimo_id_inserido);
+        }else{
+            $_statusCad = "Falha no cadastro da data da unidade" . " Erro: " . $mysqli->error;
+            $mysqli->rollback();
+            $mysqli->close();
+        }
+        //inserir uniformes
+        if($cadastrarAdmissao->execute()) {
             $ultimo_id_inserido;
 
             $cadastrarUniforme = $mysqli->prepare("INSERT INTO useduniformes (tamTronco, tamPerna, tamCalcado, usuarioID) VALUES (?, ?, ?, ?)");
             $cadastrarUniforme->bind_param("ssii", $tam_tronco_selecionado, $tam_perna_selecionado, $tam_calcado_selecionado, $ultimo_id_inserido);
         }else{
-            $_statusCad = "Falha no cadastro do uniforme" . " Erro: " . $mysqli->error;
+            $_statusCad = "Falha no cadastro da data de admissao" . " Erro: " . $mysqli->error;
             $mysqli->rollback();
             $mysqli->close();
         }
@@ -124,28 +138,82 @@ $result2 = $mysqli->query($sql2);
                                     var elems = document.querySelectorAll('select');
                                     var instances = M.FormSelect.init(elems);
                                 });
+
+                            // Márcara para o CPF
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const cpfInput = document.getElementById('cpfInput');
+
+                                cpfInput.addEventListener('input', function() {
+                                    let value = cpfInput.value.replace(/\D/g, ''); 
+                                    if (value.length > 11) {
+                                        value = value.slice(0, 11);
+                                    }
+                                    value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+                                    cpfInput.value = value;
+                                });
+                            });
+
+                                // Márcara para o telefone
+                            function formatarTelefone(input) {
+                                let numero = input.value.replace(/\D/g, '');
+                                if (numero.length === 11) {
+                                    input.value = numero.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+                                } else if (numero.length === 10) {
+                                    input.value = numero.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+                                } else {
+                                    input.value = numero;
+                                }
+                            }
+
+
+                            //caixa alta
+                            function converterParaCaixaAlta(input) {
+                                input.value = input.value.toUpperCase();
+                            }
+                                
                     </script>
 
                 <BR><BR>
+
+                <div class="statusCad center" id="statusCad"> <!--div para exibir se o cadastro foi realizado ou não e então exibir o erro -->
+                    <?php echo $_statusCad;?>
+                </div>
+
 
                 <form method="post" action="" class="form">
 
                     <div class="input-field">
                     <i class="material-icons prefix">account_circle</i>
-                    <input type="text" name="nome" id="nome" maxlength="50" class="validate" required autofocus>
+                    <input type="text" name="nome" id="nome" maxlength="50" class="validate" oninput="converterParaCaixaAlta(this)" required autofocus>
                     <label for="nome">Nome completo</label>
                     </div>
 
                     <div class="input-field">
+                    <i class="material-icons prefix">pin</i>
+                    <input type="text" name="cpf" id="cpfInput" maxlength="14" class="validate" required>
+                    <label for="cpfInput">CPF</label>
+                    </div>
+
+                    <div class="input-field">
                     <i class="material-icons prefix">email</i>
-                    <input type="email" name="email" id="email" maxlength="50" class="validate" required>
+                    <input type="email" name="email" id="email" maxlength="50" class="validate" oninput="converterParaCaixaAlta(this)" required>
                     <label for="email">E-mail</label>
                     </div>
 
                     <div class="input-field">
-                    <i class="material-icons prefix">pin</i>
-                    <input type="text" name="cpf" id="cpf" maxlength="11" class="validate" required>
-                    <label for="cpf">CPF</label>
+                    <i class="material-icons prefix">phone</i>
+                    <input type="text" name="telefone" id="telefone" maxlength="15" class="validate" oninput="formatarTelefone(this)" required>
+                    <label for="telefone">Telefone</label>
+                    </div>
+
+                    <div class="genero container center" style="text-align:left">
+                        <p>Gênero:</p>
+                        <select class="browser-default" name="genero" id="genero" required>
+                            <option value="" disabled selected>Selecione...</option>
+                            <option value="m">Marculino</option>
+                            <option value="f">Feminino</option>
+                            <option value="o">Outro</option>
+                        </select>
                     </div>
 
                     <br><h5 class="left">Endereço:</h5><br><br><br>
@@ -193,7 +261,7 @@ $result2 = $mysqli->query($sql2);
 
                     <div class="input-field col s12">
                     <i class="material-icons prefix" style="font-size:135%">edit_note</i>
-                    <input type="text" name="complemento" id="complemento" aria-expanded="100" class="validate">
+                    <input type="text" name="complemento" id="complemento" class="validate">
                     <label for="complemento">Complemento</label>
                     </div>
 
@@ -204,7 +272,7 @@ $result2 = $mysqli->query($sql2);
                 <div class="unidcarniv">                   
 
                     <div class="cargo col s6" style="text-align:left">
-                        <label for="cargo_escolhido">Cargo:</label>
+                        <p for="cargo_escolhido">Cargo:</p>
                         <select name="cargo_escolhido" id="cargo_escolhido">
                         <option value="" disabled selected>Selecione...</option>
                             <?php
@@ -224,7 +292,7 @@ $result2 = $mysqli->query($sql2);
 
 
                     <div class="unidade col s6" style="text-align:left">
-                        <label>Unidade:</label>
+                        <p>Unidade:</p>
                         <select name="unidade_escolhida" id="unidade_escolhida">
                         <option value="" disabled selected>Selecione...</option>
                             <?php
@@ -243,6 +311,13 @@ $result2 = $mysqli->query($sql2);
                     </div>
 
                 </div>
+                    
+                    <div class="admissao container center">
+                    <p for="dataAdminissao">Data da Admissão:</p>
+                    <input type="date" name="dataAdmissao" id="dataAdmissao" required class="validate">
+                    </div>
+
+                
 
                 <br>
 
@@ -251,7 +326,7 @@ $result2 = $mysqli->query($sql2);
                 <div class="unifcarg">
 
                     <div class="uniforme_tronco" style="text-align:left">
-                        <label>Tronco:</label>
+                        <p>Tronco:</p>
                         <select name="tam_tronco" id="tam_tronco">
                         <option value="" disabled selected>Selecione...</option>
                             <option value="P">Pequeno(P)</option>
@@ -262,7 +337,7 @@ $result2 = $mysqli->query($sql2);
                     </div>
 
                     <div class="uniforme_perna" style="text-align:left">
-                        <label>Pernas:</label>
+                        <p>Pernas:</p>
                         <select name="tam_perna" id="tam_perna">
                             <option value="" disabled selected>Selecione...</option>
                             <option value="P">Pequeno(P)</option>
@@ -273,7 +348,7 @@ $result2 = $mysqli->query($sql2);
                     </div>
 
                     <div class="uniforme_calcado" style="text-align:left">
-                        <label >Calçado:</label>
+                        <p>Calçado:</p>
                         <select name="tam_calcado" id="uniforme_calcado">
                             <option value="" disabled selected>Selecione...</option>
                             <option value="35">Tam 35</option>
@@ -297,9 +372,6 @@ $result2 = $mysqli->query($sql2);
                     
                 </form>
 
-                <div class="statusCad center" id="statusCad"> <!--div para exibir se o cadastro foi realizado ou não e então exibir o erro -->
-                    <?php echo $_statusCad;?>
-                </div>
 
             </div>
 

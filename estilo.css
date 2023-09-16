@@ -12,6 +12,21 @@
     height: 50%;
 }
 
+.genero {
+    width: 40% !important;
+    float: center;
+}
+
+p {
+    font-weight: bold;
+    font-size: small;
+}
+
+.admissao {
+    width: 30% !important;
+    text-align: left !important;
+}
+
 .userDados {
     display: grid;
     grid-template-columns: repeat(2, 100fr); /* Cria 2 colunas com largura igual */
@@ -36,4 +51,12 @@
 
 .page-footer {
     background-color: #26a69a !important;
+}
+
+input[type="text"] {
+    text-transform: uppercase !important;
+}
+
+input[type="email"] {
+    text-transform: uppercase !important;
 }
