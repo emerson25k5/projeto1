@@ -3,15 +3,64 @@
 include("conecta.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
-    // Recupere o ID do registro a ser excluído
+    // Recupere o ID do registro a ser exibido
     $id = $_GET["id"];
 
 
 $sql = "SELECT * FROM usuarios WHERE idUsuario = $id";
 $result = $mysqli->query($sql);
 
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $idUsuario = $row['idUsuario'];
+        $nome = $row['nome'];
+        $cpf = $row['cpf'];
+        $rg = $row['rg'];
+        $genero = $row['genero'];
+        $email = $row['email'];
+        $telefone = $row['telefone'];
+        $dataCadastro = $row['dataCadUsuario'];
+        $status = $row['status'];
+
+        if($genero == "m"){
+            $genero = "Masculino";
+        }elseif($genero == "f"){
+            $genero = "Feminino";
+        }elseif($genero == "o"){
+            $genero = "Outro";
+        }
+
+        if($status == 1){
+            $status = "Ativo";
+        }else{
+            $status = "Inativo";
+        }
+    }
+}
+
+
 $sql = "SELECT * FROM usedEnderecos WHERE usuarioID = $id";
 $result1 = $mysqli->query($sql);
+
+if ($result1->num_rows > 0) {
+    while ($row = $result1->fetch_assoc()) {
+        $cep = $row['cep'];
+        $rua = $row['rua'];
+        $numero = $row['numero'];
+        $bairro = $row['bairro'];
+        $cidade = $row['cidade'];
+        $municipio = $row['municipio'];
+        $complemento = $row['complemento'];
+        $dataCadastroEnd = $row['dataCadastro'];
+        $status = $row['status'];
+
+        if($status == 1){
+            $status = "Ativo";
+        }else{
+            $status = "Inativo";
+        }
+    }
+}
 
 //query do cargo
 $sql = "SELECT nomeCargo FROM usedcargos WHERE usuarioID = $id";
@@ -65,7 +114,7 @@ if($result5->num_rows > 0){
     $mes = $sep[1];
     $dia = $sep[2];
 
-    $admissao = "Funcionário admitido em: " .$dia."/".$mes."/".$ano."";
+    $admissao = "" .$dia."/".$mes."/".$ano."";
 }
 }else{
     $admissao = "Nenhuma data de admissão cadastrada!";
@@ -77,7 +126,7 @@ if($result5->num_rows > 0){
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE>EBDS | Funcionário </TITLE>
+        <TITLE>EBDS | Informações </TITLE>
 
         <?php include("headContent.php"); ?>
 
@@ -90,128 +139,115 @@ if($result5->num_rows > 0){
             }
         </style>
 
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+            // Inicialize as tabs
+            M.Tabs.init(document.querySelector('.tabs'));
+        });
+
+        </script>
+
     </HEAD>
     <body>
         <main class="box container">
 
-
             <div>
-                <?php //exibição dos dados do usuario
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        $idUsuario = $row['idUsuario'];
-                        $nome = $row['nome'];
-                        $cpf = $row['cpf'];
-                        $genero = $row['genero'];
-                        $email = $row['email'];
-                        $dataCadastro = $row['dataCadUsuario'];
-                        $status = $row['status'];
-
-                        if($genero == "m"){
-                            $genero = "Masculino";
-                        }elseif($genero == "f"){
-                            $genero = "Feminino";
-                        }elseif($genero == "o"){
-                            $genero = "Outro";
-                        }
-
-                        if($status == 1){
-                            $status = "Ativo";
-                        }else{
-                            $status = "Inativo";
-                        }
-                        
-                        echo '<h4>' . $nome . '</h4>'.'<p> '. $admissao .'</p>';
-                        echo '<h5>' . $cargo . "  | ". $unidade .'</h5><br><br>';
-                        echo '<div class="dadosUser">';
-                        echo '<label for="id">Funcionário ID:</label><br>';
-                        echo '<input type="text" name="id" id="id" value="'. $idUsuario.'" readonly><br>';
-                        echo '<label for="cpf">CPF:</label><br>';
-                        echo '<input type="text" name="cpf" id="cpf" value="'. $cpf.'" readonly><br>';
-                        echo '<label for="genero">Genero:</label><br>';
-                        echo '<input type="text" name="genero" id="genero" value="'. $genero.'" readonly><br>';
-                        echo '<label for="email">E-mail:</label><br>';
-                        echo '<input type="text" name="email" id="email" value="'. $email.'" readonly><br>';
-                        echo '<label for="dataCad">Data e hora do cadastro:</label><br>';
-                        echo '<input type="text" name="dataCad" id="dataCad" value="'. $dataCadastro.'" readonly><br>';
-                        echo '<label for="status">Status do funcionário:</label><br>';
-                        echo '<input type="text" name="status" id="status" value="'. $status.'" readonly><br>';
-                        
-
-                    }
-                }else {
-                    echo '<p colspan="2">Nenhum usuário encontrado</p>';
-                }
-
-
-                //exibição do enedereço do usuario
                 
-                if ($result1->num_rows > 0) {
-                    while ($row = $result1->fetch_assoc()) {
-                        $cep = $row['cep'];
-                        $rua = $row['rua'];
-                        $numero = $row['numero'];
-                        $bairro = $row['bairro'];
-                        $cidade = $row['cidade'];
-                        $municipio = $row['municipio'];
-                        $complemento = $row['complemento'];
-                        $dataCadastroEnd = $row['dataCadastro'];
-                        $status = $row['status'];
-
-                        if($status == 1){
-                            $status = "Ativo";
-                        }else{
-                            $status = "Inativo";
-                        }
-                        
-                        echo '<h4>Endereço</h4><br>';
-                        echo '<div class="dadosUser">';
-
-
-                        echo '<label for="cep">CEP:</label><br>';
-                        echo '<input type="text" name="cep" id="cep" value="'. $cep.'" readonly>';
-
-                        echo '<label for="rua">Logradouro:</label><br>';
-                        echo '<input type="text" name="rua" id="rua" value="'. $rua.'" readonly><br>';
-
-                        echo '<label for="numero">Número:</label><br>';
-                        echo '<input type="text" name="numero" id="numero" value="'. $numero.'" readonly><br>';
-
-                        echo '<label for="bairro">Bairro:</label><br>';
-                        echo '<input type="text" name="bairro" id="bairro" value="'. $bairro.'" readonly><br>';
-
-                        echo '<label for="cidade">Cidade:</label><br>';
-                        echo '<input type="text" name="cidade" id="cidade" value="'. $cidade.'" readonly><br>';
-
-                        echo '<label for="municipio">Municipio:</label><br>';
-                        echo '<input type="text" name="municipio" id="municipio" value="'. $municipio.'" readonly><br>';
-
-                        echo '<label for="complemento">Complemento:</label><br>';
-                        echo '<input type="text" name="complemento" id="complemento" value="'. $complemento.'" readonly><br>';
-
-                        echo '<label for="complemento">Data e hora do cadastro:</label><br>';
-                        echo '<input type="text" name="dataCad" id="dataCad" value="'. $dataCadastroEnd.'" readonly><br>';
-
-                        echo '<label for="status">Status do endereço:</label><br>';
-                        echo '<input type="text" name="status" id="status" value="'. $status.'" readonly><br>';
+                        <!--exibe dados gerais-->
+                        <h4><?php echo $nome ?></h4>
+                        <h5><?php echo $cargo?> | <?php echo $unidade?></h5><br>
+                        <div class="row">
+                        <div class="col s12">
+                        <ul class="tabs">
+                        <li class="tab col s3"><a href="#option1">Informações Gerais</a></li>
+                        <li class="tab col s3"><a href="#option2">Endereço</a></li>
+                        <li class="tab col s3"><a href="#option3">Atribuições</a></li>
+                        <li class="tab col s3"><a href="#option4">Uniforme</a></li>
+                        </ul>
+                        <br>
+                        </div>
+                        <div id="option1" class="col s12">
+                        <label for="dataAdmissao">Data da admissao:</label><br>
+                        <input type="text" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>" readonly><br>
+                        <label for="id">Funcionário ID:</label><br>
+                        <input type="text" name="id" id="id" value="<?php echo $idUsuario?>" readonly><br>
+                        <label for="cpf">CPF:</label><br>
+                        <input type="text" name="cpf" id="cpf" value="<?php echo $cpf ?>" readonly><br>
+                        <label for="rg">RG:</label><br>
+                        <input type="text" name="rg" id="rg" value="<?php echo $rg ?>" readonly><br>
+                        <label for="genero">Genero:</label><br>
+                        <input type="text" name="genero" id="genero" value="<?php echo $genero ?>" readonly><br>
+                        <label for="email">E-mail:</label><br>
+                        <input type="text" name="email" id="email" value="<?php echo $email ?>" readonly><br>
+                        <label for="telefone">Telfone:</label><br>
+                        <input type="text" name="telefone" id="telefone" value="<?php echo $telefone ?>" readonly><br>
+                        <label for="dataCad">Data e hora do cadastro:</label><br>
+                        <input type="text" name="dataCad" id="dataCad" value="<?php echo $dataCadastro ?>" readonly><br>
+                        <label for="status">Status do funcionário:</label><br>
+                        <input type="text" name="status" id="status" value="<?php echo $status?>"  readonly><br>
+                        </div>
 
 
-                    }
-                }else {
-                    echo '<p colspan="2">Nenhum endereço cadastrado</p>';
-                }
+                        <!--exibe endereço-->                        
+                        <div id="option2" class="col s12">
+                        <label for="cep">CEP:</label><br>
+                        <input type="text" name="cep" id="cep" value="<?php echo $cep?>" readonly>
 
-                ?>
+                        <label for="rua">Logradouro:</label><br>
+                        <input type="text" name="rua" id="rua" value="<?php echo $rua?>"  readonly><br>
 
-                    <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                    var elems = document.querySelectorAll('.modal');
-                    var instances = M.Modal.init(elems);
-                });
-                    </script>
+                        <label for="numero">Número:</label><br>
+                        <input type="text" name="numero" id="numero" value="<?php echo $numero ?>" readonly><br>
 
-                <tbody>
-                </table>
+                        <label for="bairro">Bairro:</label><br>
+                        <input type="text" name="bairro" id="bairro" value="<?php echo $bairro ?>" readonly><br>
+
+                        <label for="cidade">Cidade:</label><br>
+                        <input type="text" name="cidade" id="cidade" value="<?php echo $cidade ?>" readonly><br>
+
+                        <label for="municipio">Municipio:</label><br>
+                        <input type="text" name="municipio" id="municipio" value="<?php echo $municipio ?>" readonly><br>
+
+                        <label for="complemento">Complemento:</label><br>
+                        <input type="text" name="complemento" id="complemento" value="<?php echo $complemento ?>" readonly><br>
+
+                        <label for="complemento">Data e hora do cadastro:</label><br>
+                        <input type="text" name="dataCad" id="dataCad" value="<?php echo $dataCadastroEnd ?>" readonly><br>
+
+                        <label for="status">Status do endereço:</label><br>
+                        <input type="text" name="status" id="status" value="<?php echo $status ?>" readonly><br>
+
+                        </div>
+
+                        <!--exibe as atribuições-->   
+                        <div id="option3" class="col s12">
+                        <label for="cargo">Cargo:</label><br>
+                        <input type="text" name="cargo" id="cargo" value="<?php echo $cargo?>" readonly>
+
+                        <label for="rua">Unidade:</label><br>
+                        <input type="text" name="rua" id="rua" value="<?php echo $unidade?>"  readonly><br>
+
+                        <label for="dataAdmissao">Data da admissao:</label><br>
+                        <input type="text" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>" readonly><br>
+
+                        <label for="dataAdmissao">Data das ultimas férias:</label><br>
+                        <input type="text" name="dataAdmissao" id="dataAdmissao" value="<?php?>" readonly><br>
+                        </div>
+
+                        <!--exibe as atribuições-->   
+                        <div id="option4" class="col s12">
+                        <label for="uniforme_tronco">Tamanho do uniforme TRONCO:</label><br>
+                        <input type="text" name="tamTronco" id="uniforme_tronco" value="<?php echo $tamTronco ?>" readonly>
+
+                        <label for="tamPerna">Tamanho do uniforme PERNA:</label><br>
+                        <input type="text" name="tamPerna" id="tamPerna" value="<?php echo $tamPerna?>"  readonly><br>
+
+                        <label for="tamCalcado">Tamanho do uniforme CALÇADO:</label><br>
+                        <input type="text" name="tamCalcado" id="tamCalcado" value="<?php echo $tamCalcado?>" readonly><br>
+                        </div>
+
+                </div>
+            </div>
 
         </main>
 

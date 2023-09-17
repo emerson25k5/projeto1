@@ -47,7 +47,7 @@ $result = $mysqli->query($sql);
                         $status = $row['status'];
 
                         echo '<tr>';
-                        echo '<td><a class="waves-effect waves-light modal-trigger" href="userInfo.php?id=' . $idUsuario . '"><i class="btnopcao material-icons left">search</i></a><a class="waves-effect waves-light modal-trigger" href=""><i class="btnopcao material-icons left">edit</i></a><a class="waves-effect waves-light modal-trigger" href="#modal1"><i class="btnopcao material-icons left">delete</i></a></td>';
+                        echo '<td><a class="waves-effect waves-light modal-trigger" href="userInfo.php?id=' . $idUsuario . '"><i class="btnopcao material-icons left">search</i></a><a class="waves-effect waves-light modal-trigger" href="editaUsuario.php?id=' . $idUsuario . '""><i class="btnopcao material-icons left">edit</i></a><a class="waves-effect waves-light modal-trigger" href="#modal1"><i class="btnopcao material-icons left">delete</i></a></td>';
                         echo '<td>'. $nome .'</td>';
                         echo '<td>'. $cpf .'</td>';
                         if($status == 1){
@@ -59,7 +59,7 @@ $result = $mysqli->query($sql);
 
                         echo '<div id="modal1" class="modal">';
                         echo '<div class="modal-content">';
-                        echo '<h4>Exclusão de cadastro</h4>';
+                        echo '<h4>Exclusão de funcionário</h4>';
                         echo '<p>Tem certeza que deseja prosseguir? Esta ação não poderá ser desfeita.</p>';
                         echo '</div>';
                         echo '<div class="modal-footer">';

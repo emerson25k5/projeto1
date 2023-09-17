@@ -12,51 +12,64 @@
     height: 50%;
 }
 
-.genero {
-    width: 40% !important;
-    float: center;
-}
-
-p {
-    font-weight: bold;
-    font-size: small;
-}
-
-.admissao {
-    width: 30% !important;
-    text-align: left !important;
-}
-
-.userDados {
-    display: grid;
-    grid-template-columns: repeat(2, 100fr); /* Cria 2 colunas com largura igual */
-    gap: 1%;
-}
-
-.unidcarniv {
-    display: grid;
-    grid-template-columns: repeat(2, 100fr);
-    gap: 10%;
-}
-
-.unifcarg {
-    display: grid;
-    grid-template-columns: repeat(3, 100fr);
-    gap: 5%;
-}
-
 .tabelaExibe {
     float: center;
+}
+
+.labSelect {
+    font-size: 100% !important;
+    float: left;
+    font-weight: bold;
+    color: #26a69a;
+}
+
+.onetwo {
+    background-color: #26a69a !important;
+    border-radius: 10px;
+    font-size: 15px !important;
+}
+
+#here {
+    font-weight: bold;
+    font-size: 25px !important;
+    color: white !important;
+}
+
+.breadcrumb {
+    color: #ffffff !important;;
 }
 
 .page-footer {
     background-color: #26a69a !important;
 }
 
-input[type="text"] {
-    text-transform: uppercase !important;
+.nasci_gen {
+    display: flex;
+    column-gap: 5%;
 }
 
-input[type="email"] {
-    text-transform: uppercase !important;
+.genero {
+    width: 80%;
+    align-items: center;
+}
+
+.nascimento {
+    width: 80% !important;
+}
+
+.butao {
+    background-color: #26a69a !important;
+    color: #fff !important;
+    padding: 5px 5px !important;
+    border: none !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    font-size: 16px !important;
+    display: inline-flex !important;
+    align-items: center !important; /* Alinha o ícone verticalmente */
+    font-weight: bold;
+}
+
+.material-icons.prefix {
+    font-size: 30px !important; /* Ajuste o tamanho do ícone conforme necessário */
 }

@@ -9,11 +9,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
     $sql = "DELETE FROM usuarios WHERE idUsuario = $id";
 
     if ($mysqli->query($sql) === TRUE) {
+        $esclusão = "Usuário exluido!";
         echo '<script>alert("Cadastro excluido com sucesso!");</script>';
         echo '<script>
             setTimeout(function() {
                 window.location.href = "listausuarios.php";
-            }, 100);
+            }, 1);
           </script>';
         exit;
     } else {
@@ -21,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
         echo '<script>
             setTimeout(function() {
                 window.location.href = "listausuarios.php";
-            }, 100);
+            }, 1);
           </script>';
     }
 

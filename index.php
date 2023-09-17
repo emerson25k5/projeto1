@@ -12,8 +12,9 @@ if ($_POST) {
 $nome = $_POST["nome"];
 $email = $_POST["email"];
 $cpf = $_POST["cpf"];
-$senha = $cpf;
+$rg = $_POST['rg'];
 $telefone = $_POST['telefone'];
+$nascimento = $_POST['nascimento'];
 $genero = $_POST['genero'];
 
 //endereço
@@ -36,8 +37,8 @@ $tam_perna_selecionado = $_POST["tam_perna"];
 $tam_calcado_selecionado = $_POST["tam_calcado"];
 
     // Inserir o usuário
-    $cadastrarUser = $mysqli->prepare("INSERT INTO usuarios (nome, email, cpf, senha, telefone, genero) VALUES (?, ?, ?, ?, ?, ?)");
-    $cadastrarUser->bind_param("ssssss", $nome, $email, $cpf, $cpf, $telefone, $genero);
+    $cadastrarUser = $mysqli->prepare("INSERT INTO usuarios (nome, email, cpf, rg, senha, telefone, nascimento, genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $cadastrarUser->bind_param("ssssssss", $nome, $email, $cpf, $rg, $cpf, $telefone, $nascimento, $genero);
 
     if ($cadastrarUser->execute()) {
         $ultimo_id = $mysqli->insert_id;
@@ -128,254 +129,311 @@ $result2 = $mysqli->query($sql2);
     <body>
         <main class="box container">
 
-
-            <div class="container center">
+            <div class="center">
 
                 <h4>CADASTRO DE FUNCIONÁRIOS</h4>
 
-                    <script> //JS para inicializar a lista suspensa do cargo
+                    <script> //JS para inicializar das listas suspensas SELECT (uniformes, cargos e unidade)
                                 document.addEventListener('DOMContentLoaded', function() {
                                     var elems = document.querySelectorAll('select');
                                     var instances = M.FormSelect.init(elems);
                                 });
 
-                            // Márcara para o CPF
-                            document.addEventListener('DOMContentLoaded', function() {
-                                const cpfInput = document.getElementById('cpfInput');
+                            //js para passar a etapas do form
+                            let etapaAtual = 1;
 
-                                cpfInput.addEventListener('input', function() {
-                                    let value = cpfInput.value.replace(/\D/g, ''); 
-                                    if (value.length > 11) {
-                                        value = value.slice(0, 11);
-                                    }
-                                    value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-                                    cpfInput.value = value;
-                                });
+                            function proximaEtapa() {
+                                if (etapaAtual < 3) {
+                                    etapaAtual++;
+                                    atualizarEtapa();
+                                }
+                            }
+
+                            function anteriorEtapa() {
+                                if (etapaAtual > 1) {
+                                    etapaAtual--;
+                                    atualizarEtapa();
+                                }
+                            }
+
+                            function atualizarEtapa() {
+                                document.getElementById('etapa1').style.display = etapaAtual === 1 ? 'block' : 'none';
+                                document.getElementById('etapa2').style.display = etapaAtual === 2 ? 'block' : 'none';
+                                document.getElementById('etapa3').style.display = etapaAtual === 3 ? 'block' : 'none';
+                            }
+
+
+                            //corrigi o bug do label sobrepor o input quando já tem dado
+                            $(document).ready(function() {
+                                Materialize.updateTextFields();
                             });
 
-                                // Márcara para o telefone
-                            function formatarTelefone(input) {
-                                let numero = input.value.replace(/\D/g, '');
-                                if (numero.length === 11) {
-                                    input.value = numero.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-                                } else if (numero.length === 10) {
-                                    input.value = numero.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
-                                } else {
-                                    input.value = numero;
-                                }
-                            }
-
-
-                            //caixa alta
-                            function converterParaCaixaAlta(input) {
-                                input.value = input.value.toUpperCase();
-                            }
-                                
                     </script>
 
-                <BR><BR>
+                    <?php include("mascaraContent.php");?>
 
                 <div class="statusCad center" id="statusCad"> <!--div para exibir se o cadastro foi realizado ou não e então exibir o erro -->
-                    <?php echo $_statusCad;?>
+                    <?php 
+                    if($_statusCad == "Cadastro realizado com sucesso!"){
+                        echo '<h5 style="color:green;">'.$_statusCad. '</h5>';
+                    }else{
+                        echo '<h5 style="color:red;">'.$_statusCad. '</h5>';
+                    }
+                    ?>
                 </div>
-
-
-                <form method="post" action="" class="form">
-
-                    <div class="input-field">
-                    <i class="material-icons prefix">account_circle</i>
-                    <input type="text" name="nome" id="nome" maxlength="50" class="validate" oninput="converterParaCaixaAlta(this)" required autofocus>
-                    <label for="nome">Nome completo</label>
-                    </div>
-
-                    <div class="input-field">
-                    <i class="material-icons prefix">pin</i>
-                    <input type="text" name="cpf" id="cpfInput" maxlength="14" class="validate" required>
-                    <label for="cpfInput">CPF</label>
-                    </div>
-
-                    <div class="input-field">
-                    <i class="material-icons prefix">email</i>
-                    <input type="email" name="email" id="email" maxlength="50" class="validate" oninput="converterParaCaixaAlta(this)" required>
-                    <label for="email">E-mail</label>
-                    </div>
-
-                    <div class="input-field">
-                    <i class="material-icons prefix">phone</i>
-                    <input type="text" name="telefone" id="telefone" maxlength="15" class="validate" oninput="formatarTelefone(this)" required>
-                    <label for="telefone">Telefone</label>
-                    </div>
-
-                    <div class="genero container center" style="text-align:left">
-                        <p>Gênero:</p>
-                        <select class="browser-default" name="genero" id="genero" required>
-                            <option value="" disabled selected>Selecione...</option>
-                            <option value="m">Marculino</option>
-                            <option value="f">Feminino</option>
-                            <option value="o">Outro</option>
-                        </select>
-                    </div>
-
-                    <br><h5 class="left">Endereço:</h5><br><br><br>
-
-                    <div class="left input-field col s12 left" style="width: 35%;">
-                    <i class="material-icons prefix" style="font-size:125%">place</i>
-                    <input type="number" name="cep" id="cep" maxlength="20" class="validate" onclick="" required>
-                    <label for="cep">CEP</label>
-                    </div>
-                    
-
-                    <div class="input-field col s12 right" style="width: 60%;">
-                    <input type="text" name="nomeRua" id="nomeRua" maxlength="70" class="validate" required>
-                    <label for="nomeRua">Logradouro</label>
-                    </div>
-
-                    <br> <br> <br><br>
-
-                <div class="userDados">
-
-                    <div class="input-field col s12">
-                    <i class="material-icons prefix">123</i>
-                    <input type="number" name="numero" id="numero" maxlength="10" class="validate" required>
-                    <label for="numero">Número</label>
-                    </div>
-
-                    <div class="input-field col s12">
-                    <i class="material-icons prefix" style="font-size:135%">map</i>
-                    <input type="text" name="cidade" id="cidade" maxlength="60" class="validate" required>
-                    <label for="cidade">Cidade</label>
-                    </div>
-
-                    <div class="input-field col s12">
-                    <i class="material-icons prefix" style="font-size:135%">map</i>
-                    <input type="text" name="municipio" id="municipio" maxlength="60" class="validate" required>
-                    <label for="municipio">Município</label>
-                    </div>
-
-                    <div class="input-field col s12">
-                    <i class="material-icons prefix" style="font-size:135%">map</i>
-                    <input type="text" name="bairro" id="bairro" maxlength="60" class="validate" required>
-                    <label for="bairro">Bairro</label>
-                    </div>
-
-
-                    <div class="input-field col s12">
-                    <i class="material-icons prefix" style="font-size:135%">edit_note</i>
-                    <input type="text" name="complemento" id="complemento" class="validate">
-                    <label for="complemento">Complemento</label>
-                    </div>
-
-
-                </div>
-
-                <br><h5 class="left">Atribuições do funcionário:</h5><br><br><br>
-                <div class="unidcarniv">                   
-
-                    <div class="cargo col s6" style="text-align:left">
-                        <p for="cargo_escolhido">Cargo:</p>
-                        <select name="cargo_escolhido" id="cargo_escolhido">
-                        <option value="" disabled selected>Selecione...</option>
-                            <?php
-                            // Verifique se há registros e gere as opções do select
-                            if ($result->num_rows > 0) {
-                                while ($row = $result->fetch_assoc()) {
-                                    $idCargo = $row['idCargo'];
-                                    $nomeCargo = $row['nomeCargo'];
-                                    echo '<option value="' . $nomeCargo . '">'. $nomeCargo.'</option>';
-                                }
-                            } else {
-                                echo '<option value="" disabled>Nenhum cargo encontrado</option>';
-                            }
-                            ?>
-                        </select>
-                    </div>
-
-
-                    <div class="unidade col s6" style="text-align:left">
-                        <p>Unidade:</p>
-                        <select name="unidade_escolhida" id="unidade_escolhida">
-                        <option value="" disabled selected>Selecione...</option>
-                            <?php
-                            // Verifique se há registros e gere as opções do select
-                            if ($result2->num_rows > 0) {
-                                while ($row = $result2->fetch_assoc()) {
-                                    $idUnidade = $row['idUnidade'];
-                                    $nomeUnidade = $row['nomeUnidade'];
-                                    echo '<option value="' . $nomeUnidade . '">'. $nomeUnidade.'</option>';
-                                }
-                            } else {
-                                echo '<option value="" disabled>Nenhuma Unidade encontrada</option>';
-                            }
-                            ?>
-                        </select>
-                    </div>
-
-                </div>
-                    
-                    <div class="admissao container center">
-                    <p for="dataAdminissao">Data da Admissão:</p>
-                    <input type="date" name="dataAdmissao" id="dataAdmissao" required class="validate">
-                    </div>
-
-                
 
                 <br>
 
-                    <h5 class="left">Uniforme</h5><br><br><br>
+                <form method="post" action="" class="form">
 
-                <div class="unifcarg">
+                    <div id="etapa1" class="col s12">
 
-                    <div class="uniforme_tronco" style="text-align:left">
-                        <p>Tronco:</p>
-                        <select name="tam_tronco" id="tam_tronco">
-                        <option value="" disabled selected>Selecione...</option>
-                            <option value="P">Pequeno(P)</option>
-                            <option value="M">Médio(M)</option>
-                            <option value="G">Grande(G)</option>
-                            <option value="GG">Extra grande(GG)</option>
-                        </select>
+
+                    <nav class="onetwo">
+                        <div class="nav-wrapper">
+                        <div class="col s12">
+                            <a class="breadcrumb" id="here">Geral</a>
+                            <a class="breadcrumb">Endereço</a>
+                            <a class="breadcrumb">Atribuições</a>
+                        </div>
+                        </div>
+                    </nav>
+
+                    <br><br>
+
+                        <div class="input-field">
+                        <i class="material-icons prefix">account_circle</i>
+                        <input type="text" name="nome" id="nome" maxlength="50" class="validate" oninput="converterParaCaixaAlta(this)" required autofocus>
+                        <label for="nome">Nome completo</label>
+                        </div>
+
+                        <div class="nasci_gen container">
+
+                        <div class="nascimento">
+                        <label for="nascimento" class="labSelect">Data de nascimento:</label>
+                        <input type="date" class="validate" name="nascimento" id="nascimento">
+                        </div>
+
+                        <div class="genero">
+                            <label for="genero" class="labSelect">Gênero:</label>
+                            <select name="genero" id="genero" class="validate" required>
+                                <option value="" disabled selected>Selecione...</option>
+                                <option value="m">Marculino</option>
+                                <option value="f">Feminino</option>
+                                <option value="o">Outro</option>
+                            </select>
+                        </div>
+
+                        </div>
+
+                        <div class="input-field">
+                        <i class="material-icons prefix">pin</i>
+                        <input type="text" name="cpf" id="cpfInput" maxlength="14" class="validate" required>
+                        <label for="cpfInput">CPF</label>
+                        </div>
+
+                        <div class="input-field">
+                        <i class="material-icons prefix">assignment_ind</i>
+                        <input type="text" name="rg" id="rg" maxlength="14" class="validate" oninput="formatarRG(this)" required>
+                        <label for="rg">RG</label>
+                        </div>
+
+                        <div class="input-field">
+                        <i class="material-icons prefix">email</i>
+                        <input type="email" name="email" id="email" maxlength="50" class="validate" oninput="converterParaCaixaAlta(this)" required>
+                        <label for="email">E-mail</label>
+                        </div>
+
+                        <div class="input-field">
+                        <i class="material-icons prefix">phone</i>
+                        <input type="text" name="telefone" id="telefone" maxlength="15" class="validate" oninput="formatarTelefone(this)" required>
+                        <label for="telefone">Telefone</label>
+                        </div>
+
+                        <br><br>
+
+                        <button class="butao btn right" id="proximo" onclick="proximaEtapa()">Endereço<i class="material-icons prefix">keyboard_arrow_right</i></button>
+
+                        <br><br><br><br>
+
                     </div>
 
-                    <div class="uniforme_perna" style="text-align:left">
-                        <p>Pernas:</p>
-                        <select name="tam_perna" id="tam_perna">
+                    <div id="etapa2" class="col s12" style="display: none;">
+
+                    <nav class="onetwo">
+                        <div class="nav-wrapper">
+                        <div class="col s12">
+                            <a class="breadcrumb">Geral</a>
+                            <a class="breadcrumb" id="here">Endereço</a>
+                            <a class="breadcrumb">Atribuições</a>
+                        </div>
+                        </div>
+                    </nav>
+
+                    <br><br>
+
+
+                        <div class="input-field col s12">
+                        <i class="material-icons prefix" style="font-size:125%">place</i>
+                        <input type="text" name="cep" id="cep" maxlength="9" class="validate" oninput="formatarCEP(this)" required>
+                        <label for="cep">CEP</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                        <i class="material-icons prefix" style="font-size:125%">add_road</i>
+                        <input type="text" name="nomeRua" id="nomeRua" maxlength="70" class="validate" oninput="converterParaCaixaAlta(this)" required>
+                        <label for="nomeRua">Logradouro</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                        <i class="material-icons prefix">123</i>
+                        <input type="number" name="numero" id="numero" maxlength="10" class="validate" required>
+                        <label for="numero">Número</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                        <i class="material-icons prefix" style="font-size:135%">map</i>
+                        <input type="text" name="cidade" id="cidade" maxlength="60" class="validate" oninput="converterParaCaixaAlta(this)" required>
+                        <label for="cidade">Cidade</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                        <i class="material-icons prefix" style="font-size:135%">map</i>
+                        <input type="text" name="municipio" id="municipio" maxlength="60" class="validate" oninput="converterParaCaixaAlta(this)" required>
+                        <label for="municipio">Município</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                        <i class="material-icons prefix" style="font-size:135%">map</i>
+                        <input type="text" name="bairro" id="bairro" maxlength="60" class="validate" oninput="converterParaCaixaAlta(this)" required>
+                        <label for="bairro">Bairro</label>
+                        </div>
+
+                        <div class="input-field col s12">
+                        <i class="material-icons prefix" style="font-size:135%">edit_note</i>
+                        <input type="text" name="complemento" id="complemento" class="validate" oninput="converterParaCaixaAlta(this)">
+                        <label for="complemento">Complemento</label>
+                        </div>
+
+                        <br><br>
+
+                        <button class="butao btn left" id="anterior" onclick="anteriorEtapa()"><i class="material-icons prefix">keyboard_arrow_left</i>Geral</button>
+                        <button class="butao btn right" id="proximo" onclick="proximaEtapa()">Atribuições<i class="material-icons prefix">keyboard_arrow_right</i></button>
+
+                        <br><br><br><br>
+
+                    </div>
+
+                    <div id="etapa3" class="col s12" style="display: none;">
+
+                    <nav class="onetwo">
+                        <div class="nav-wrapper">
+                        <div class="col s12">
+                            <a class="breadcrumb">Geral</a>
+                            <a class="breadcrumb">Endereço</a>
+                            <a class="breadcrumb"id="here">Atribuições</a>
+                        </div>
+                        </div>
+                    </nav>
+
+                    <br><br>
+
+                        <div class="cargo col s6" >
+                            <label for="cargo_escolhido" class="labSelect">Cargo:</label>
+                            <select name="cargo_escolhido" id="cargo_escolhido">
                             <option value="" disabled selected>Selecione...</option>
-                            <option value="P">Pequeno(P)</option>
-                            <option value="M">Médio(M)</option>
-                            <option value="G">Grande(G)</option>
-                            <option value="GG">Extra grande(GG)</option>
-                        </select>
-                    </div>
+                                <?php
+                                // Verifique se há registros e gere as opções do select
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        $idCargo = $row['idCargo'];
+                                        $nomeCargo = $row['nomeCargo'];
+                                        echo '<option value="' . $nomeCargo . '">'. $nomeCargo.'</option>';
+                                    }
+                                } else {
+                                    echo '<option value="" disabled>Nenhum cargo encontrado</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
 
-                    <div class="uniforme_calcado" style="text-align:left">
-                        <p>Calçado:</p>
-                        <select name="tam_calcado" id="uniforme_calcado">
+
+                        <div class="unidade col s6">
+                            <label for="unidade_escolhida" class="labSelect">Unidade:</label>
+                            <select name="unidade_escolhida" id="unidade_escolhida">
                             <option value="" disabled selected>Selecione...</option>
-                            <option value="35">Tam 35</option>
-                            <option value="36">Tam 36</option>
-                            <option value="37">Tam 37</option>
-                            <option value="38">Tam 38</option>
-                            <option value="39">Tam 39</option>
-                            <option value="40">Tam 40</option>
-                            <option value="41">Tam 41</option>
-                            <option value="42">Tam 42</option>
-                            <option value="43">Tam 43</option>
-                            <option value="44">Tam 44</option>
-                        <select>
-                    </div>
+                                <?php
+                                // Verifique se há registros e gere as opções do select
+                                if ($result2->num_rows > 0) {
+                                    while ($row = $result2->fetch_assoc()) {
+                                        $idUnidade = $row['idUnidade'];
+                                        $nomeUnidade = $row['nomeUnidade'];
+                                        echo '<option value="' . $nomeUnidade . '">'. $nomeUnidade.'</option>';
+                                    }
+                                } else {
+                                    echo '<option value="" disabled>Nenhuma Unidade encontrada</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
                         
-                        <br><br><br><br><br><br><br>
+                        <div class="admissao">
+                        <label for="dataAdmissao" class="labSelect">Data da Admissão:</label>
+                        <input type="date" name="dataAdmissao" id="dataAdmissao" required class="validate">
+                        </div>
 
-                        <input type="submit" name="entrar" value="Salvar" class="btn center-align">
-                </div>
+                        <div class="uniforme_tronco">
+                            <label for="tam_tronco" class="labSelect">Tronco:</label>
+                            <select name="tam_tronco" id="tam_tronco" required>
+                            <option value="" disabled selected>Selecione...</option>
+                                <option value="P">Pequeno(P)</option>
+                                <option value="M">Médio(M)</option>
+                                <option value="G">Grande(G)</option>
+                                <option value="GG">Extra grande(GG)</option>
+                            </select>
+                        </div>
 
+                        <div class="uniforme_perna">
+                            <label for="tam_perna" class="labSelect">Pernas:</label>
+                            <select name="tam_perna" id="tam_perna" required>
+                                <option value="" disabled selected>Selecione...</option>
+                                <option value="P">Pequeno(P)</option>
+                                <option value="M">Médio(M)</option>
+                                <option value="G">Grande(G)</option>
+                                <option value="GG">Extra grande(GG)</option>
+                            </select>
+                        </div>
+
+                        <div class="uniforme_calcado">
+                            <label for="uniforme_calcado" class="labSelect">Calçado:</label>
+                            <select name="tam_calcado" id="uniforme_calcado" required>
+                                <option value="" disabled selected>Selecione...</option>
+                                <option value="35">Tam 35</option>
+                                <option value="36">Tam 36</option>
+                                <option value="37">Tam 37</option>
+                                <option value="38">Tam 38</option>
+                                <option value="39">Tam 39</option>
+                                <option value="40">Tam 40</option>
+                                <option value="41">Tam 41</option>
+                                <option value="42">Tam 42</option>
+                                <option value="43">Tam 43</option>
+                                <option value="44">Tam 44</option>
+                            <select>
+                        </div>
+
+                        <br><br>
+
+                        <button class="butao btn left" id="anterior" onclick="anteriorEtapa()"><i class="material-icons prefix">keyboard_arrow_left</i>Endereço</button> 
+                        <input type="submit" name="entrar" value="Finalizar cadastro" class="butão btn center-align right">
+
+                        <br><br><br><br>
+
+                    </div>
                     
                 </form>
 
 
             </div>
-
-            <BR>
 
         </main>
             
