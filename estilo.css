@@ -18,7 +18,7 @@
 
 .labSelect {
     font-size: 100% !important;
-    float: left;
+    float: left !important;
     font-weight: bold;
     color: #26a69a;
 }
@@ -41,20 +41,10 @@
 
 .page-footer {
     background-color: #26a69a !important;
-}
-
-.nasci_gen {
-    display: flex;
-    column-gap: 5%;
-}
-
-.genero {
-    width: 80%;
-    align-items: center;
-}
-
-.nascimento {
-    width: 80% !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .butao {
@@ -68,6 +58,8 @@
     display: inline-flex !important;
     align-items: center !important; /* Alinha o ícone verticalmente */
     font-weight: bold;
+    width: 130px !important;
+    height: 40px !important;
 }
 
 .material-icons.prefix {

@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $sql = "UPDATE usuarios SET nome=?, cpf=?, rg=?, email=?, telefone=? WHERE idUsuario = $id";
 
                 $stmt = $mysqli->prepare($sql);
-
+ 
                 if ($stmt === false) {
                     die('Erro na preparação da consulta: ' . $mysqli->error);
                 }
@@ -27,20 +27,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $stmt->bind_param("sssss", $nome, $cpf, $rg, $email, $telefone);
 
                 if ($stmt->execute()) {
-                    echo "Alterações gravadas com sucesso!";
+                    echo '<script>alert("Alterações gravadas com sucesso!");</script>';
+                    header("Refresh:0.1; url=listausuarios.php");
                 } else {
-                    echo "Erro ao atualizar: " . $stmt->error;
+                    echo '<script>alert("Erro ao atualizar dados:");</script>' . $stmt->error;
                 }
             } else {
                 echo "Formulário não foi enviado corretamente";
             }
-        } else {
-            echo "Formulário com ID desconhecido";
         }
-    } else {
-        echo "ID de formulário não foi especificado";
-    }
 
     $mysqli->close();
+}
 }
 ?>

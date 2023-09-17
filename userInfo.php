@@ -168,7 +168,7 @@ if($result5->num_rows > 0){
                         </div>
                         <div id="option1" class="col s12">
                         <label for="dataAdmissao">Data da admissao:</label><br>
-                        <input type="text" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>" readonly><br>
+                        <input type="text" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>" readonly> <br>
                         <label for="id">Funcionário ID:</label><br>
                         <input type="text" name="id" id="id" value="<?php echo $idUsuario?>" readonly><br>
                         <label for="cpf">CPF:</label><br>
@@ -191,10 +191,10 @@ if($result5->num_rows > 0){
                         <!--exibe endereço-->                        
                         <div id="option2" class="col s12">
                         <label for="cep">CEP:</label><br>
-                        <input type="text" name="cep" id="cep" value="<?php echo $cep?>" readonly>
+                        <input type="text" name="cep" id="cep" value="<?php echo $cep?>" readonly><br>
 
                         <label for="rua">Logradouro:</label><br>
-                        <input type="text" name="rua" id="rua" value="<?php echo $rua?>"  readonly><br>
+                        <input type="text" name="rua" id="rua" value="<?php echo $rua?>" readonly><br>
 
                         <label for="numero">Número:</label><br>
                         <input type="text" name="numero" id="numero" value="<?php echo $numero ?>" readonly><br>

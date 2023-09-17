@@ -127,7 +127,7 @@ $result2 = $mysqli->query($sql2);
 
     </HEAD>
     <body>
-        <main class="box container">
+        <main class="container">
 
             <div class="center">
 
@@ -186,20 +186,21 @@ $result2 = $mysqli->query($sql2);
 
                 <form method="post" action="" class="form">
 
-                    <div id="etapa1" class="col s12">
+                    <div id="etapa1" class="row col s12">
 
 
                     <nav class="onetwo">
                         <div class="nav-wrapper">
                         <div class="col s12">
-                            <a class="breadcrumb" id="here">Geral</a>
-                            <a class="breadcrumb">Endereço</a>
-                            <a class="breadcrumb">Atribuições</a>
+                            <a class="col s4" id="here">Geral</a>
+                            <a class="col s4">Endereço</a>
+                            <a class="col s4">Mais</a>
                         </div>
                         </div>
                     </nav>
 
-                    <br><br>
+                    <br>
+                    
 
                         <div class="input-field">
                         <i class="material-icons prefix">account_circle</i>
@@ -207,14 +208,15 @@ $result2 = $mysqli->query($sql2);
                         <label for="nome">Nome completo</label>
                         </div>
 
-                        <div class="nasci_gen container">
+                        <br>
 
-                        <div class="nascimento">
+                        <div class="row container col s12 center">
+                        <div class="nascimento col s6">
                         <label for="nascimento" class="labSelect">Data de nascimento:</label>
-                        <input type="date" class="validate" name="nascimento" id="nascimento">
+                        <input type="date" class="validate" name="nascimento" id="nascimento" required>
                         </div>
 
-                        <div class="genero">
+                        <div class="genero col s6">
                             <label for="genero" class="labSelect">Gênero:</label>
                             <select name="genero" id="genero" class="validate" required>
                                 <option value="" disabled selected>Selecione...</option>
@@ -223,115 +225,117 @@ $result2 = $mysqli->query($sql2);
                                 <option value="o">Outro</option>
                             </select>
                         </div>
-
                         </div>
 
-                        <div class="input-field">
+                        <br>
+
+                        <div class="input-field col s6">
                         <i class="material-icons prefix">pin</i>
                         <input type="text" name="cpf" id="cpfInput" maxlength="14" class="validate" required>
                         <label for="cpfInput">CPF</label>
                         </div>
 
-                        <div class="input-field">
+                        <div class="input-field col s6">
                         <i class="material-icons prefix">assignment_ind</i>
                         <input type="text" name="rg" id="rg" maxlength="14" class="validate" oninput="formatarRG(this)" required>
                         <label for="rg">RG</label>
                         </div>
 
-                        <div class="input-field">
+
+                        <div class="input-field col s12">
                         <i class="material-icons prefix">email</i>
                         <input type="email" name="email" id="email" maxlength="50" class="validate" oninput="converterParaCaixaAlta(this)" required>
                         <label for="email">E-mail</label>
                         </div>
 
-                        <div class="input-field">
+                        <div class="input-field col s12">
                         <i class="material-icons prefix">phone</i>
                         <input type="text" name="telefone" id="telefone" maxlength="15" class="validate" oninput="formatarTelefone(this)" required>
                         <label for="telefone">Telefone</label>
                         </div>
 
-                        <br><br>
-
-                        <button class="butao btn right" id="proximo" onclick="proximaEtapa()">Endereço<i class="material-icons prefix">keyboard_arrow_right</i></button>
-
                         <br><br><br><br>
+
+                        <button class="butao btn right col s6" id="proximo" onclick="proximaEtapa()">Próximo<i class="material-icons prefix">keyboard_arrow_right</i></button>
+
+                        
 
                     </div>
 
-                    <div id="etapa2" class="col s12" style="display: none;">
+                    <div id="etapa2" class="row col s12" style="display: none;">
 
                     <nav class="onetwo">
                         <div class="nav-wrapper">
                         <div class="col s12">
-                            <a class="breadcrumb">Geral</a>
-                            <a class="breadcrumb" id="here">Endereço</a>
-                            <a class="breadcrumb">Atribuições</a>
+                            <a class="col s4">Geral</a>
+                            <a class="col s4" id="here">Endereço</a>
+                            <a class="col s4">Mais</a>
                         </div>
                         </div>
                     </nav>
 
-                    <br><br>
+                    <br><br><br><br>
 
 
-                        <div class="input-field col s12">
+                        <div class="input-field col s6 offset-s2">
                         <i class="material-icons prefix" style="font-size:125%">place</i>
                         <input type="text" name="cep" id="cep" maxlength="9" class="validate" oninput="formatarCEP(this)" required>
                         <label for="cep">CEP</label>
                         </div>
 
-                        <div class="input-field col s12">
+                        <div class="input-field col s8">
                         <i class="material-icons prefix" style="font-size:125%">add_road</i>
                         <input type="text" name="nomeRua" id="nomeRua" maxlength="70" class="validate" oninput="converterParaCaixaAlta(this)" required>
                         <label for="nomeRua">Logradouro</label>
                         </div>
 
-                        <div class="input-field col s12">
+                        <div class="input-field col s4">
                         <i class="material-icons prefix">123</i>
                         <input type="number" name="numero" id="numero" maxlength="10" class="validate" required>
                         <label for="numero">Número</label>
                         </div>
 
-                        <div class="input-field col s12">
+                        <div class="input-field col s6">
                         <i class="material-icons prefix" style="font-size:135%">map</i>
                         <input type="text" name="cidade" id="cidade" maxlength="60" class="validate" oninput="converterParaCaixaAlta(this)" required>
                         <label for="cidade">Cidade</label>
                         </div>
 
-                        <div class="input-field col s12">
+                        <div class="input-field col s6">
                         <i class="material-icons prefix" style="font-size:135%">map</i>
                         <input type="text" name="municipio" id="municipio" maxlength="60" class="validate" oninput="converterParaCaixaAlta(this)" required>
                         <label for="municipio">Município</label>
                         </div>
 
-                        <div class="input-field col s12">
+                        <div class="input-field col s6">
                         <i class="material-icons prefix" style="font-size:135%">map</i>
                         <input type="text" name="bairro" id="bairro" maxlength="60" class="validate" oninput="converterParaCaixaAlta(this)" required>
                         <label for="bairro">Bairro</label>
                         </div>
 
-                        <div class="input-field col s12">
+                        <div class="input-field col s6">
                         <i class="material-icons prefix" style="font-size:135%">edit_note</i>
                         <input type="text" name="complemento" id="complemento" class="validate" oninput="converterParaCaixaAlta(this)">
                         <label for="complemento">Complemento</label>
                         </div>
 
-                        <br><br>
+                        <br><br><br><br>
 
-                        <button class="butao btn left" id="anterior" onclick="anteriorEtapa()"><i class="material-icons prefix">keyboard_arrow_left</i>Geral</button>
-                        <button class="butao btn right" id="proximo" onclick="proximaEtapa()">Atribuições<i class="material-icons prefix">keyboard_arrow_right</i></button>
+                        <button class="butao btn left col s6" id="anterior" onclick="anteriorEtapa()"><i class="material-icons prefix">keyboard_arrow_left</i>Anterior</button>
+                        <button class="butao btn right col s6" id="proximo" onclick="proximaEtapa()">Próximo<i class="material-icons prefix">keyboard_arrow_right</i></button>
 
                         <br><br><br><br>
 
                     </div>
 
-                    <div id="etapa3" class="col s12" style="display: none;">
+                    <div id="etapa3" class="row col s12" style="display: none;">
 
                     <nav class="onetwo">
                         <div class="nav-wrapper">
                         <div class="col s12">
-                            <a class="breadcrumb">Geral</a>
-                            <a class="breadcrumb">Endereço</a>
-                            <a class="breadcrumb"id="here">Atribuições</a>
+                            <a class="col s4">Geral</a>
+                            <a class="col s4">Endereço</a>
+                            <a class="col s4"id="here">Mais</a>
                         </div>
                         </div>
                     </nav>
@@ -377,13 +381,17 @@ $result2 = $mysqli->query($sql2);
                             </select>
                         </div>
                         
-                        <div class="admissao">
+                        <div class="admissao col s12">
                         <label for="dataAdmissao" class="labSelect">Data da Admissão:</label>
                         <input type="date" name="dataAdmissao" id="dataAdmissao" required class="validate">
                         </div>
 
-                        <div class="uniforme_tronco">
-                            <label for="tam_tronco" class="labSelect">Tronco:</label>
+                        <h5 class="col s12 left-align">Uniforme:</h5>
+
+                        <br><br><br>
+
+                        <div class="uniforme_tronco col s4">
+                            <label for="tam_tronco" class="labSelect">Tamanho tronco:</label>
                             <select name="tam_tronco" id="tam_tronco" required>
                             <option value="" disabled selected>Selecione...</option>
                                 <option value="P">Pequeno(P)</option>
@@ -393,8 +401,8 @@ $result2 = $mysqli->query($sql2);
                             </select>
                         </div>
 
-                        <div class="uniforme_perna">
-                            <label for="tam_perna" class="labSelect">Pernas:</label>
+                        <div class="uniforme_perna col s4">
+                            <label for="tam_perna" class="labSelect">Tamanho pernas:</label>
                             <select name="tam_perna" id="tam_perna" required>
                                 <option value="" disabled selected>Selecione...</option>
                                 <option value="P">Pequeno(P)</option>
@@ -404,8 +412,8 @@ $result2 = $mysqli->query($sql2);
                             </select>
                         </div>
 
-                        <div class="uniforme_calcado">
-                            <label for="uniforme_calcado" class="labSelect">Calçado:</label>
+                        <div class="uniforme_calcado col s4">
+                            <label for="uniforme_calcado" class="labSelect">Tamanho calado:</label>
                             <select name="tam_calcado" id="uniforme_calcado" required>
                                 <option value="" disabled selected>Selecione...</option>
                                 <option value="35">Tam 35</option>
@@ -422,11 +430,12 @@ $result2 = $mysqli->query($sql2);
                         </div>
 
                         <br><br>
-
-                        <button class="butao btn left" id="anterior" onclick="anteriorEtapa()"><i class="material-icons prefix">keyboard_arrow_left</i>Endereço</button> 
-                        <input type="submit" name="entrar" value="Finalizar cadastro" class="butão btn center-align right">
-
-                        <br><br><br><br>
+                        
+                        <div class="row col s12">
+                        <button class="butao btn left col s6" id="anterior" onclick="anteriorEtapa()"><i class="material-icons prefix">keyboard_arrow_left</i>Anterior</button> 
+                        <button type="submit" name="entrar" value="Finalizar cadastro" class="butao btn right col s6"><i class="material-icons prefix">how_to_reg</i>Concluir</button>
+                        </div>
+                        <br><br><br><br><br><br>
 
                     </div>
                     
