@@ -194,8 +194,11 @@ $mysqli->close();
                         </div>
 
                     </form>
-                
 
+                    <!-- form para a 2° tabela a de endereços-->
+                    <form id="form2" name="form2" action="atualizaCadastro.php" method="post">
+
+                        <input type="hidden" name="form_id" value="2">
 
                         <!--exibe e edita endereço-->                        
                         <div id="option2" class="col s12">
@@ -226,6 +229,10 @@ $mysqli->close();
                         <label for="status">Status do endereço:</label><br>
                         <input type="text" name="status" id="status" oninput="converterParaCaixaAlta(this)" value="<?php echo $status ?>" ><br>
                         </div>
+
+                    </form>
+
+                    
 
                         <!--exibe e edita as atribuições-->   
                         <div id="option3" class="col s12">
