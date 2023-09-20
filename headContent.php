@@ -1,7 +1,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="SistemaEBDS">
-        <link rel="icon" type="image/png" href="gravata.png">
+        <link rel="icon" href="imagens/brasao_patrol.png" type="image/png">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <link rel="stylesheet" type="text/css" href="estilo.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -11,13 +11,17 @@
 
 
 <header>
+
+    
     <nav class="nav">
         <div class="nav-wrapper container">
-        <a href="#" class="brand-logo center">EBDS</a>
+        <a href="index.php" class="brand-logo center"><img class="logo" src="imagens/patrol_texto_bg.png" alt="patrol_logo"></a>
         <ul id="sidenav">
             <li href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></li>
         </ul>
         </div>
+    </nav>
+    <nav class="nav1">
     </nav>
 
     <script>
@@ -38,8 +42,8 @@
             });
     </script>
 
-    <ul id="slide-out" class="sidenav">
-        <li class="center">EBDS Corporation</li>
+    <ul id="slide-out" class="right sidenav">
+    <a href="index.php" class="brand-logo center"><img class="logo" src="imagens/patrol_texto_bg.png" alt="patrol_logo"></a>
         <div class="divider"></div>
         <li><a href="listausuarios.php">Funcionários</a></li>
         <li><a href="cadastrocargo.php">Cadastro de cargos</a></li>

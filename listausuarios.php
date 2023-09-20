@@ -10,24 +10,25 @@ $result = $mysqli->query($sql);
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE>EBDS | Funcionários </TITLE>
+        <TITLE>PATROL | Funcionários </TITLE>
 
         <?php include("headContent.php"); ?>
 
     </HEAD>
     <body>
+
+        <BR><BR>
         
     <div class="center">
     <form action="" method="post">
     <input class="center" type="text" id="busca" name="busca" placeholder="Buscar funcionários" style="width:50%; background-color:;"><br>
-    <input class="center btn" type="submit" id="submit" value="Buscar">
+    <input class="serach center btn" type="submit" id="submit" value="Buscar">
     </form>
     </div>
 
         <main class="box container">
 
             <div>
-                <h4>Funcionários:</h4>
                 <table class="highlight">
                     <thead>
                     <tr>

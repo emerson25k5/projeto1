@@ -47,7 +47,7 @@ $result = $mysqli->query($sql);
                     
                     <br><br><br><br>
 
-                    <input type="submit" name="entrar" value="Adicionar" class="btn">
+                    <input type="submit" name="entrar" value="Adicionar" class="btnopcao1 btn">
 
 
                     <br><br>

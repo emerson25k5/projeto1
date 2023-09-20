@@ -121,7 +121,7 @@ $result2 = $mysqli->query($sql2);
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE>EBDS | Cadastro </TITLE>
+        <TITLE>PATROL | Cadastro </TITLE>
 
 <?php include("headContent.php"); ?>
 
@@ -189,7 +189,7 @@ $result2 = $mysqli->query($sql2);
                     <div id="etapa1" class="row col s12">
 
 
-                    <nav class="onetwo">
+                    <nav class="barra_etapa">
                         <div class="nav-wrapper">
                         <div class="col s12">
                             <a class="col s4" id="here">Geral</a>
@@ -264,7 +264,7 @@ $result2 = $mysqli->query($sql2);
 
                     <div id="etapa2" class="row col s12" style="display: none;">
 
-                    <nav class="onetwo">
+                    <nav class="barra_etapa">
                         <div class="nav-wrapper">
                         <div class="col s12">
                             <a class="col s4">Geral</a>
@@ -330,7 +330,7 @@ $result2 = $mysqli->query($sql2);
 
                     <div id="etapa3" class="row col s12" style="display: none;">
 
-                    <nav class="onetwo">
+                    <nav class="barra_etapa">
                         <div class="nav-wrapper">
                         <div class="col s12">
                             <a class="col s4">Geral</a>

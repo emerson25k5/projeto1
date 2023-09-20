@@ -1,10 +1,16 @@
-.nav {
-    background-color: #26a69a;
+.nav1 {
+    background-color: rgb(255, 196, 0);
+    height: 5px;
 }
 
-.btnopcao {
-    color: #26a69a;
-    font-size: 200% !important;
+.nav {
+    background-color: #000000;
+}
+
+.logo {
+    width: 45%;
+    height: auto;
+    margin-top: 8px;
 }
 
 .box {
@@ -12,35 +18,28 @@
     height: 50%;
 }
 
-.tabelaExibe {
-    float: center;
-}
-
 .labSelect {
     font-size: 100% !important;
     float: left !important;
     font-weight: bold;
-    color: #26a69a;
+    color: #000000;
 }
 
-.onetwo {
-    background-color: #26a69a !important;
+.barra_etapa {
+    background-color: #000000 !important;
     border-radius: 10px;
     font-size: 15px !important;
+
 }
 
 #here {
     font-weight: bold;
     font-size: 25px !important;
-    color: white !important;
-}
-
-.breadcrumb {
-    color: #ffffff !important;;
+    color: rgb(255, 196, 0);
 }
 
 .page-footer {
-    background-color: #26a69a !important;
+    background-color: rgb(0, 0, 0) !important;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -48,7 +47,7 @@
 }
 
 .butao {
-    background-color: #26a69a !important;
+    background-color: #000000 !important;
     color: #fff !important;
     padding: 5px 5px !important;
     border: none !important;
@@ -63,5 +62,45 @@
 }
 
 .material-icons.prefix {
-    font-size: 30px !important; /* Ajuste o tamanho do ícone conforme necessário */
+    font-size: 20px !important; /* Ajuste o tamanho do ícone conforme necessário */
 }
+.material-icons.prefix:active {
+    color:rgb(255, 196, 0) !important;
+}
+
+.btnopcao {
+    color: black;
+}
+
+.btnopcao1 {
+    background-color: black !important;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.serach {
+    background-color: #000000 !important;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px !important;
+}
+
+.tabs .tab a {
+    color: #ffffff !important; /* Cor do texto quando não selecionado */
+    background-color: #000000;
+  }
+  
+  .tabs .tab a:hover {
+    background-color: rgb(0, 0, 0) !important; /* Cor de fundo ao passar o mouse */
+    font-weight: bold !important;
+  }
+  
+  .tabs .tab a.active {
+    background-color: rgb(0, 0, 0) !important; /* Cor de fundo quando selecionado */
+    font-weight: bold !important; /* Cor do texto quando selecionado */
+    color: rgb(255, 196, 0) !important;
+  }
+
+  .tabs .indicator {
+    background-color: rgb(255, 196, 0) !important; /* Cor da animação (azul no exemplo) */
+  }
