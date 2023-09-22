@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $telefone = $_POST['telefone'];
 
                 // Executar a atualização no banco de dados
-                $sql = "UPDATE usuarios SET nome=?, cpf=?, rg=?, email=?, telefone=? WHERE idUsuario = $id";
+                $sql = "UPDATE funcionarios SET nome=?, cpf=?, rg=?, email=?, telefone=? WHERE idFuncionario = $id";
 
                 $stmt = $mysqli->prepare($sql);
  
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 if ($stmt->execute()) {
                     echo '<script>alert("Alterações gravadas com sucesso!");</script>';
-                    header("Refresh:0.1; url=listausuarios.php");
+                    header("Refresh:0.1; url=listaFuncionarios.php");
                 } else {
                     echo '<script>alert("Erro ao atualizar dados:");</script>' . $stmt->error;
                 }

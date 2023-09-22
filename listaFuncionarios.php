@@ -1,8 +1,15 @@
 <?php
+session_start();
+
+if (!isset($_SESSION["authenticated"]) || $_SESSION["authenticated"] !== true) {
+    header("Location: index.php");
+    exit;
+}
+
 
 include("conecta.php");
 
-$sql = "SELECT * FROM usuarios ORDER BY nome";
+$sql = "SELECT * FROM funcionarios ORDER BY nome";
 $result = $mysqli->query($sql);
 
 ?>
@@ -42,13 +49,13 @@ $result = $mysqli->query($sql);
                 <?php
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
-                        $idUsuario = $row['idUsuario'];
+                        $idFuncionario = $row['idFuncionario'];
                         $nome = $row['nome'];
                         $cpf = $row['cpf'];
                         $status = $row['status'];
 
                         echo '<tr>';
-                        echo '<td><a class="waves-effect waves-light modal-trigger" href="userInfo.php?id=' . $idUsuario . '"><i class="btnopcao material-icons left">search</i></a><a class="waves-effect waves-light modal-trigger" href="editaUsuario.php?id=' . $idUsuario . '""><i class="btnopcao material-icons left">edit</i></a><a class="waves-effect waves-light modal-trigger" href="#modal1"><i class="btnopcao material-icons left">delete</i></a></td>';
+                        echo '<td><a class="waves-effect waves-light modal-trigger" href="userInfo.php?id=' . $idFuncionario . '"><i class="btnopcao material-icons left">search</i></a><a class="waves-effect waves-light modal-trigger" href="editaFuncionario.php?id=' . $idFuncionario . '""><i class="btnopcao material-icons left">edit</i></a><a class="waves-effect waves-light modal-trigger" href="#modal1"><i class="btnopcao material-icons left">delete</i></a></td>';
                         echo '<td>'. $nome .'</td>';
                         echo '<td>'. $cpf .'</td>';
                         if($status == 1){
@@ -64,14 +71,14 @@ $result = $mysqli->query($sql);
                         echo '<p>Tem certeza que deseja prosseguir? Esta ação não poderá ser desfeita.</p>';
                         echo '</div>';
                         echo '<div class="modal-footer">';
-                        echo '<a href="excluiUsuario.php?id=' . $idUsuario . '" class="modal-close waves-effect waves-green btn-flat">EXCLUIR</a>';
+                        echo '<a href="excluiFuncionario.php?id=' . $idFuncionario . '" class="modal-close waves-effect waves-green btn-flat">EXCLUIR</a>';
                         echo '<a href="#" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>';
                         echo '</div>';
                         echo '</div>';
 
                     }
                 }else {
-                    echo '<p colspan="2">Nenhum usuário encontrado</p>';
+                    echo '<p colspan="2">Nenhum funcionário encontrado</p>';
                 }                   
                 ?>
 

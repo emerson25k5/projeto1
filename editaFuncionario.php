@@ -1,5 +1,12 @@
 <?php
 
+session_start();
+
+if (!isset($_SESSION["authenticated"]) || $_SESSION["authenticated"] !== true) {
+    header("Location: index.php");
+    exit;
+}
+
 include("conecta.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
@@ -7,19 +14,19 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
     $id = $_GET["id"];
 
 
-$sql = "SELECT * FROM usuarios WHERE idUsuario = $id";
+$sql = "SELECT * FROM funcionarios WHERE idFuncionario = $id";
 $result = $mysqli->query($sql);
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $idUsuario = $row['idUsuario'];
+        $idFuncionario = $row['idFuncionario'];
         $nome = $row['nome'];
         $cpf = $row['cpf'];
         $rg = $row['rg'];
         $genero = $row['genero'];
         $email = $row['email'];
         $telefone = $row['telefone'];
-        $dataCadastro = $row['dataCadUsuario'];
+        $dataCadastro = $row['dataCadFuncionario'];
         $status = $row['status'];
 
         if($genero == "m"){
@@ -39,7 +46,7 @@ if ($result->num_rows > 0) {
 }
 
 
-$sql = "SELECT * FROM usedEnderecos WHERE usuarioID = $id";
+$sql = "SELECT * FROM usedEnderecos WHERE funcionarioID = $id";
 $result1 = $mysqli->query($sql);
 
 if ($result1->num_rows > 0) {
@@ -63,7 +70,7 @@ if ($result1->num_rows > 0) {
 }
 
 //query do cargo
-$sql = "SELECT nomeCargo FROM usedcargos WHERE usuarioID = $id";
+$sql = "SELECT nomeCargo FROM usedcargos WHERE funcionarioID = $id";
 $result2 = $mysqli->query($sql);
 
 if($result2->num_rows > 0){
@@ -75,7 +82,7 @@ if($result2->num_rows > 0){
 }
 
 //query da unidade
-$sql = "SELECT nomeUnidade FROM usedUnidades WHERE usuarioID = $id";
+$sql = "SELECT nomeUnidade FROM usedUnidades WHERE funcionarioID = $id";
 $result3 = $mysqli->query($sql);
 
 if($result3->num_rows > 0){
@@ -87,7 +94,7 @@ if($result3->num_rows > 0){
 }
 
 //query dos uniformes
-$sql = "SELECT tamTronco, tamPerna, tamCalcado FROM usedUniformes WHERE usuarioID = $id";
+$sql = "SELECT tamTronco, tamPerna, tamCalcado FROM usedUniformes WHERE funcionarioID = $id";
 $result4 = $mysqli->query($sql);
 
 if($result4->num_rows > 0){
@@ -102,7 +109,7 @@ if($result4->num_rows > 0){
     $tamCalcado = "Não atribuído a nenhum uniforme!";
 }
 
-$sql = "SELECT * FROM admissao WHERE usuarioID = $id";
+$sql = "SELECT * FROM admissao WHERE funcionarioID = $id";
 $result5 = $mysqli->query($sql);
 
 if($result5->num_rows > 0){
@@ -174,7 +181,7 @@ $mysqli->close();
                         <label for="dataAdmissao">Data da admissao:</label><br>
                         <input type="date" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>"><br>
                         <label for="id">Funcionário ID:</label><br>
-                        <input type="text" name="id" id="id" value="<?php echo $idUsuario?>" readonly><br>
+                        <input type="text" name="id" id="id" value="<?php echo $idFuncionario?>" readonly><br>
                         <label for="cpfInput">CPF:</label><br>
                         <input type="text" name="cpf" id="cpfInput" maxlength="14" value="<?php echo $cpf ?>" ><br>
                         <label for="rg">RG:</label><br>
