@@ -1,11 +1,6 @@
 <?php
 
-session_start();
-
-if (!isset($_SESSION["authenticated"]) || $_SESSION["authenticated"] !== true) {
-    header("Location: index.php");
-    exit;
-}
+include("autenticaContent.php");
 
 include("conecta.php");
 
@@ -28,6 +23,7 @@ if ($result->num_rows > 0) {
         $telefone = $row['telefone'];
         $dataCadastro = $row['dataCadFuncionario'];
         $status = $row['status'];
+        $funcObservacoes = $row['funcObservacoes'];
 
         if($genero == "m"){
             $genero = "Masculino";
@@ -70,27 +66,41 @@ if ($result1->num_rows > 0) {
 }
 
 //query do cargo
-$sql = "SELECT nomeCargo FROM usedcargos WHERE funcionarioID = $id";
+$sql = "SELECT cargoID FROM usedcargos WHERE funcionarioID = $id";
 $result2 = $mysqli->query($sql);
 
 if($result2->num_rows > 0){
-    while ($row = $result2->fetch_assoc()) {
-    $cargo = $row['nomeCargo'];
+    while ($row = $result2->fetch_assoc())
+    $atualCargoID = $row['cargoID'];
+
+    $sql10 = "SELECT nomeCargo FROM cargos WHERE idCargo = $atualCargoID";
+    $result10 = $mysqli->query($sql10);
+    if($result10->num_rows > 0){
+        while ($row = $result10->fetch_assoc()) {
+        $cargoAtual = $row['nomeCargo'];
+        }
 }
 }else{
-    $cargo = "Não atribuído a nenhum cargo!";
+    $cargoAtual = "Não atribuído a nenhum cargo!";
 }
 
 //query da unidade
-$sql = "SELECT nomeUnidade FROM usedUnidades WHERE funcionarioID = $id";
+$sql = "SELECT unidadeID FROM usedunidades WHERE funcionarioID = $id";
 $result3 = $mysqli->query($sql);
 
 if($result3->num_rows > 0){
-    while ($row = $result3->fetch_assoc()) {
-    $unidade = $row['nomeUnidade'];
+    while ($row = $result3->fetch_assoc())
+    $atualUnidadeID = $row['unidadeID'];
+
+    $sql11 = "SELECT nomeUnidade FROM unidades WHERE idUnidade = $atualUnidadeID";
+    $result11 = $mysqli->query($sql11);
+    if($result11->num_rows > 0){
+        while ($row = $result11->fetch_assoc()) {
+        $unidadeAtual = $row['nomeUnidade'];
+        }
 }
 }else{
-    $unidade = "Não atribuído a nenhuma unidade!";
+    $unidadeAtual = "Não atribuído a nenhuma unidade!";
 }
 
 //query dos uniformes
@@ -117,6 +127,25 @@ if($result5->num_rows > 0){
     $admissao = $row['dataAdmissao'];
 }
 }
+
+$sql = "SELECT * FROM controleferias WHERE funcionarioID = $id";
+$result6 = $mysqli->query($sql);
+
+if($result6->num_rows > 0){
+    while ($row = $result6->fetch_assoc()) {
+    $dataUltFerias = $row['dataUltFerias'];
+}
+}else{
+    $dataUltFerias = "Nenhuma data cadastrada";
+}
+
+include("conecta.php");
+
+$sql = "SELECT idCargo, nomeCargo FROM cargos WHERE status = 1 ORDER BY nomeCargo";
+$result23 = $mysqli->query($sql);
+
+$sql2 = "SELECT idUnidade, nomeUnidade FROM unidades WHERE status = 1 ORDER BY nomeUnidade";
+$result24 = $mysqli->query($sql2);
 
 $mysqli->close();
 
@@ -164,7 +193,7 @@ $mysqli->close();
 
                         <!--exibe e edita dados gerais-->
                         <h4><?php echo $nome ?></h4>
-                        <h5><?php echo $cargo?> | <?php echo $unidade?></h5><br>
+                        <h5><?php echo $cargoAtual?> | <?php echo $unidadeAtual?></h5><br>
                         <div class="row">
                         <div class="col s12">
                         <ul class="tabs">
@@ -176,6 +205,8 @@ $mysqli->close();
                         <br>
                         </div>
                         <div id="option1" class="col s12">
+                        <button type="submit" name="submit_form1" class="search btn" id="submit_form1" value="Salvar alterações"><i class="material-icons left">check</i>Salvar</button>
+                        <a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>
                         <label for="nome">Nome completo:</label><br>
                         <input type="text" name="nome" id="nome" oninput="converterParaCaixaAlta(this)" value="<?php echo $nome?>"><br>
                         <label for="dataAdmissao">Data da admissao:</label><br>
@@ -195,20 +226,27 @@ $mysqli->close();
                         <label for="dataCad">Data e hora do cadastro:</label><br>
                         <input type="text" name="dataCad" id="dataCad" readonly value="<?php echo $dataCadastro ?>"><br>
                         <label for="status">Status do funcionário:</label><br>
-                        <input type="text" name="status" id="status" readonly value="<?php echo $status?>"><br>
-                        <input type="submit" name="submit_form1" class="btn" id="submit_form1" value="Salvar alterações">
+                        <input type="text" name="status" id="status" readonly value="<?php echo $status?>"><br><br>
 
+                        <legend>Observações:</legend>
+                                <textarea name="funcObservacoes" data-length="500" class="textarea"><?php echo $funcObservacoes;?></textarea>
                         </div>
 
                     </form>
 
                     <!-- form para a 2° tabela a de endereços-->
-                    <form id="form2" name="form2" action="atualizaCadastro.php" method="post">
+                <form id="form2" name="form2" action="atualizaCadastro.php" method="post">
 
                         <input type="hidden" name="form_id" value="2">
 
                         <!--exibe e edita endereço-->                        
                         <div id="option2" class="col s12">
+
+                        <button type="submit" name="submit_form2" class="search btn" id="submit_form2" value="Salvar alterações"><i class="material-icons left">check</i>Salvar</button>
+                        <a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>
+                        
+                        <input type="hidden" name="id" id="id" value="<?php echo $idFuncionario?>">
+
                         <label for="cep">CEP:</label><br>
                         <input type="text" name="cep" id="cep" oninput="formatarCEP(this)" value="<?php echo $cep?>" >
 
@@ -231,37 +269,92 @@ $mysqli->close();
                         <input type="text" name="complemento" id="complemento" oninput="converterParaCaixaAlta(this)" value="<?php echo $complemento ?>" ><br>
 
                         <label for="complemento">Data e hora do cadastro:</label><br>
-                        <input type="text" name="dataCad" id="dataCad" value="<?php echo $dataCadastroEnd ?>" ><br>
+                        <input type="text" name="dataCadastroEnd" id="dataCadastroEnd" value="<?php echo $dataCadastroEnd ?>" ><br>
 
                         <label for="status">Status do endereço:</label><br>
                         <input type="text" name="status" id="status" oninput="converterParaCaixaAlta(this)" value="<?php echo $status ?>" ><br>
+
                         </div>
 
-                    </form>
+                </form>
 
-                    
+                    <!-- form para a 3° tabela a de atribuições-->
+                <form id="form3" name="form3" action="atualizaCadastro.php" method="post">
 
-                        <!--exibe e edita as atribuições-->   
-                        <div id="option3" class="col s12">
-                        <label for="cargo">Cargo:</label><br>
-                        <input type="text" name="cargo" id="cargo" value="<?php echo $cargo?>" >
+                        <input type="hidden" name="form_id" value="3">
 
-                        <label for="rua">Unidade:</label><br>
-                        <input type="text" name="rua" id="rua" value="<?php echo $unidade?>"  ><br>
+                            <!--exibe e edita as atribuições-->
+                            <div id="option3" class="col s12">
+                            <button type="submit" name="submit_form3" class="search btn" id="submit_form3" value="Salvar alterações"><i class="material-icons left">check</i>Salvar</button>
+                            <a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>
+                            <input type="hidden" name="id" id="id" value="<?php echo $idFuncionario?>">
+                            <div class="cargo col s6" >
+                                <label for="cargo_escolhido" class="labSelect">Cargo:</label>
+                                <select name="cargo_escolhido" id="cargo_escolhido">
+                                <option value="<?php echo $atualCargoID;?>"selected><?php echo $cargoAtual;?></option>
+                                    <?php
+                                    // Verifique se há registros e gere as opções do select
+                                    if ($result23->num_rows > 0) {
+                                        while ($row = $result23->fetch_assoc()) {
+                                            $idCargo = $row['idCargo'];
+                                            $nomeCargo = $row['nomeCargo'];
+                                            if($idCargo != $atualCargoID){
+                                            echo '<option value="' . $idCargo . '">'. $nomeCargo.'</option>';
+                                            }
+                                        }
+                                    } else {
+                                        echo '<option value="" disabled>Nenhum cargo encontrado</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
 
-                        <label for="dataAdmissao">Data da admissao:</label><br>
-                        <input type="text" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>" ><br>
+                            <div class="unidade col s6">
+                                <label for="unidade_escolhida" class="labSelect">Unidade:</label>
+                                <select name="unidade_escolhida" id="unidade_escolhida">
+                                <option value="<?php echo $atualUnidadeID; ?>"selected><?php echo $unidadeAtual; ?></option>
+                                    <?php
+                                    // Verifique se há registros e gere as opções do select
+                                    if ($result24->num_rows > 0) {
+                                        while ($row = $result24->fetch_assoc()) {
+                                            $idUnidade = $row['idUnidade'];
+                                            $nomeUnidade = $row['nomeUnidade'];
 
-                        <label for="dataAdmissao">Data das ultimas férias:</label><br>
-                        <input type="date" name="dataAdmissao" id="dataAdmissao" value="<?php?>" ><br>
-                        </div>
+                                            If ($idUnidade != $atualUnidadeID){
+                                            echo '<option value="' . $idUnidade . '">'. $nomeUnidade.'</option>';
+                                        }
+                                        }
+                                    } else {
+                                        echo '<option value="" disabled>Nenhuma Unidade encontrada</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+                            <label for="dataAdmissao">Data da admissao:</label><br>
+                            <input type="date" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>" ><br>
+
+                            <label for="dataUltFerias">Data das ultimas férias:</label><br>
+                            <input type="date" name="dataUltFerias" id="dataUltFerias" value="<?php echo $dataUltFerias?>"><br>
+
+                            </div>
+                </form>
+
+
+
+                <form id="form4" name="form4" action="atualizaCadastro.php" method="post">
+
+                    <input type="hidden" name="form_id" value="4">
 
                         <!--exibe e edita o tamanho do uniforme-->   
                         <div id="option4" class="col s12">
+                        <button type="submit" name="submit_form4" class="search btn" id="submit_form4" value="Salvar alterações"><i class="material-icons left">check</i>Salvar</button>
+                        <a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>
+                        <input type="hidden" name="id" id="id" value="<?php echo $idFuncionario?>">
                         <div class="uniforme_tronco">
                             <label for="tam_tronco" class="labSelect">Tronco:</label>
                             <select name="tam_tronco" id="tam_tronco" required>
-                            <option value="<?php echo $tamTronco;?>" disabled selected><?php echo $tamTronco;?></option>
+                            <option value="<?php echo $tamTronco;?>" selected><?php echo $tamTronco;?></option>
                                 <option value="P">Pequeno(P)</option>
                                 <option value="M">Médio(M)</option>
                                 <option value="G">Grande(G)</option>
@@ -272,7 +365,7 @@ $mysqli->close();
                         <div class="uniforme_perna">
                             <label for="tam_perna" class="labSelect">Pernas:</label>
                             <select name="tam_perna" id="tam_perna" required>
-                                <option value="<?php echo $tamPerna;?>" disabled selected><?php echo $tamPerna;?></option>
+                                <option value="<?php echo $tamPerna;?>"selected><?php echo $tamPerna;?></option>
                                 <option value="P">Pequeno(P)</option>
                                 <option value="M">Médio(M)</option>
                                 <option value="G">Grande(G)</option>
@@ -283,7 +376,7 @@ $mysqli->close();
                         <div class="uniforme_calcado">
                             <label for="uniforme_calcado" class="labSelect">Calçado:</label>
                             <select name="tam_calcado" id="uniforme_calcado" required>
-                                <option value="<?php echo $tamCalcado;?>" disabled selected><?php echo $tamCalcado;?></option>
+                                <option value="<?php echo $tamCalcado;?>"selected><?php echo $tamCalcado;?></option>
                                 <option value="35">Tam 35</option>
                                 <option value="36">Tam 36</option>
                                 <option value="37">Tam 37</option>
@@ -296,8 +389,11 @@ $mysqli->close();
                                 <option value="44">Tam 44</option>
                             <select>
                         </div>
+                        
                         </div>
                     </div>
+
+                <form>
 
 
 

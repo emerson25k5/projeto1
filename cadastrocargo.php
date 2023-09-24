@@ -1,9 +1,10 @@
 <?php
 
-session_start();
+include("autenticaContent.php");
 
-if (!isset($_SESSION["authenticated"]) || $_SESSION["authenticated"] !== true) {
-    header("Location: index.php");
+if ($_SESSION['nivelAcesso'] != 3) {
+    echo "acesso negado!";
+    header("Location: cadastroFuncionario.php");
     exit;
 }
 

@@ -1,11 +1,6 @@
 <?php
 
-session_start();
-
-if (!isset($_SESSION["authenticated"]) || $_SESSION["authenticated"] !== true) {
-    header("Location: index.php");
-    exit;
-}
+include("autenticaContent.php");
 
 include("conecta.php");
 
@@ -28,6 +23,7 @@ if ($result->num_rows > 0) {
         $telefone = $row['telefone'];
         $dataCadastro = $row['dataCadFuncionario'];
         $status = $row['status'];
+                $funcObservacoes = $row['funcObservacoes'];
 
         if($genero == "m"){
             $genero = "Masculino";
@@ -70,24 +66,38 @@ if ($result1->num_rows > 0) {
 }
 
 //query do cargo
-$sql = "SELECT nomeCargo FROM usedcargos WHERE funcionarioID = $id";
+$sql = "SELECT cargoID FROM usedcargos WHERE funcionarioID = $id";
 $result2 = $mysqli->query($sql);
 
 if($result2->num_rows > 0){
-    while ($row = $result2->fetch_assoc()) {
-    $cargo = $row['nomeCargo'];
+    while ($row = $result2->fetch_assoc())
+    $cargoID = $row['cargoID'];
+
+    $sql10 = "SELECT nomeCargo FROM cargos WHERE idCargo = $cargoID";
+    $result10 = $mysqli->query($sql10);
+    if($result10->num_rows > 0){
+        while ($row = $result10->fetch_assoc()) {
+        $cargo = $row['nomeCargo'];
+        }
 }
 }else{
     $cargo = "Não atribuído a nenhum cargo!";
 }
 
 //query da unidade
-$sql = "SELECT nomeUnidade FROM usedUnidades WHERE funcionarioID = $id";
+$sql = "SELECT unidadeID FROM usedunidades WHERE funcionarioID = $id";
 $result3 = $mysqli->query($sql);
 
 if($result3->num_rows > 0){
-    while ($row = $result3->fetch_assoc()) {
-    $unidade = $row['nomeUnidade'];
+    while ($row = $result3->fetch_assoc())
+    $unidadeID = $row['unidadeID'];
+
+    $sql11 = "SELECT nomeUnidade FROM unidades WHERE idUnidade = $unidadeID";
+    $result11 = $mysqli->query($sql11);
+    if($result11->num_rows > 0){
+        while ($row = $result11->fetch_assoc()) {
+        $unidade = $row['nomeUnidade'];
+        }
 }
 }else{
     $unidade = "Não atribuído a nenhuma unidade!";
@@ -109,6 +119,8 @@ if($result4->num_rows > 0){
     $tamCalcado = "Não atribuído a nenhum uniforme!";
 }
 
+
+//coleta e explode e exibe a data de admissao
 $sql = "SELECT * FROM admissao WHERE funcionarioID = $id";
 $result5 = $mysqli->query($sql);
 
@@ -126,6 +138,26 @@ if($result5->num_rows > 0){
 }else{
     $admissao = "Nenhuma data de admissão cadastrada!";
 }
+
+//coleta e explode e exibe a data de férias
+$sql = "SELECT * FROM controleferias WHERE funcionarioID = $id";
+$result6 = $mysqli->query($sql);
+
+if($result6->num_rows > 0){
+    while ($row = $result6->fetch_assoc()) {
+    $dataUltFerias = $row['dataUltFerias'];
+    $sep1 = explode("-", $dataUltFerias);
+
+    $ano1 = $sep1[0];
+    $mes2 = $sep1[1];
+    $dia3 = $sep1[2];
+
+    $dataUltFerias = "" .$dia3."/".$mes2."/".$ano1."";
+}
+}else{
+    $dataUltFerias = "Nenhuma data de férias cadastrada";
+}
+
 }
 
 ?>
@@ -163,6 +195,7 @@ if($result5->num_rows > 0){
                         <!--exibe dados gerais-->
                         <h4><?php echo $nome ?></h4>
                         <h5><?php echo $cargo?> | <?php echo $unidade?></h5><br>
+
                         <div class="row">
                         <div class="col s12">
                         <ul class="tabs">
@@ -174,6 +207,7 @@ if($result5->num_rows > 0){
                         <br>
                         </div>
                         <div id="option1" class="col s12">
+                        <a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>
                         <label for="dataAdmissao">Data da admissao:</label><br>
                         <input type="text" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>" readonly> <br>
                         <label for="id">Funcionário ID:</label><br>
@@ -192,11 +226,17 @@ if($result5->num_rows > 0){
                         <input type="text" name="dataCad" id="dataCad" value="<?php echo $dataCadastro ?>" readonly><br>
                         <label for="status">Status do funcionário:</label><br>
                         <input type="text" name="status" id="status" value="<?php echo $status?>"  readonly><br>
+
+                        <fieldset>
+                        <legend>Observações:</legend>
+                                <p name="funcObservacoes" data-length="500" class="textarea" readonly><?php echo $funcObservacoes;?></p>
+                        </fieldset>
                         </div>
 
 
                         <!--exibe endereço-->                        
                         <div id="option2" class="col s12">
+                        <a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>
                         <label for="cep">CEP:</label><br>
                         <input type="text" name="cep" id="cep" value="<?php echo $cep?>" readonly><br>
 
@@ -228,6 +268,7 @@ if($result5->num_rows > 0){
 
                         <!--exibe as atribuições-->   
                         <div id="option3" class="col s12">
+                        <a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>
                         <label for="cargo">Cargo:</label><br>
                         <input type="text" name="cargo" id="cargo" value="<?php echo $cargo?>" readonly>
 
@@ -237,12 +278,13 @@ if($result5->num_rows > 0){
                         <label for="dataAdmissao">Data da admissao:</label><br>
                         <input type="text" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>" readonly><br>
 
-                        <label for="dataAdmissao">Data das ultimas férias:</label><br>
-                        <input type="text" name="dataAdmissao" id="dataAdmissao" value="<?php?>" readonly><br>
+                        <label for="dataUltFerias">Data das ultimas férias:</label><br>
+                        <input type="text" name="dataUltFerias" id="dataUltFerias" value="<?php echo $dataUltFerias?>" readonly><br>
                         </div>
 
                         <!--exibe as atribuições-->   
                         <div id="option4" class="col s12">
+                        <a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>
                         <label for="uniforme_tronco">Tamanho do uniforme TRONCO:</label><br>
                         <input type="text" name="tamTronco" id="uniforme_tronco" value="<?php echo $tamTronco ?>" readonly>
 

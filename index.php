@@ -10,7 +10,10 @@ if (isset($_POST['entrar'])) {
     $login = $mysqli->real_escape_string($login); //trata a variável evitando ataques sql injection
     $senha = $mysqli->real_escape_string($senha); //trata a variável evitando ataques sql injection
 
-    $sql = "SELECT * FROM usuarios WHERE login = '$login'";
+    $sql = "SELECT usuarios.login, usuarios.senha, usuarios.nomeUsuario, usedperfilacesso.nivelPerfilID
+            FROM usuarios
+            INNER JOIN usedperfilacesso ON usuarios.idUsuario = usedperfilacesso.usuarioID
+            WHERE login = '$login'";
 
     $result = $mysqli->query($sql);
 
@@ -18,12 +21,17 @@ if (isset($_POST['entrar'])) {
         $row = $result->fetch_assoc();
         $senhaArmazenada = $row['senha'];
         $nome = $row['nomeUsuario'];
+        $nivelAcesso = $row['nivelPerfilID'];
+
+        $sep = explode(" ",$nome);
+        $pnome = $sep[0];
 
         if (password_verify($senha, $senhaArmazenada)) {
             session_start();
             $_SESSION["authenticated"] = true;
             $_SESSION['login'] = $login;
-            $_SESSION['nomeUsuario'] = $row['nomeUsuario'];
+            $_SESSION['nomeUsuario'] = $pnome;
+            $_SESSION['nivelAcesso'] = $nivelAcesso;
             header("Location: listaFuncionarios.php");
             exit();
         } else {
@@ -64,9 +72,6 @@ if (isset($_POST['entrar'])) {
         <ul id="sidenav">
         </ul>
         </div>
-    </nav>
-    <nav class="nav1">
-    </nav>
 
         <?php include("mascaraContent.php"); ?>
 

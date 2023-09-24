@@ -14,22 +14,21 @@
     
     <nav class="nav">
         <div class="nav-wrapper container">
-        <a href="index.php" class="brand-logo center"><img class="logo" src="imagens/patrol_texto_bg.png" alt="patrol_logo"></a>
+        <a href="index.php" class="brand-logo center"><img class="logo" src="imagens/brasao_patrol.png" alt="patrol_logo"></a>
         <ul id="sidenav">
             <li href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></li>
-            <li  class="right"><a href="encerra_sessao.php"><i class="material-icons">logout</i></a></li>
             <?php 
             if ($_SESSION["authenticated"] = true) {
-                echo '<li class="right"><a href="">Bem-vindo ' . $_SESSION['nomeUsuario'] .'</a></li>';
-            }else {
-                echo '<li class="right"><a href="index.php">LOGIN</a></li>';
+                echo '<li class="right"><a class="dropdown-trigger" href="#" data-target="dropdown1">Olá, '.$_SESSION['nomeUsuario'].'</a></li>';
             }
                 ?>
         </ul>
         </div>
-    </nav>
-    <nav class="nav1">
-    </nav>
+
+        <ul id='dropdown1' class='dropdown-content'>
+            <li><a href="atualizaSenha.php">Alterar senha</a></li>
+            <li><a href="encerra_sessao.php">Sair</a></li>
+        </ul>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -50,11 +49,12 @@
     </script>
 
     <ul id="slide-out" class="right sidenav">
-    <a href="index.php" class="brand-logo center"><img class="logo" src="imagens/patrol_texto_bg.png" alt="patrol_logo"></a>
+        <li><a href="index.php" class="brand-logo center"><img src="imagens/patrol_texto_bg.png" alt="patrol_logo"></a></li>
         <div class="divider"></div>
-        <li><a href="listaFuncionarios.php">Funcionários</a></li>
         <li><a href="cadastrocargo.php">Cadastro de cargos</a></li>
         <li><a href="cadastrounidade.php">Cadastro de unidades</a></li>
+        <li><a href="associaPerfilAcesso.php">Associar perfis de acesso</a></li>
         <li><a href="cadastroFuncionario.php">Cadastro de funcionários</a></li>
+        <li><a href="listaFuncionarios.php">Funcionários</a></li>
     </ul>
 </header>

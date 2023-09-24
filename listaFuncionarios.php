@@ -1,15 +1,15 @@
 <?php
-session_start();
 
-if (!isset($_SESSION["authenticated"]) || $_SESSION["authenticated"] !== true) {
-    header("Location: index.php");
-    exit;
-}
-
+include("autenticaContent.php");
 
 include("conecta.php");
 
-$sql = "SELECT * FROM funcionarios ORDER BY nome";
+$sql = "SELECT funcionarios.idFuncionario, funcionarios.nome, funcionarios.cpf, funcionarios.status, cargos.nomeCargo, unidades.nomeUnidade
+        FROM funcionarios
+        INNER JOIN usedcargos ON funcionarios.idFuncionario = usedcargos.funcionarioID
+        INNER JOIN cargos ON usedcargos.cargoID = cargos.idCargo
+        INNER JOIN usedunidades ON funcionarios.idFuncionario = usedunidades.funcionarioID
+        INNER JOIN unidades ON usedunidades.unidadeID = unidades.idUnidade";
 $result = $mysqli->query($sql);
 
 ?>
@@ -29,7 +29,7 @@ $result = $mysqli->query($sql);
     <div class="center">
     <form action="" method="post">
     <input class="center" type="text" id="busca" name="busca" placeholder="Buscar funcionários" style="width:50%; background-color:;"><br>
-    <input class="serach center btn" type="submit" id="submit" value="Buscar">
+    <input class="search center btn" type="submit" id="submit" value="Buscar (em desenvolvimento)">
     </form>
     </div>
 
@@ -41,7 +41,8 @@ $result = $mysqli->query($sql);
                     <tr>
                         <th></th>
                         <th>Nome</th>
-                        <th>CPF</th>
+                        <th>Cargo</th>
+                        <th>Unidade</th>
                         <th>Status</th>
                     </tr>
                     </thead>
@@ -50,14 +51,16 @@ $result = $mysqli->query($sql);
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         $idFuncionario = $row['idFuncionario'];
+                        $cargo = $row['nomeCargo'];
+                        $unidade = $row['nomeUnidade'];
                         $nome = $row['nome'];
-                        $cpf = $row['cpf'];
                         $status = $row['status'];
 
                         echo '<tr>';
                         echo '<td><a class="waves-effect waves-light modal-trigger" href="userInfo.php?id=' . $idFuncionario . '"><i class="btnopcao material-icons left">search</i></a><a class="waves-effect waves-light modal-trigger" href="editaFuncionario.php?id=' . $idFuncionario . '""><i class="btnopcao material-icons left">edit</i></a><a class="waves-effect waves-light modal-trigger" href="#modal1"><i class="btnopcao material-icons left">delete</i></a></td>';
                         echo '<td>'. $nome .'</td>';
-                        echo '<td>'. $cpf .'</td>';
+                        echo '<td>'. $cargo .'</td>';
+                        echo '<td>'. $unidade .'</td>';
                         if($status == 1){
                             echo '<td>Ativo</td>';
                         }else{

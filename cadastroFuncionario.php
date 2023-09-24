@@ -1,12 +1,6 @@
 <?php
 
-session_start();
-
-if (!isset($_SESSION["authenticated"]) || $_SESSION["authenticated"] !== true) {
-    header("Location: index.php");
-    exit;
-}
-
+include("autenticaContent.php");
 include("conecta.php");
 
 $_statusCad = "";
@@ -77,7 +71,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
         if($cadastrarEndereco->execute()) {
             $ultimo_id_inserido;
 
-            $cadastrarCargo = $mysqli->prepare("INSERT INTO usedcargos (nomeCargo, funcionarioID) VALUES (?, ?)");
+            $cadastrarCargo = $mysqli->prepare("INSERT INTO usedcargos (cargoID, funcionarioID) VALUES (?, ?)");
             $cadastrarCargo->bind_param("si", $cargo, $ultimo_id_inserido);
         }else{
             $_statusCad = "Falha no cadastro do endereço" . " Erro: " . $mysqli->error;
@@ -88,7 +82,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
         if($cadastrarCargo->execute()) {
             $ultimo_id_inserido;
 
-            $cadastrarUnidade = $mysqli->prepare("INSERT INTO usedunidades (nomeUnidade, funcionarioID) VALUES (?, ?)");
+            $cadastrarUnidade = $mysqli->prepare("INSERT INTO usedunidades (unidadeID, funcionarioID) VALUES (?, ?)");
             $cadastrarUnidade->bind_param("si", $unidade, $ultimo_id_inserido);
         }else{
             $_statusCad = "Falha no cadastro do cargo" . " Erro: " . $mysqli->error;
@@ -135,10 +129,10 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
 
 include("conecta.php");
 
-$sql = "SELECT idCargo, nomeCargo FROM cargos WHERE status = 1 ORDER BY idCargo";
+$sql = "SELECT idCargo, nomeCargo FROM cargos WHERE status = 1 ORDER BY nomeCargo";
 $result = $mysqli->query($sql);
 
-$sql2 = "SELECT idUnidade, nomeUnidade FROM unidades WHERE status = 1 ORDER BY idUnidade";
+$sql2 = "SELECT idUnidade, nomeUnidade FROM unidades WHERE status = 1 ORDER BY nomeUnidade";
 $result2 = $mysqli->query($sql2);
 
 ?>
@@ -377,7 +371,7 @@ $result2 = $mysqli->query($sql2);
                                     while ($row = $result->fetch_assoc()) {
                                         $idCargo = $row['idCargo'];
                                         $nomeCargo = $row['nomeCargo'];
-                                        echo '<option value="' . $nomeCargo . '">'. $nomeCargo.'</option>';
+                                        echo '<option value="' . $idCargo . '">'. $nomeCargo.'</option>';
                                     }
                                 } else {
                                     echo '<option value="" disabled>Nenhum cargo encontrado</option>';
@@ -397,7 +391,7 @@ $result2 = $mysqli->query($sql2);
                                     while ($row = $result2->fetch_assoc()) {
                                         $idUnidade = $row['idUnidade'];
                                         $nomeUnidade = $row['nomeUnidade'];
-                                        echo '<option value="' . $nomeUnidade . '">'. $nomeUnidade.'</option>';
+                                        echo '<option value="' . $idUnidade . '">'. $nomeUnidade.'</option>';
                                     }
                                 } else {
                                     echo '<option value="" disabled>Nenhuma Unidade encontrada</option>';

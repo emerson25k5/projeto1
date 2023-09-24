@@ -58,4 +58,16 @@
                             function converterParaCaixaAlta(input) {
                                 input.value = input.value.toUpperCase();
                             }
+
+
+                            //inicializar o text area do materialize
+                            $(document).ready(function() {
+                            $('input#input_text, textarea#textarea2').characterCounter();
+                        });
+
+                            //inicializar o select do materialize
+                            document.addEventListener('DOMContentLoaded', function() {
+                                    var elems = document.querySelectorAll('select');
+                                    var instances = M.FormSelect.init(elems);
+                                });
 </script>
