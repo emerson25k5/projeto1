@@ -14,7 +14,7 @@
     
     <nav class="nav">
         <div class="nav-wrapper container">
-        <a href="index.php" class="brand-logo center"><img class="logo" src="imagens/brasao_patrol.png" alt="patrol_logo"></a>
+        <a href="cadastroFuncionario.php" class="brand-logo center"><img class="logo" src="imagens/brasao_patrol.png" alt="patrol_logo"></a>
         <ul id="sidenav">
             <li href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></li>
             <?php 
@@ -49,7 +49,10 @@
     </script>
 
     <ul id="slide-out" class="right sidenav">
-        <li><a href="index.php" class="brand-logo center"><img src="imagens/patrol_texto_bg.png" alt="patrol_logo"></a></li>
+    <li><div class="user-view">
+      <div class="background">
+        <img src="imagens/brasao_patrol.jpg">
+      </div>
         <div class="divider"></div>
         <li><a href="cadastrocargo.php">Cadastro de cargos</a></li>
         <li><a href="cadastrounidade.php">Cadastro de unidades</a></li>

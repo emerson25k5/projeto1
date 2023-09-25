@@ -40,6 +40,7 @@ $result = $mysqli->query($sql);
                     <thead>
                     <tr>
                         <th></th>
+                        <th>ID</th>
                         <th>Nome</th>
                         <th>Cargo</th>
                         <th>Unidade</th>
@@ -57,7 +58,8 @@ $result = $mysqli->query($sql);
                         $status = $row['status'];
 
                         echo '<tr>';
-                        echo '<td><a class="waves-effect waves-light modal-trigger" href="userInfo.php?id=' . $idFuncionario . '"><i class="btnopcao material-icons left">search</i></a><a class="waves-effect waves-light modal-trigger" href="editaFuncionario.php?id=' . $idFuncionario . '""><i class="btnopcao material-icons left">edit</i></a><a class="waves-effect waves-light modal-trigger" href="#modal1"><i class="btnopcao material-icons left">delete</i></a></td>';
+                        echo '<td><a class="waves-effect waves-light modal-trigger" href="userInfo.php?id=' . $idFuncionario . '"><i class="btnopcao material-icons left">search</i></a><a class="waves-effect waves-light modal-trigger" href="editaFuncionario.php?id=' . $idFuncionario . '"><i class="btnopcao material-icons left">edit</i></a><a class="waves-effect waves-light modal-trigger" href="#modal1"><i class="btnopcao material-icons left">delete</i></a></td>';
+                        echo '<td>'. $idFuncionario .'</td>';
                         echo '<td>'. $nome .'</td>';
                         echo '<td>'. $cargo .'</td>';
                         echo '<td>'. $unidade .'</td>';

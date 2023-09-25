@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
           </script>';
         exit;
     } else {
-        echo '<script>alert("Erro ao excluir cadastro:");</script>';
+        echo '<script>alert("Erro ao excluir cadastro:'.$mysqli->error.'");</script>';
         echo '<script>
             setTimeout(function() {
                 window.location.href = "listaFuncionarios.php";
