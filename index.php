@@ -73,6 +73,7 @@ if (isset($_POST['entrar'])) {
         <ul id="sidenav">
         </ul>
         </div>
+    </nav>
 
         <?php include("mascaraContent.php"); ?>
 
@@ -81,7 +82,7 @@ if (isset($_POST['entrar'])) {
     </HEAD>
     <body>
 
-    <h4 class="center">Login </h4>
+    <h4 class="center">Login</h4>
 
         <BR><BR>
 
