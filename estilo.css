@@ -1,6 +1,5 @@
 .nav {
     background-color: #4682B4;
-    width: auto;
 }
 
 body {
@@ -55,7 +54,7 @@ body {
     display: inline-flex !important;
     align-items: center !important; /* Alinha o ícone verticalmente */
     font-weight: bold;
-    width: 130px !important;
+    width: 120px !important;
     height: 40px !important;
 }
 
@@ -114,4 +113,8 @@ body {
   .textarea {
     height: 180px;
     font-size: 20px;
+  }
+
+  .menu:hover{
+    color: rgb(255, 196, 0) !important;;
   }

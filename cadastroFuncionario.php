@@ -45,8 +45,8 @@ $tam_perna_selecionado = $_POST["tam_perna"];
 $tam_calcado_selecionado = $_POST["tam_calcado"];
 
     // Inserir o usuário
-    $cadastrarFuncionario = $mysqli->prepare("INSERT INTO funcionarios (nome, email, cpf, rg, senha, telefone, nascimento, genero) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $cadastrarFuncionario->bind_param("ssssssss", $nome, $email, $cpf, $rg, $cpf, $telefone, $nascimento, $genero);
+    $cadastrarFuncionario = $mysqli->prepare("INSERT INTO funcionarios (nome, email, cpf, rg, telefone, nascimento, genero) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $cadastrarFuncionario->bind_param("sssssss", $nome, $email, $cpf, $rg, $telefone, $nascimento, $genero);
 
     if ($cadastrarFuncionario->execute()) {
         $ultimo_id = $mysqli->insert_id;
@@ -61,7 +61,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
             
         // Inserir o endereço
         $cadastrarEndereco = $mysqli->prepare("INSERT INTO usedenderecos (cep, rua, numero, cidade, municipio, bairro, complemento, funcionarioID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        $cadastrarEndereco->bind_param("ssissssi", $cep, $nomeRua, $numero, $cidade, $municipio, $bairro, $complemento, $ultimo_id_inserido);
+        $cadastrarEndereco->bind_param("ssssssss", $cep, $nomeRua, $numero, $cidade, $municipio, $bairro, $complemento, $ultimo_id_inserido);
         }else{
             $_statusCad = "Falha no cadastro do endereço" . " Erro: " . $mysqli->error;
             $mysqli->rollback();
@@ -296,13 +296,13 @@ $result2 = $mysqli->query($sql2);
                     <br><br><br><br>
 
 
-                        <div class="input-field col s6 offset-s2">
+                        <div class="input-field col s6">
                         <i class="material-icons prefix" style="font-size:125%">place</i>
                         <input type="text" name="cep" id="cep" maxlength="9" class="validate" oninput="formatarCEP(this)" required>
                         <label for="cep">CEP</label>
                         </div>
 
-                        <div class="input-field col s8">
+                        <div class="input-field col s7">
                         <i class="material-icons prefix" style="font-size:125%">add_road</i>
                         <input type="text" name="nomeRua" id="nomeRua" maxlength="70" class="validate" oninput="converterParaCaixaAlta(this)" required>
                         <label for="nomeRua">Logradouro</label>

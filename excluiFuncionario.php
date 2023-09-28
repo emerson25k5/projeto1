@@ -1,12 +1,15 @@
 <?php
 
+
+
 include("conecta.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["idFuncionario"])) {
     // Recupere o ID do registro a ser excluído
-    $id = $_GET["id"];
+    $idFuncionario = $_GET["idFuncionario"];
 
-    $sql = "DELETE FROM funcionarios WHERE idFuncionario = $id";
+
+    $sql = "DELETE FROM funcionarios WHERE idFuncionario = $idFuncionario";
 
     if ($mysqli->query($sql) === TRUE) {
         $exclusao = "Funcionário exluido!";

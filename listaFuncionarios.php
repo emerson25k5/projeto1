@@ -4,12 +4,12 @@ include("autenticaContent.php");
 
 include("conecta.php");
 
-$sql = "SELECT funcionarios.idFuncionario, funcionarios.nome, funcionarios.cpf, funcionarios.status, cargos.nomeCargo, unidades.nomeUnidade
+$sql = "SELECT funcionarios.idFuncionario, funcionarios.nome, funcionarios.status, cargos.nomeCargo, unidades.nomeUnidade
         FROM funcionarios
-        INNER JOIN usedcargos ON funcionarios.idFuncionario = usedcargos.funcionarioID
-        INNER JOIN cargos ON usedcargos.cargoID = cargos.idCargo
-        INNER JOIN usedunidades ON funcionarios.idFuncionario = usedunidades.funcionarioID
-        INNER JOIN unidades ON usedunidades.unidadeID = unidades.idUnidade";
+        LEFT JOIN usedunidades ON funcionarios.idFuncionario = usedunidades.funcionarioID
+        LEFT JOIN usedcargos ON funcionarios.idFuncionario = usedcargos.funcionarioID
+        LEFT JOIN unidades ON usedunidades.unidadeID = unidades.idUnidade
+        LEFT JOIN cargos ON usedcargos.cargoID = cargos.idCargo";
 $result = $mysqli->query($sql);
 
 ?>
@@ -56,9 +56,10 @@ $result = $mysqli->query($sql);
                         $unidade = $row['nomeUnidade'];
                         $nome = $row['nome'];
                         $status = $row['status'];
+                        $modalId = 'modal_' . $idFuncionario;
 
                         echo '<tr>';
-                        echo '<td><a class="waves-effect waves-light modal-trigger" href="userInfo.php?id=' . $idFuncionario . '"><i class="btnopcao material-icons left">search</i></a><a class="waves-effect waves-light modal-trigger" href="editaFuncionario.php?id=' . $idFuncionario . '"><i class="btnopcao material-icons left">edit</i></a><a class="waves-effect waves-light modal-trigger" href="#modal1"><i class="btnopcao material-icons left">delete</i></a></td>';
+                        echo '<td><a class="waves-effect waves-light modal-trigger" href="userInfo.php?id=' . $idFuncionario . '"><i class="btnopcao material-icons left">search</i></a><a class="waves-effect waves-light modal-trigger" href="editaFuncionario.php?id=' . $idFuncionario . '"><i class="btnopcao material-icons left">edit</i></a><a class="waves-effect waves-light modal-trigger" href="#'. $modalId . '"><i class="btnopcao material-icons left">delete</i></a></td>';
                         echo '<td>'. $idFuncionario .'</td>';
                         echo '<td>'. $nome .'</td>';
                         echo '<td>'. $cargo .'</td>';
@@ -70,13 +71,13 @@ $result = $mysqli->query($sql);
                         }
                         echo '</tr>';
 
-                        echo '<div id="modal1" class="modal">';
+                        echo '<div id="' . $modalId . '" class="modal">';
                         echo '<div class="modal-content">';
                         echo '<h4>Exclusão de funcionário</h4>';
                         echo '<p>Tem certeza que deseja prosseguir? Esta ação não poderá ser desfeita.</p>';
                         echo '</div>';
                         echo '<div class="modal-footer">';
-                        echo '<a href="excluiFuncionario.php?id=' . $idFuncionario . '" class="modal-close waves-effect waves-green btn-flat">EXCLUIR</a>';
+                        echo '<a href="excluiFuncionario.php?idFuncionario=' . $idFuncionario . '" class="modal-close waves-effect waves-green btn-flat">EXCLUIR</a>';
                         echo '<a href="#" class="modal-close waves-effect waves-green btn-flat">CANCELAR</a>';
                         echo '</div>';
                         echo '</div>';

@@ -50,14 +50,10 @@
 
     <ul id="slide-out" class="right sidenav">
     <li><div class="user-view">
-      <div class="background">
-        <img src="imagens/brasao_patrol.jpg">
-      </div>
-        <div class="divider"></div>
-        <li><a href="cadastrocargo.php">Cadastro de cargos</a></li>
-        <li><a href="cadastrounidade.php">Cadastro de unidades</a></li>
-        <li><a href="associaPerfilAcesso.php">Associar perfis de acesso</a></li>
-        <li><a href="cadastroFuncionario.php">Cadastro de funcionários</a></li>
-        <li><a href="listaFuncionarios.php">Funcionários</a></li>
+        <li><a href="listaFuncionarios.php" class="menu"><i class="a material-icons">badge</i>Funcionários</a></li>
+        <li><a href="cadastroFuncionario.php" class="menu"><i class="a material-icons">person_add</i>Cadastro de funcionários</a></li>
+        <li><a href="cadastrocargo.php" class="menu"><i class="a material-icons">post_add</i>Cadastro de cargos</a></li>
+        <li><a href="cadastrounidade.php" class="menu"><i class="a material-icons">add_location_alt</i>Cadastro de unidades</a></li>
+        <li><a href="associaPerfilAcesso.php" class="menu"><i class="a material-icons">admin_panel_settings</i>Associar perfis de acesso</a></li>
     </ul>
 </header>

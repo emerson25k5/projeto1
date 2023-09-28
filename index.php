@@ -10,9 +10,10 @@ if (isset($_POST['entrar'])) {
     $login = $mysqli->real_escape_string($login); //trata a variável evitando ataques sql injection
     $senha = $mysqli->real_escape_string($senha); //trata a variável evitando ataques sql injection
 
+
     $sql = "SELECT usuarios.login, usuarios.senha, usuarios.nomeUsuario, usedperfilacesso.nivelPerfilID
             FROM usuarios
-            INNER JOIN usedperfilacesso ON usuarios.idUsuario = usedperfilacesso.usuarioID
+            LEFT JOIN usedperfilacesso ON usuarios.idUsuario = usedperfilacesso.usuarioID
             WHERE login = '$login'";
 
     $result = $mysqli->query($sql);
@@ -23,7 +24,7 @@ if (isset($_POST['entrar'])) {
         $nome = $row['nomeUsuario'];
         $nivelAcesso = $row['nivelPerfilID'];
 
-        $sep = explode(" ",$nome);
+        $sep = explode(" ", $nome);
         $pnome = $sep[0];
 
         if (password_verify($senha, $senhaArmazenada)) {
