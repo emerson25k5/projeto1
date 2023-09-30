@@ -1,14 +1,7 @@
 <?php
 
-include("autenticaContent.php");
-
-if ($_SESSION['nivelAcesso'] != 3) {
-    echo "acesso negado!";
-    header("Location: cadastroFuncionario.php");
-    exit;
-}
-
-include("conecta.php");
+require "autenticaContent.php";
+require "conecta.php";
 
 $_statusCadCargo = "";
 
@@ -32,7 +25,12 @@ $result = $mysqli->query($sql);
     <HEAD>
         <TITLE>EBDS | Cadastro Cargo</TITLE>
 
-        <?php include("headContent.php"); ?>
+        <?php 
+
+        require "headContent.php"; 
+        require "funcoes.php";
+        
+        ?>
 
     </HEAD>
     <body>
@@ -90,12 +88,7 @@ $result = $mysqli->query($sql);
                                     echo '<tr>';
                                     echo '<td>' . $nome . '</td>';
                                     echo '<td>' . $dataCadastro . '</td>';
-                                    if($status == 1){
-                                        echo '<td>Ativo</td>';
-                                    }else {
-                                        echo '<td>Inativo</td>';
-                                    };
-                                    echo '</tr>';
+                                    echo '<td>' . traduz_status($status) . '</td>';
                                 }
                             } else {
                                 echo '<tr><td colspan="2">Nenhum cargo encontrado</td></tr>';
@@ -109,7 +102,7 @@ $result = $mysqli->query($sql);
 
         </main>
 
-        <?php include("footerContent.php");?> <!--adiciona o conteúdo do rodapé de modo modular usando o INCLUDE em PHP-->
+        <?php require "footerContent.php";?> <!--adiciona o conteúdo do rodapé de modo modular usando o INCLUDE em PHP-->
 
     </body>
 </HTML>

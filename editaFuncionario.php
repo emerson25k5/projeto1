@@ -1,8 +1,8 @@
 <?php
 
-include("autenticaContent.php");
-
-include("conecta.php");
+require "autenticaContent.php";
+require "conecta.php";
+require "funcoes.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
     // Recupere o ID do registro a ser exibido
@@ -25,19 +25,6 @@ if ($result->num_rows > 0) {
         $status = $row['status'];
         $funcObservacoes = $row['funcObservacoes'];
 
-        if($genero == "m"){
-            $genero = "Masculino";
-        }elseif($genero == "f"){
-            $genero = "Feminino";
-        }elseif($genero == "o"){
-            $genero = "Outro";
-        }
-
-        if($status == 1){
-            $status = "Ativo";
-        }else{
-            $status = "Inativo";
-        }
     }
 }
 
@@ -55,13 +42,8 @@ if ($result1->num_rows > 0) {
         $municipio = $row['municipio'];
         $complemento = $row['complemento'];
         $dataCadastroEnd = $row['dataCadastro'];
-        $status = $row['status'];
+        $statusEnd = $row['status'];
 
-        if($status == 1){
-            $status = "Ativo";
-        }else{
-            $status = "Inativo";
-        }
     }
 }
 
@@ -218,7 +200,7 @@ $mysqli->close();
                         <label for="rg">RG:</label><br>
                         <input type="text" name="rg" id="rg" maxlength="14" oninput="formatarRG(this)" value="<?php echo $rg ?>" ><br>
                         <label for="genero">Genero:</label><br>
-                        <input type="text" name="genero" id="genero" readonly value="<?php echo $genero ?>" ><br>
+                        <input type="text" name="genero" id="genero" readonly value="<?php echo traduz_genero($genero); ?>" ><br>
                         <label for="email">E-mail:</label><br>
                         <input type="text" name="email" id="email" oninput="converterParaCaixaAlta(this)" value="<?php echo $email ?>" ><br>
                         <label for="telefone">Telefone:</label><br>
@@ -226,8 +208,8 @@ $mysqli->close();
                         <label for="dataCad">Data e hora do cadastro:</label><br>
                         <input type="text" name="dataCad" id="dataCad" readonly value="<?php echo $dataCadastro ?>"><br>
                         <label for="status">Status do funcionário:</label><br>
-                        <input type="text" name="status" id="status" readonly value="<?php echo $status?>"><br><br>
-
+                        <?php echo lista_suspensa_inativa($status)?> <!-- chama a espetacular criação de EMERSON function da lista suspensa de ativo e inativo -->
+                        <br><br>
                         <legend>Observações:</legend>
                                 <textarea name="funcObservacoes" data-length="500" class="textarea"><?php echo $funcObservacoes;?></textarea>
                         </div>
@@ -270,9 +252,6 @@ $mysqli->close();
 
                         <label for="complemento">Data e hora do cadastro:</label><br>
                         <input type="text" name="dataCadastroEnd" id="dataCadastroEnd" value="<?php echo $dataCadastroEnd ?>" ><br>
-
-                        <label for="status">Status do endereço:</label><br>
-                        <input type="text" name="status" id="status" oninput="converterParaCaixaAlta(this)" value="<?php echo $status ?>" ><br>
 
                         </div>
 
@@ -334,7 +313,7 @@ $mysqli->close();
                             <label for="dataAdmissao">Data da admissao:</label><br>
                             <input type="date" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>" ><br>
 
-                            <label for="dataUltFerias">Data das ultimas férias:</label><br>
+                            <label for="dataUltFerias">Data ultimas férias:</label><br>
                             <input type="date" name="dataUltFerias" id="dataUltFerias" value="<?php echo $dataUltFerias?>"><br>
 
                             </div>

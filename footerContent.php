@@ -5,7 +5,7 @@
             <div class="row">
               <div class="col l6 s12">
                 <h5 class="white-text" style="color:rgb(255, 196, 0) !important;">EBDS | PATROL</h5>
-                <p class="grey-text text-lighten-4">Managemant sistem for emploeyers</p>
+                <p class="grey-text text-lighten-4">Managemant sistem for employers</p>
               </div>
               <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">Redes Sociais</h5>

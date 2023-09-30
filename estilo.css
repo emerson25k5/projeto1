@@ -107,7 +107,7 @@ body {
   }
 
   .tabs .indicator {
-    background-color: rgb(255, 196, 0) !important; /* Cor da animação (azul no exemplo) */
+    background-color: rgb(255, 196, 0) !important;
   }
 
   .textarea {

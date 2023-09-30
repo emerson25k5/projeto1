@@ -17,10 +17,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $rg = $_POST['rg'];
                 $email = $_POST['email'];
                 $telefone = $_POST['telefone'];
-                $funcObservacoes = $_POST['funcObservacoes'];
+                $status = $_POST['status'];
+                $funcObservacoes = $_POST['funcObservacoes'];             
 
                 // Executar a atualização no banco de dados
-                $sql = "UPDATE funcionarios SET nome=?, cpf=?, rg=?, email=?, telefone=?, funcObservacoes=? WHERE idFuncionario = $id";
+                $sql = "UPDATE funcionarios SET nome=?, cpf=?, rg=?, email=?, telefone=?, status=?, funcObservacoes=? WHERE idFuncionario = $id";
 
                 $stmt = $mysqli->prepare($sql);
  
@@ -28,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     die('Erro na preparação da consulta: ' . $mysqli->error);
                 }
 
-                $stmt->bind_param("ssssss", $nome, $cpf, $rg, $email, $telefone, $funcObservacoes);
+                $stmt->bind_param("sssssis", $nome, $cpf, $rg, $email, $telefone, $status, $funcObservacoes);
 
                 if ($stmt->execute()) {
                     $mysqli->commit();

@@ -1,8 +1,8 @@
 <?php
 
-include("autenticaContent.php");
-
-include("conecta.php");
+require "autenticaContent.php";
+require "conecta.php";
+require "funcoes.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
     // Recupere o ID do registro a ser exibido
@@ -24,20 +24,6 @@ if ($result->num_rows > 0) {
         $dataCadastro = $row['dataCadFuncionario'];
         $status = $row['status'];
                 $funcObservacoes = $row['funcObservacoes'];
-
-        if($genero == "m"){
-            $genero = "Masculino";
-        }elseif($genero == "f"){
-            $genero = "Feminino";
-        }elseif($genero == "o"){
-            $genero = "Outro";
-        }
-
-        if($status == 1){
-            $status = "Ativo";
-        }else{
-            $status = "Inativo";
-        }
     }
 }
 
@@ -55,13 +41,6 @@ if ($result1->num_rows > 0) {
         $municipio = $row['municipio'];
         $complemento = $row['complemento'];
         $dataCadastroEnd = $row['dataCadastro'];
-        $status = $row['status'];
-
-        if($status == 1){
-            $status = "Ativo";
-        }else{
-            $status = "Inativo";
-        }
     }
 }
 
@@ -217,7 +196,7 @@ if($result6->num_rows > 0){
                         <label for="rg">RG:</label><br>
                         <input type="text" name="rg" id="rg" value="<?php echo $rg ?>" readonly><br>
                         <label for="genero">Genero:</label><br>
-                        <input type="text" name="genero" id="genero" value="<?php echo $genero ?>" readonly><br>
+                        <input type="text" name="genero" id="genero" value="<?php echo traduz_genero($genero);?>" readonly><br>
                         <label for="email">E-mail:</label><br>
                         <input type="text" name="email" id="email" value="<?php echo $email ?>" readonly><br>
                         <label for="telefone">Telefone:</label><br>
@@ -225,7 +204,7 @@ if($result6->num_rows > 0){
                         <label for="dataCad">Data e hora do cadastro:</label><br>
                         <input type="text" name="dataCad" id="dataCad" value="<?php echo $dataCadastro ?>" readonly><br>
                         <label for="status">Status do funcionário:</label><br>
-                        <input type="text" name="status" id="status" value="<?php echo $status?>"  readonly><br>
+                        <input type="text" name="status" id="status" value="<?php echo traduz_status($status);?>"  readonly><br>
 
                         <fieldset>
                         <legend>Observações:</legend>
@@ -261,8 +240,6 @@ if($result6->num_rows > 0){
                         <label for="complemento">Data e hora do cadastro:</label><br>
                         <input type="text" name="dataCad" id="dataCad" value="<?php echo $dataCadastroEnd ?>" readonly><br>
 
-                        <label for="status">Status do endereço:</label><br>
-                        <input type="text" name="status" id="status" value="<?php echo $status ?>" readonly><br>
 
                         </div>
 
@@ -300,7 +277,7 @@ if($result6->num_rows > 0){
 
         </main>
 
-        <?php include("footerContent.php");?> <!--adiciona o conteúdo do rodapé de modo modular usando o INCLUDE em PHP-->
+        <?php require "footerContent.php";?> <!--adiciona o conteúdo do rodapé de modo modular usando o INCLUDE em PHP-->
 
     </body>
 </HTML>

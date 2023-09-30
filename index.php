@@ -11,7 +11,7 @@ if (isset($_POST['entrar'])) {
     $senha = $mysqli->real_escape_string($senha); //trata a variável evitando ataques sql injection
 
 
-    $sql = "SELECT usuarios.login, usuarios.senha, usuarios.nomeUsuario, usedperfilacesso.nivelPerfilID
+    $sql = "SELECT usuarios.login, usuarios.senha, usuarios.nomeUsuario, usuarios.idUsuario, usedperfilacesso.nivelPerfilID
             FROM usuarios
             LEFT JOIN usedperfilacesso ON usuarios.idUsuario = usedperfilacesso.usuarioID
             WHERE login = '$login'";
@@ -22,6 +22,7 @@ if (isset($_POST['entrar'])) {
         $row = $result->fetch_assoc();
         $senhaArmazenada = $row['senha'];
         $nome = $row['nomeUsuario'];
+        $idSessao = $row['idUsuario'];
         $nivelAcesso = $row['nivelPerfilID'];
 
         $sep = explode(" ", $nome);
@@ -32,7 +33,9 @@ if (isset($_POST['entrar'])) {
             $_SESSION["authenticated"] = true;
             $_SESSION['login'] = $login;
             $_SESSION['nomeUsuario'] = $pnome;
+            $_SESSION['nomeCompleto'] = $nome;
             $_SESSION['nivelAcesso'] = $nivelAcesso;
+            $_SESSION['idUsuarioLogado'] = $idSessao;
             header("Location: listaFuncionarios.php");
             exit();
         } else {

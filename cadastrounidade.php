@@ -26,7 +26,12 @@ $result = $mysqli->query($sql);
     <HEAD>
         <TITLE>EBDS | Cadastro Unidade</TITLE>
 
-        <?php include("headContent.php"); ?>
+        <?php 
+        
+        require "headContent.php";
+        require "funcoes.php";
+
+        ?>
 
     </HEAD>
     <body>
@@ -84,11 +89,7 @@ $result = $mysqli->query($sql);
                                     echo '<tr>';
                                     echo '<td>' . $nome . '</td>';
                                     echo '<td>' . $dataCadastro . '</td>';
-                                    if ($status== "1"){
-                                        echo '<td>Ativo</td>';
-                                    }else {
-                                        echo '<td>Inativo</td>';
-                                    }
+                                    echo '<td>' . traduz_status($status) . '</td>';
                                     echo '</tr>';
                                 }
                             } else {

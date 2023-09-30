@@ -218,10 +218,10 @@ $result2 = $mysqli->query($sql2);
                         </div>
                     </nav>
 
-                    <br>
+                    <br><br>
                     
 
-                        <div class="input-field">
+                        <div class="input-field col s12">
                         <i class="material-icons prefix">account_circle</i>
                         <input type="text" name="nome" id="nome" maxlength="50" class="validate" oninput="converterParaCaixaAlta(this)" required autofocus>
                         <label for="nome">Nome completo</label>
@@ -241,7 +241,6 @@ $result2 = $mysqli->query($sql2);
                                 <option value="" disabled selected>Selecione...</option>
                                 <option value="m">Marculino</option>
                                 <option value="f">Feminino</option>
-                                <option value="o">Outro</option>
                             </select>
                         </div>
                         </div>
@@ -293,23 +292,23 @@ $result2 = $mysqli->query($sql2);
                         </div>
                     </nav>
 
-                    <br><br><br><br>
+
+                    <br><br>
 
 
-                        <div class="input-field col s6">
+                        <div class="input-field" style="width: 50%;">
                         <i class="material-icons prefix" style="font-size:125%">place</i>
                         <input type="text" name="cep" id="cep" maxlength="9" class="validate" oninput="formatarCEP(this)" required>
                         <label for="cep">CEP</label>
                         </div>
 
-                        <div class="input-field col s7">
+                        <div class="input-field col s8">
                         <i class="material-icons prefix" style="font-size:125%">add_road</i>
                         <input type="text" name="nomeRua" id="nomeRua" maxlength="70" class="validate" oninput="converterParaCaixaAlta(this)" required>
                         <label for="nomeRua">Logradouro</label>
                         </div>
 
                         <div class="input-field col s4">
-                        <i class="material-icons prefix">123</i>
                         <input type="number" name="numero" id="numero" maxlength="10" class="validate" required>
                         <label for="numero">Número</label>
                         </div>
@@ -338,7 +337,7 @@ $result2 = $mysqli->query($sql2);
                         <label for="complemento">Complemento</label>
                         </div>
 
-                        <br><br><br><br>
+                        <br><br><br><br><br><br><br><br><br><br>
 
                         <button class="butao btn left col s6" id="anterior" onclick="anteriorEtapa()"><i class="material-icons prefix">keyboard_arrow_left</i>Anterior</button>
                         <button class="butao btn right col s6" id="proximo" onclick="proximaEtapa()">Próximo<i class="material-icons prefix">keyboard_arrow_right</i></button>
@@ -346,6 +345,8 @@ $result2 = $mysqli->query($sql2);
                         <br><br><br><br>
 
                     </div>
+
+                    
 
                     <div id="etapa3" class="row col s12" style="display: none;">
 
@@ -360,6 +361,12 @@ $result2 = $mysqli->query($sql2);
                     </nav>
 
                     <br><br>
+
+                    <h5 class="col s12 left-align">Atribuições</h5>
+
+
+
+                    <br><br><br>
 
                         <div class="cargo col s6" >
                             <label for="cargo_escolhido" class="labSelect">Cargo:</label>
@@ -399,13 +406,17 @@ $result2 = $mysqli->query($sql2);
                                 ?>
                             </select>
                         </div>
+
+                        <br><br><br><br><br>
                         
                         <div class="admissao col s12">
                         <label for="dataAdmissao" class="labSelect">Data da Admissão:</label>
                         <input type="date" name="dataAdmissao" id="dataAdmissao" required class="validate">
                         </div>
 
-                        <h5 class="col s12 left-align">Uniforme:</h5>
+                        <br><br><br><br><br><br>
+
+                        <h5 class="col s12 left-align">Uniforme</h5>
 
                         <br><br><br>
 
@@ -448,7 +459,7 @@ $result2 = $mysqli->query($sql2);
                             <select>
                         </div>
 
-                        <br><br>
+                        <br><br><br><br><br>
                         
                         <div class="row col s12">
                         <button class="butao btn left col s6" id="anterior" onclick="anteriorEtapa()"><i class="material-icons prefix">keyboard_arrow_left</i>Anterior</button> 
