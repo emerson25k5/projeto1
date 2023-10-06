@@ -8,7 +8,7 @@
                 <p class="grey-text text-lighten-4">Managemant sistem for employers</p>
               </div>
               <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Redes Sociais</h5>
+                <h5 class="white-text" style="color:rgb(255, 196, 0) !important;">Redes Sociais</h5>
                 <ul>
                   <li><a class="grey-text text-lighten-3" href="https://www.instagram.com/patrolservicos/">Instagram</a></li>
                   <li><a class="grey-text text-lighten-3" href="https://www.facebook.com/PatrolServicos">Facebook</a></li>

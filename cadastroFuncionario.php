@@ -3,6 +3,11 @@
 include("autenticaContent.php");
 include("conecta.php");
 
+if($_SESSION['nivelAcesso'] != 2) {
+    echo "Acesso negado!";
+    exit;
+}
+
 $_statusCad = "";
 
 if ($_POST) {
@@ -17,6 +22,8 @@ $rg = $_POST['rg'];
 $telefone = $_POST['telefone'];
 $nascimento = $_POST['nascimento'];
 $genero = $_POST['genero'];
+$responsavelCadastro = $_SESSION['nomeCompleto']; //para enviar para a tabela de cadastro de funcionarios o cara que está logado e que está fazendo a inserção do usuário
+$usuarioResponsavelPeloCadastro = $_SESSION['nomeUsuario']; //para enviar a tabela de associa perfil de acesso
 
 //usuario (login e senha)
 $nomeUsuario = $_POST["nome"];
@@ -45,8 +52,8 @@ $tam_perna_selecionado = $_POST["tam_perna"];
 $tam_calcado_selecionado = $_POST["tam_calcado"];
 
     // Inserir o usuário
-    $cadastrarFuncionario = $mysqli->prepare("INSERT INTO funcionarios (nome, email, cpf, rg, telefone, nascimento, genero) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $cadastrarFuncionario->bind_param("sssssss", $nome, $email, $cpf, $rg, $telefone, $nascimento, $genero);
+    $cadastrarFuncionario = $mysqli->prepare("INSERT INTO funcionarios (nome, email, cpf, rg, telefone, nascimento, genero, responsavelCadastro) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $cadastrarFuncionario->bind_param("ssssssss", $nome, $email, $cpf, $rg, $telefone, $nascimento, $genero, $responsavelCadastro);
 
     if ($cadastrarFuncionario->execute()) {
         $ultimo_id = $mysqli->insert_id;
@@ -57,8 +64,19 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
         $cadastrarUsuario->bind_param("ssss", $nomeUsuario, $login, $hashSenha, $ultimo_id_inserido);
 
         if($cadastrarUsuario->execute()) {
+            $ultimo_id_usuario = $mysqli->insert_id;//para enviar para a usedperfilacesso
+
+        $cadastrarPerfilAcesso = $mysqli->prepare("INSERT INTO usedperfilacesso (usuarioID, responsavelAssociacao) VALUES (?, ?)");
+        $cadastrarPerfilAcesso->bind_param("is", $ultimo_id_usuario, $usuarioResponsavelPeloCadastro);
+        }else{
+            $_statusCad = "Falha no cadastro do perfil de acesso" . " Erro: " . $mysqli->error;
+            $mysqli->rollback();
+            $mysqli->close();
+        }
+        
+        if($cadastrarPerfilAcesso->execute()){
             $ultimo_id_inserido;
-            
+
         // Inserir o endereço
         $cadastrarEndereco = $mysqli->prepare("INSERT INTO usedenderecos (cep, rua, numero, cidade, municipio, bairro, complemento, funcionarioID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         $cadastrarEndereco->bind_param("ssssssss", $cep, $nomeRua, $numero, $cidade, $municipio, $bairro, $complemento, $ultimo_id_inserido);

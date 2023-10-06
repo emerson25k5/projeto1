@@ -11,7 +11,7 @@ if (isset($_POST['entrar'])) {
     $senha = $mysqli->real_escape_string($senha); //trata a variável evitando ataques sql injection
 
 
-    $sql = "SELECT usuarios.login, usuarios.senha, usuarios.nomeUsuario, usuarios.idUsuario, usedperfilacesso.nivelPerfilID
+    $sql = "SELECT usuarios.login, usuarios.senha, usuarios.nomeUsuario, usuarios.idUsuario, usuarios.funcionarioID, usedperfilacesso.nivelPerfilID
             FROM usuarios
             LEFT JOIN usedperfilacesso ON usuarios.idUsuario = usedperfilacesso.usuarioID
             WHERE login = '$login'";
@@ -23,6 +23,7 @@ if (isset($_POST['entrar'])) {
         $senhaArmazenada = $row['senha'];
         $nome = $row['nomeUsuario'];
         $idSessao = $row['idUsuario'];
+        $idFunc = $row['funcionarioID'];
         $nivelAcesso = $row['nivelPerfilID'];
 
         $sep = explode(" ", $nome);
@@ -35,11 +36,16 @@ if (isset($_POST['entrar'])) {
             $_SESSION['nomeUsuario'] = $pnome;
             $_SESSION['nomeCompleto'] = $nome;
             $_SESSION['nivelAcesso'] = $nivelAcesso;
+            $_SESSION['idFuncionarioLogado'] = $idFunc;
             $_SESSION['idUsuarioLogado'] = $idSessao;
-            header("Location: listaFuncionarios.php");
-            exit();
+
+            if($nivelAcesso == 2){
+                header("Location: listaFuncionarios.php");
+            }else{
+                header("Location: userInfo.php?id=$idFunc");
+            }
         } else {
-            echo "<script>alert('Senha incorreta.');</script>";
+            echo '<script>alert("Senha incorreta!")<script>';
             echo "<script>setTimeout(function(){ window.location.href = 'index.php'; }, 5);</script>";
         }
     }else {
@@ -87,7 +93,7 @@ if (isset($_POST['entrar'])) {
 
     <h4 class="center">Login</h4>
 
-        <BR><BR>
+        <BR><BR><BR><BR>
 
         <main class="row col s12 container center">
 
@@ -105,7 +111,9 @@ if (isset($_POST['entrar'])) {
                 <label for="senha">Senha</label>
             </div>
 
-            <input type="submit" name="entrar" value="Entrar" class="butao">
+            <BR><BR>
+
+            <input type="submit" name="entrar" value="Entrar" class="search">
 
         </form>
         

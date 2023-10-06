@@ -8,6 +8,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
     // Recupere o ID do registro a ser exibido
     $id = $_GET["id"];
 
+if(($_SESSION['nivelAcesso'] != 2) && ($_SESSION['idFuncionarioLogado'] != $id)) {
+    echo "Acesso negado!";
+    exit;
+}
 
 $sql = "SELECT * FROM funcionarios WHERE idFuncionario = $id";
 $result = $mysqli->query($sql);
@@ -23,12 +27,13 @@ if ($result->num_rows > 0) {
         $telefone = $row['telefone'];
         $dataCadastro = $row['dataCadFuncionario'];
         $status = $row['status'];
-                $funcObservacoes = $row['funcObservacoes'];
+        $funcObservacoes = $row['funcObservacoes'];
+        $responsavelCadastro = $row['responsavelCadastro'];
     }
 }
 
 
-$sql = "SELECT * FROM usedEnderecos WHERE funcionarioID = $id";
+$sql = "SELECT * FROM usedenderecos WHERE funcionarioID = $id";
 $result1 = $mysqli->query($sql);
 
 if ($result1->num_rows > 0) {
@@ -83,7 +88,7 @@ if($result3->num_rows > 0){
 }
 
 //query dos uniformes
-$sql = "SELECT tamTronco, tamPerna, tamCalcado FROM usedUniformes WHERE funcionarioID = $id";
+$sql = "SELECT tamTronco, tamPerna, tamCalcado FROM useduniformes WHERE funcionarioID = $id";
 $result4 = $mysqli->query($sql);
 
 if($result4->num_rows > 0){
@@ -185,8 +190,10 @@ if($result6->num_rows > 0){
                         </ul>
                         <br>
                         </div>
-                        <div id="option1" class="col s12">
-                        <a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>
+                        <div id="option1" class="col s12">                        
+                        <?php if ($_SESSION['nivelAcesso'] == 2){
+                        echo '<a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>';}
+                        ?>
                         <label for="dataAdmissao">Data da admissao:</label><br>
                         <input type="text" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>" readonly> <br>
                         <label for="id">Funcionário ID:</label><br>
@@ -205,17 +212,25 @@ if($result6->num_rows > 0){
                         <input type="text" name="dataCad" id="dataCad" value="<?php echo $dataCadastro ?>" readonly><br>
                         <label for="status">Status do funcionário:</label><br>
                         <input type="text" name="status" id="status" value="<?php echo traduz_status($status);?>"  readonly><br>
+                        <label for="status">Resposável pelo cadastro:</label><br>
+                        <input type="text" name="responsavelCadastro" id="responsavelCadastro" value="<?php echo $responsavelCadastro;?>"  readonly><br>
 
-                        <fieldset>
+                        <?php if ($_SESSION['nivelAcesso'] == 2){
+                        echo '<fieldset>
                         <legend>Observações:</legend>
-                                <p name="funcObservacoes" data-length="500" class="textarea" readonly><?php echo $funcObservacoes;?></p>
-                        </fieldset>
+                                <p name="funcObservacoes" data-length="500" class="textarea" readonly>'.$funcObservacoes.'</p>
+                        </fieldset>';
+                        }
+                        ?>
+                        
                         </div>
 
 
                         <!--exibe endereço-->                        
                         <div id="option2" class="col s12">
-                        <a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>
+                        <?php if ($_SESSION['nivelAcesso'] == 2){
+                        echo '<a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>';}
+                        ?>
                         <label for="cep">CEP:</label><br>
                         <input type="text" name="cep" id="cep" value="<?php echo $cep?>" readonly><br>
 
@@ -245,7 +260,9 @@ if($result6->num_rows > 0){
 
                         <!--exibe as atribuições-->   
                         <div id="option3" class="col s12">
-                        <a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>
+                        <?php if ($_SESSION['nivelAcesso'] == 2){
+                        echo '<a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>';}
+                        ?>
                         <label for="cargo">Cargo:</label><br>
                         <input type="text" name="cargo" id="cargo" value="<?php echo $cargo?>" readonly>
 
@@ -261,7 +278,9 @@ if($result6->num_rows > 0){
 
                         <!--exibe as atribuições-->   
                         <div id="option4" class="col s12">
-                        <a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>
+                        <?php if ($_SESSION['nivelAcesso'] == 2){
+                        echo '<a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>';}
+                        ?>
                         <label for="uniforme_tronco">Tamanho do uniforme TRONCO:</label><br>
                         <input type="text" name="tamTronco" id="uniforme_tronco" value="<?php echo $tamTronco ?>" readonly>
 

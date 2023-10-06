@@ -30,7 +30,7 @@ switch($status){
 function lista_suspensa_inativa($status){
 
                         echo '<select name="status" id="status">';
-                            echo '<option value="'. traduz_status($status) .'" selected>'. traduz_status($status).'</option>';
+                            echo '<option value="'. $status .'" selected>'. traduz_status($status).'</option>';
                                 switch($status){
                                     case 1:
                                         echo '<option value="0">Inativo</option>';
@@ -47,30 +47,24 @@ function lista_suspensa_inativa($status){
 
 
 
+//lista suspensa e select para mostrar as opções de genero
+function lista_suspensa_genero($genero){
+
+                        echo '<select name="genero" id="genero">';
+                            echo '<option value="'. $genero .'" selected>'. traduz_genero($genero).'</option>';
+                                switch($genero){
+                                    case "f":
+                                        echo '<option value="m">Masculino</option>';
+                                        break;
+
+                                    case "m":
+                                        echo '<option value="f">Feminino</option>';
+                                        break;
+                                }
+                        echo '</select>';
 
 
-
-//function que gera um switch/case para trazer "ativo" ou "inativo" do endereco do funcionario das colunas de status no banco de dados
-function traduz_statusEnd($statusEnd){
-
-    $statusAtualEnd = "";
-
-switch($statusEnd){
-    
-    case 1:
-        $statusAtualEnd = 'Ativo';
-
-        break;
-    
-    case 0:
-        $statusAtualEnd = 'Inativo';
-
-        break;
-}
-
-    return $statusAtualEnd;
-
-}
+                    }
 
 
 
@@ -81,7 +75,7 @@ function traduz_genero($genero){
 
     switch($genero){
 
-        case 'm':
+        case "m":
             $generoAtual = "Masculino";
 
             break;
@@ -96,7 +90,3 @@ function traduz_genero($genero){
     return $generoAtual;
 
 }
-
-
-
-?>

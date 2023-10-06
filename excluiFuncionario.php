@@ -1,16 +1,13 @@
 <?php
 session_start();
 
-
-include("conecta.php");
-
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["idFuncionario"])) {
     // Recupere o ID do registro a ser excluído
     $idFuncionario = $_GET["idFuncionario"];
 
+    include("conecta.php");
 
-
-
+    //antes de excluir guarda as informações no LOG
     $idLogUsuarioResponsavel = $_SESSION['idUsuarioLogado'];
     $nomeUsuarioResponsavel = $_SESSION['nomeCompleto'];
 
@@ -49,6 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["idFuncionario"])) {
         }
     }
 
+    if($insertLog){ //se inserir no logo prossiga com a exclusão
+
     $sql = "DELETE FROM funcionarios WHERE idFuncionario = $idFuncionario";
     
 
@@ -69,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["idFuncionario"])) {
             }, 1);
           </script>';
     }
-
+}
 }
 ?>
 

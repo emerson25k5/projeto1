@@ -1,5 +1,5 @@
 <?php
-session_start();
+require "autenticaContent.php";
 
 if (isset($_SESSION['login'])) {
   $login = $_SESSION['login'];

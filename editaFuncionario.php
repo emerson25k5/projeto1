@@ -7,6 +7,11 @@ require "funcoes.php";
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
     // Recupere o ID do registro a ser exibido
     $id = $_GET["id"];
+    
+    if(($_SESSION['nivelAcesso'] != 2) && ($_SESSION['idFuncionarioLogado'] != $id)) {
+        echo "Acesso negado!";
+        exit;
+    }
 
 
 $sql = "SELECT * FROM funcionarios WHERE idFuncionario = $id";
@@ -29,7 +34,7 @@ if ($result->num_rows > 0) {
 }
 
 
-$sql = "SELECT * FROM usedEnderecos WHERE funcionarioID = $id";
+$sql = "SELECT * FROM usedenderecos WHERE funcionarioID = $id";
 $result1 = $mysqli->query($sql);
 
 if ($result1->num_rows > 0) {
@@ -42,7 +47,6 @@ if ($result1->num_rows > 0) {
         $municipio = $row['municipio'];
         $complemento = $row['complemento'];
         $dataCadastroEnd = $row['dataCadastro'];
-        $statusEnd = $row['status'];
 
     }
 }
@@ -86,7 +90,7 @@ if($result3->num_rows > 0){
 }
 
 //query dos uniformes
-$sql = "SELECT tamTronco, tamPerna, tamCalcado FROM usedUniformes WHERE funcionarioID = $id";
+$sql = "SELECT tamTronco, tamPerna, tamCalcado FROM useduniformes WHERE funcionarioID = $id";
 $result4 = $mysqli->query($sql);
 
 if($result4->num_rows > 0){
@@ -110,8 +114,8 @@ if($result5->num_rows > 0){
 }
 }
 
-$sql = "SELECT * FROM controleferias WHERE funcionarioID = $id";
-$result6 = $mysqli->query($sql);
+$sql2 = "SELECT * FROM controleferias WHERE funcionarioID = $id";
+$result6 = $mysqli->query($sql2);
 
 if($result6->num_rows > 0){
     while ($row = $result6->fetch_assoc()) {
@@ -163,7 +167,7 @@ $mysqli->close();
                                 });
         </script>
 
-        <?php include("mascaraContent.php");?>
+        <?php include("mascaraContent.php");?> 
 
     </HEAD>
     <body>
@@ -200,7 +204,7 @@ $mysqli->close();
                         <label for="rg">RG:</label><br>
                         <input type="text" name="rg" id="rg" maxlength="14" oninput="formatarRG(this)" value="<?php echo $rg ?>" ><br>
                         <label for="genero">Genero:</label><br>
-                        <input type="text" name="genero" id="genero" readonly value="<?php echo traduz_genero($genero); ?>" ><br>
+                        <?php echo lista_suspensa_genero($genero);?>
                         <label for="email">E-mail:</label><br>
                         <input type="text" name="email" id="email" oninput="converterParaCaixaAlta(this)" value="<?php echo $email ?>" ><br>
                         <label for="telefone">Telefone:</label><br>
@@ -263,7 +267,7 @@ $mysqli->close();
                         <input type="hidden" name="form_id" value="3">
 
                             <!--exibe e edita as atribuições-->
-                            <div id="option3" class="col s12">
+                        <div id="option3" class="col s12">
                             <button type="submit" name="submit_form3" class="search btn" id="submit_form3" value="Salvar alterações"><i class="material-icons left">check</i>Salvar</button>
                             <a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>
                             <input type="hidden" name="id" id="id" value="<?php echo $idFuncionario?>">
@@ -311,12 +315,12 @@ $mysqli->close();
                             </div>
 
                             <label for="dataAdmissao">Data da admissao:</label><br>
-                            <input type="date" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>" ><br>
+                            <input type="date" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao;?>"><br>
 
                             <label for="dataUltFerias">Data ultimas férias:</label><br>
-                            <input type="date" name="dataUltFerias" id="dataUltFerias" value="<?php echo $dataUltFerias?>"><br>
+                            <input type="date" name="dataUltFerias" id="dataUltFerias" value="<?php echo $dataUltFerias;?>"><br>
 
-                            </div>
+                        </div>
                 </form>
 
 
