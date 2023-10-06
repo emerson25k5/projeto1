@@ -58,8 +58,10 @@ $result = $mysqli->query($sql);
 
                     <br><br>
 
-                    <div class="statusCadCargo center" id="statusCadCargo"> <!-- div para exibir se o cadastro foi realizado ou não e então exibir o erro -->
-                        <?php echo $_statusCadCargo;?>
+                    <div class="statusCadCargo center"> <!-- div para exibir se o cadastro foi realizado ou não e então exibir o erro -->
+                    <?php
+
+                    ?>
                     </div>
 
                 </form>
