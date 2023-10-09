@@ -198,7 +198,7 @@ $result2 = $mysqli->query($sql2);
     <HEAD>
         <TITLE>PATROL | Cadastro </TITLE>
 
-<?php include("headContent.php"); ?>
+        <?php include("headContent.php"); ?>
 
     </HEAD>
     <body>
@@ -287,12 +287,12 @@ $result2 = $mysqli->query($sql2);
 
                         <div class="row container col s12 center">
                         <div class="nascimento col s6">
-                        <label for="datepicker" class="labSelect">Data de nascimento:</label>
+                        <label for="datepicker" class="left">Data de nascimento:</label>
                         <input type="date" class="datepicker" name="nascimento" id="datepicker" required>
                         </div>
 
                         <div class="genero col s6">
-                            <label for="genero" class="labSelect">Gênero:</label>
+                            <label for="genero" class="left">Gênero:</label>
                             <select name="genero" id="genero" class="validate" required>
                                 <option value="" disabled selected>Selecione...</option>
                                 <option value="m">Marculino</option>
@@ -423,7 +423,7 @@ $result2 = $mysqli->query($sql2);
                     <br><br><br>
 
                         <div class="cargo col s6" >
-                            <label for="cargo_escolhido" class="labSelect">Cargo:</label>
+                            <label for="cargo_escolhido" class="left">Cargo:</label>
                             <select name="cargo_escolhido" id="cargo_escolhido">
                             <option value="" disabled selected>Selecione...</option>
                                 <?php
@@ -443,7 +443,7 @@ $result2 = $mysqli->query($sql2);
 
 
                         <div class="unidade col s6">
-                            <label for="unidade_escolhida" class="labSelect">Unidade:</label>
+                            <label for="unidade_escolhida" class="left">Unidade:</label>
                             <select name="unidade_escolhida" id="unidade_escolhida">
                             <option value="" disabled selected>Selecione...</option>
                                 <?php
@@ -464,7 +464,7 @@ $result2 = $mysqli->query($sql2);
                         <br><br><br><br><br>
                         
                         <div class="admissao col s12">
-                        <label for="dataAdmissao" class="labSelect">Data da Admissão:</label>
+                        <label for="dataAdmissao" class="left">Data da Admissão:</label>
                         <input type="date" name="dataAdmissao" id="dataAdmissao" class="validate" required>
                         </div>
 
@@ -475,7 +475,7 @@ $result2 = $mysqli->query($sql2);
                         <br><br><br>
 
                         <div class="uniforme_tronco col s4">
-                            <label for="tam_tronco" class="labSelect">Tamanho tronco:</label>
+                            <label for="tam_tronco" class="left">Tamanho tronco:</label>
                             <select name="tam_tronco" id="tam_tronco" required>
                             <option value="" disabled selected>Selecione...</option>
                                 <option value="P">Pequeno(P)</option>
@@ -486,7 +486,7 @@ $result2 = $mysqli->query($sql2);
                         </div>
 
                         <div class="uniforme_perna col s4">
-                            <label for="tam_perna" class="labSelect">Tamanho pernas:</label>
+                            <label for="tam_perna" class="left">Tamanho pernas:</label>
                             <select name="tam_perna" id="tam_perna" required>
                                 <option value="" disabled selected>Selecione...</option>
                                 <option value="P">Pequeno(P)</option>
@@ -497,7 +497,7 @@ $result2 = $mysqli->query($sql2);
                         </div>
 
                         <div class="uniforme_calcado col s4">
-                            <label for="uniforme_calcado" class="labSelect">Tamanho calado:</label>
+                            <label for="uniforme_calcado" class="left">Tamanho calado:</label>
                             <select name="tam_calcado" id="uniforme_calcado" required>
                                 <option value="" disabled selected>Selecione...</option>
                                 <option value="35">Tam 35</option>

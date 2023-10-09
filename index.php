@@ -15,7 +15,7 @@ if (isset($_POST['entrar'])) {
             FROM funcionarios
             LEFT JOIN usuarios ON funcionarios.idFuncionario = usuarios.funcionarioID
             LEFT JOIN usedperfilacesso ON usuarios.idUsuario = usedperfilacesso.usuarioID
-            WHERE email = '$login'";
+            WHERE email = '$login' AND funcionarios.status = 1";
 
     $result = $mysqli->query($sql);
 
@@ -51,7 +51,7 @@ if (isset($_POST['entrar'])) {
             echo "<script>setTimeout(function(){ window.location.href = 'index.php'; }, 5);</script>";
         }
     }else {
-        echo "<script>alert('Usuário não encontrado!');</script>";
+        echo "<script>alert('Usuário não encontrado ou inativo, fale com um administrador!');</script>";
         echo "<script>setTimeout(function(){ window.location.href = 'index.php'; }, 5);</script>";
     }
 

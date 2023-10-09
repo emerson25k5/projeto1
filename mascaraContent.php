@@ -72,7 +72,7 @@
                                 });
 
 
-                        // Função para adicionar as barras nos inputs de datas
+                        //Função para adicionar as barras nos inputs de datas
                         function formatarData(input) {
                             var value = input.value.replace(/\D/g, '');
                             if (value.length === 10) {
@@ -81,5 +81,11 @@
                                 input.value = value.substring(0, 2) + '/' + value.substring(2, 4) + '/' + value.substring(4, 10);
                             }
                         }
+
+                        //multiplo select 
+                        document.addEventListener('DOMContentLoaded', function() {
+                        var elems = document.querySelectorAll('select');
+                        var instances = M.FormSelect.init(elems, options);
+                    });
 
 </script>

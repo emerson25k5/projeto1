@@ -164,10 +164,10 @@ $result6 = $mysqli->query($sql2);
                         <h4><?php echo $nome ?></h4>
                         <h5><?php echo $cargo?> | <?php echo $unidade?></h5><br>
 
-                        <div class="">
+                        <div class="row">
                         <div class="col s12">
                         <ul class="tabs">
-                        <li class="tab col s3"><a href="#option1">Informações Gerais</a></li>
+                        <li class="tab col s3"><a href="#option1">Geral</a></li>
                         <li class="tab col s3"><a href="#option2">Endereço</a></li>
                         <li class="tab col s3"><a href="#option3">Atribuições</a></li>
                         <li class="tab col s3"><a href="#option4">Uniforme</a></li>
@@ -201,13 +201,13 @@ $result6 = $mysqli->query($sql2);
 
                         <?php if ($_SESSION['nivelAcesso'] == 2){
                         echo '<fieldset>
-                        <legend>Observações:</legend>
+                        <label>Observações:</label>
                                 <p name="funcObservacoes" data-length="500" class="textarea" readonly>'.$funcObservacoes.'</p>
                         </fieldset>';
                         }
                         ?>
 
-<br><br><br><br>
+                        <br><br><br><br>
                         
                         </div>
 
@@ -292,17 +292,17 @@ $result6 = $mysqli->query($sql2);
 
                         <!--exibe as atribuições-->   
                         <div id="option4" class="col s12">
-                        <?php if ($_SESSION['nivelAcesso'] == 2){
-                        echo '<a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>';}
-                        ?>
-                        <label for="uniforme_tronco">Tamanho do uniforme TRONCO:</label><br>
-                        <input type="text" name="tamTronco" id="uniforme_tronco" value="<?php echo $tamTronco ?>" readonly>
+                            <?php if ($_SESSION['nivelAcesso'] == 2){
+                            echo '<a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>';}
+                            ?>
+                            <label for="uniforme_tronco">Tamanho do uniforme TRONCO:</label><br>
+                            <input type="text" name="tamTronco" id="uniforme_tronco" value="<?php echo $tamTronco ?>" readonly>
 
-                        <label for="tamPerna">Tamanho do uniforme PERNA:</label><br>
-                        <input type="text" name="tamPerna" id="tamPerna" value="<?php echo $tamPerna?>"  readonly><br>
+                            <label for="tamPerna">Tamanho do uniforme PERNA:</label><br>
+                            <input type="text" name="tamPerna" id="tamPerna" value="<?php echo $tamPerna?>"  readonly><br>
 
-                        <label for="tamCalcado">Tamanho do uniforme CALÇADO:</label><br>
-                        <input type="text" name="tamCalcado" id="tamCalcado" value="<?php echo $tamCalcado?>" readonly><br>
+                            <label for="tamCalcado">Tamanho do uniforme CALÇADO:</label><br>
+                            <input type="text" name="tamCalcado" id="tamCalcado" value="<?php echo $tamCalcado?>" readonly><br>
                         </div>
 
                 </div>

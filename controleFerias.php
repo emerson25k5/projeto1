@@ -115,6 +115,7 @@ $resultFerias = $mysqli->query($sqlFerias);
     require "headContent.php";
     require "mascaraContent.php";
     ?>
+    </HEAD>
 
     <body>
 

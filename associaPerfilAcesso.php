@@ -26,11 +26,12 @@ if(array_key_exists('usuario_selecionado', $_POST) && array_key_exists('perfil_s
     $associaPerfil->bind_param("iss", $usuario_selecionado, $perfil_selecionado, $usuarioResponsavelPelaAlteracao);
 
     if ($associaPerfil->execute()) {
-        $_statusCad = "Usuário associado com sucesso!";
         $mysqli->commit();
+        echo "<script>alert('Usuário associado com sucesso!');</script>";
+        echo "<script>setTimeout(function(){ window.location.href = 'associaPerfilAcesso.php'; }, 5);</script>";
     }else {
-        $_statusCad = "Erro ao associar usuário!";
         $mysqli->rollback();
+        echo "<script>alert('Erro ao associar perfil de usuário');</script>";
     }
 
 
@@ -88,17 +89,6 @@ $result3 = $mysqli->query($cleito);
                 <h4>ASSOCIAR PERFIS DE ACESSO</h4>
 
                 <br><br>
-
-                <?php 
-                    if($_statusCad = "Usuário associado com sucesso!"){
-                        echo '<h5 style="color:green">' . $_statusCad . '</h5>';
-                    }else {
-                        echo '<h5 style="color:red">' . $_statusCad . '</h5>';
-                    }
-                ?>
-
-                <br><br>
-
 
                     <!-- Form para associar usuário com determinado perfil de acesso -->
 

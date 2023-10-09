@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
 <header>
@@ -23,10 +23,10 @@
     </nav>
     <nav class="finin">
     </nav>
-        <ul id='dropdown1' class='dropdown-content'>
-        <li><a href="userInfo.php?id=<?php echo $_SESSION['idFuncionarioLogado'];?>">Meus dados</a></li>
-            <li><a href="atualizaSenha.php">Alterar senha</a></li>
-            <li><a href="encerra_sessao.php">Sair</a></li>
+        <ul id='dropdown1' class='menu-perfil dropdown-content'>
+        <li><a href="userInfo.php?id=<?php echo $_SESSION['idFuncionarioLogado'];?>"><i class="material-icons prefix">badge</i>Meus dados</a></li>
+            <li><a href="atualizaSenha.php"><i class="material-icons prefix">key</i>Alterar senha</a></li>
+            <li><a href="encerra_sessao.php"><i class="material-icons prefix">logout</i>Sair</a></li>
         </ul>
 
     <script>
@@ -59,9 +59,10 @@
         echo '
                 <li><a href="listaFuncionarios.php" class="menu"><i class="a material-icons">badge</i>Funcionários</a></li>
                 <li><a href="cadastroFuncionario.php" class="menu"><i class="a material-icons">person_add</i>Cadastro de funcionários</a></li>
+                <li><a href="controleEntregaUniformes.php" class="menu"><i class="a material-icons">checkroom</i>Controle entrega uniformes</a></li>
                 <li><a href="cadastrocargo.php" class="menu"><i class="a material-icons">post_add</i>Cadastro de cargos</a></li>
                 <li><a href="cadastrounidade.php" class="menu"><i class="a material-icons">add_location_alt</i>Cadastro de unidades</a></li>
-                <li><a href="associaPerfilAcesso.php" class="menu"><i class="a material-icons">admin_panel_settings</i>Associar perfis de acesso</a></li>';
+                <li><a href="associaPerfilAcesso.php" class="menu"><i class="a material-icons">admin_panel_settings</i>Associar perfis de acesso</a></li>';               
     }?>
 
     </ul>

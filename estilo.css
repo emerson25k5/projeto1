@@ -12,11 +12,16 @@ table {
 }
 
 .options_list_user {
-    background-color: #ffffff00 !important;
-    width: 8px !important;
+    background-color: #ffffff !important;
+    width: 25px !important;
     text-align: center !important;
-    border-radius: 8px;
-} 
+    align-items: center!important;
+    align-content: center !important;
+    align-tracks: center !important;
+    vertical-align: center !important;
+    border-radius: 7px !important;
+    color: rgb(255, 255, 255) !important;
+}
 
 .logo {
     width: 40px;
@@ -79,6 +84,13 @@ table {
 .btnopcao {
     color: #000000 !important;
     font-size: 30px !important;
+    text-align: center;
+}
+.btnopcao:hover {
+    color: rgb(255, 196, 0) !important;
+    font-size: 30px !important;
+    text-align: center;
+    font-weight: bold;
 }
 
 .search {
@@ -90,9 +102,7 @@ table {
 }
 
 .search:hover {
-    background-color: #000000
-    
-     !important;
+    background-color: #000000 !important;
     color: rgb(255, 196, 0) !important;
     font-weight: bold;
     border-radius: 5px !important;
@@ -124,5 +134,33 @@ table {
   }
 
   .menu:hover{
-    color: rgb(255, 196, 0) !important;;
+    color: rgb(255, 196, 0) !important;
+  }
+
+  label {
+    font-size: 15px !important;
+    font-weight: bold !important;
+  }
+
+  label:hover {
+    font-size: 15px !important;
+    color: rgb(255, 196, 0) !important;
+  }
+
+  .menu-perfil {
+    background-color: #000000 !important;
+    width: 15% !important;
+    color: white !important;
+    a {
+        color: white !important;
+    }
+  }
+
+  li:hover {
+    color:rgb(255, 196, 0) !important;
+  }
+
+  legend {
+    color: #000000 !important;
+    font-weight: bold !important;
   }
