@@ -10,7 +10,7 @@ if($_SESSION['nivelAcesso'] != 2) {
 $_statusCad = "";
 $usuario_selecionado = "";
 $perfil_selecionado = "";
-$usuarioResponsavelPelaAlteracao = $_SESSION['nomeUsuario']; 
+$usuarioResponsavelPelaAlteracao = $_SESSION['nomeCompleto'];
 
 include("conecta.php");
 
@@ -38,18 +38,21 @@ if(array_key_exists('usuario_selecionado', $_POST) && array_key_exists('perfil_s
     $_statusCad = "Preencha os campos ou exclua e associe um novo perfil de usuário!";
 }
 
-$maria = "SELECT *
-            FROM usuarios
-            WHERE idUsuario NOT IN (SELECT usuarioID FROM usedperfilacesso)";
+$maria = "SELECT usuarios.*, funcionarios.nome
+        FROM funcionarios
+        LEFT JOIN usuarios ON funcionarios.idFuncionario = usuarios.funcionarioID
+        WHERE idUsuario NOT IN (SELECT usuarioID FROM usedperfilacesso)";
 $result1 = $mysqli->query($maria);
 
 $jose = "SELECT * FROM perfis WHERE status = 1";
 $result2 = $mysqli->query($jose);
 
-$cleito = "SELECT usedperfilacesso.idAssociaPerfil, usedperfilacesso.dataCadNivelPerfil, usedperfilacesso.responsavelAssociacao, usedperfilacesso.status, perfis.nomePerfil, usuarios.nomeUsuario, usuarios.login, usuarios.idUsuario
-            FROM usedperfilacesso
-            INNER JOIN perfis ON usedperfilacesso.nivelPerfilID = perfis.idNivelPerfil
-            INNER JOIN usuarios ON usedperfilacesso.usuarioID = usuarios.idUsuario
+$cleito = "SELECT usedperfilacesso.*, perfis.nomePerfil, funcionarios.nome, usuarios.login, usuarios.idUsuario
+            FROM funcionarios
+            LEFT JOIN usuarios ON funcionarios.idFuncionario = usuarios.funcionarioID
+            LEFT JOIN usedperfilacesso ON usuarios.idUsuario = usedperfilacesso.usuarioID
+            LEFT JOIN perfis ON usedperfilacesso.nivelPerfilID = perfis.idNivelPerfil
+            WHERE usedperfilacesso.usuarioID IS NOT NULL
             ORDER BY usedperfilacesso.dataCadNivelPerfil";
 $result3 = $mysqli->query($cleito);
 
@@ -110,7 +113,7 @@ $result3 = $mysqli->query($cleito);
                                     if ($result1->num_rows > 0) {
                                         while ($row = $result1->fetch_assoc()) {
                                             $idUsuario = $row['idUsuario'];
-                                            $nomeUsuario = $row['nomeUsuario'];
+                                            $nomeUsuario = $row['nome'];
                                             echo '<option value="' . $idUsuario . '">'. $nomeUsuario.'</option>';
                                         }
                                     } else {
@@ -147,7 +150,7 @@ $result3 = $mysqli->query($cleito);
                 <br>
 
                 <p><b>Administrador</b> visualizar e editar todos os dados e parâmetros (cargos e unidades).</p>
-            <p><b>Comum</b> visualizar apenas os seus próríos dados.</p>
+            <p><b>Comum</b> visualizar apenas os seus próprios dados.</p>
 
                             
                             
@@ -175,7 +178,7 @@ $result3 = $mysqli->query($cleito);
                             if ($result3->num_rows > 0) {
                                 while ($row = $result3->fetch_assoc()) {
                                     $idAssocia = $row['idAssociaPerfil'];
-                                    $nomeUsuario = $row['nomeUsuario'];
+                                    $nomeUsuario = $row['nome'];
                                     $perfil = $row['nomePerfil'];
                                     $responsavelAssociacao = $row['responsavelAssociacao'];
                                     $dataCadNivelPerfil = $row['dataCadNivelPerfil'];

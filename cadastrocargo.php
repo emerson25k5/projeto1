@@ -27,6 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 $_statusCadCargo = ($cadastrarCargo) ? "Cadastro realizado com sucesso!" . $mysqli->error : "Falha ao realizar o cadastro!" ." Código do erro:  " . $mysqli->error;
             }
+
+            header("Location: cadastrocargo.php");//após atualização/inserção no banco é redirecionado para a mesma página para evitar duplicidade com F5
+            exit;
         }
 
         //processa a atualização dos cargos individualmente
@@ -68,6 +71,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $mysqli->rollback();
                     $_statusCadCargo = "Falha ao realizar o cadastro!" ." Código do erro:  " . $mysqli->error;
                 }
+
+                header("Location: cadastrocargo.php");//após atualização/inserção no banco é redirecionado para a mesma página para evitar duplicidade com F5
+                exit;
 
             }
         }

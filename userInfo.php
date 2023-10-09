@@ -45,7 +45,6 @@ if ($result1->num_rows > 0) {
         $cidade = $row['cidade'];
         $municipio = $row['municipio'];
         $complemento = $row['complemento'];
-        $dataCadastroEnd = $row['dataCadastro'];
     }
 }
 
@@ -123,24 +122,9 @@ if($result5->num_rows > 0){
     $admissao = "Nenhuma data de admissão cadastrada!";
 }
 
-//coleta e explode e exibe a data de férias
-$sql = "SELECT * FROM controleferias WHERE funcionarioID = $id";
-$result6 = $mysqli->query($sql);
-
-if($result6->num_rows > 0){
-    while ($row = $result6->fetch_assoc()) {
-    $dataUltFerias = $row['dataUltFerias'];
-    $sep1 = explode("-", $dataUltFerias);
-
-    $ano1 = $sep1[0];
-    $mes2 = $sep1[1];
-    $dia3 = $sep1[2];
-
-    $dataUltFerias = "" .$dia3."/".$mes2."/".$ano1."";
-}
-}else{
-    $dataUltFerias = "Nenhuma data de férias cadastrada";
-}
+//query controleferias
+$sql2 = "SELECT * FROM controleferias WHERE funcionarioID = $id";
+$result6 = $mysqli->query($sql2);
 
 }
 
@@ -180,7 +164,7 @@ if($result6->num_rows > 0){
                         <h4><?php echo $nome ?></h4>
                         <h5><?php echo $cargo?> | <?php echo $unidade?></h5><br>
 
-                        <div class="row">
+                        <div class="">
                         <div class="col s12">
                         <ul class="tabs">
                         <li class="tab col s3"><a href="#option1">Informações Gerais</a></li>
@@ -209,11 +193,11 @@ if($result6->num_rows > 0){
                         <label for="telefone">Telefone:</label><br>
                         <input type="text" name="telefone" id="telefone" value="<?php echo $telefone ?>" readonly><br>
                         <label for="dataCad">Data e hora do cadastro:</label><br>
-                        <input type="text" name="dataCad" id="dataCad" value="<?php echo $dataCadastro ?>" readonly><br>
+                        <input type="text" name="dataCad" id="dataCad" value="<?php echo date('d/m/Y H:i:s', strtotime($dataCadastro)); ?>" readonly><br>
                         <label for="status">Status do funcionário:</label><br>
-                        <input type="text" name="status" id="status" value="<?php echo traduz_status($status);?>"  readonly><br>
-                        <label for="status">Resposável pelo cadastro:</label><br>
-                        <input type="text" name="responsavelCadastro" id="responsavelCadastro" value="<?php echo $responsavelCadastro;?>"  readonly><br>
+                        <input type="text" name="status" id="status" value="<?php echo traduz_status_para_exibir($status);?>" readonly><br>
+                        <label for="responsavelCadastro">Resposável pelo cadastro:</label><br>
+                        <input type="text" name="responsavelCadastro" id="responsavelCadastro" value="<?php echo $responsavelCadastro;?>" readonly><br>
 
                         <?php if ($_SESSION['nivelAcesso'] == 2){
                         echo '<fieldset>
@@ -222,6 +206,8 @@ if($result6->num_rows > 0){
                         </fieldset>';
                         }
                         ?>
+
+<br><br><br><br>
                         
                         </div>
 
@@ -252,10 +238,6 @@ if($result6->num_rows > 0){
                         <label for="complemento">Complemento:</label><br>
                         <input type="text" name="complemento" id="complemento" value="<?php echo $complemento ?>" readonly><br>
 
-                        <label for="complemento">Data e hora do cadastro:</label><br>
-                        <input type="text" name="dataCad" id="dataCad" value="<?php echo $dataCadastroEnd ?>" readonly><br>
-
-
                         </div>
 
                         <!--exibe as atribuições-->   
@@ -270,10 +252,42 @@ if($result6->num_rows > 0){
                         <input type="text" name="rua" id="rua" value="<?php echo $unidade?>"  readonly><br>
 
                         <label for="dataAdmissao">Data da admissao:</label><br>
-                        <input type="text" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>" readonly><br>
+                        <input type="text" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>" readonly><br><br>
 
-                        <label for="dataUltFerias">Data das ultimas férias:</label><br>
-                        <input type="text" name="dataUltFerias" id="dataUltFerias" value="<?php echo $dataUltFerias?>" readonly><br>
+                        <h5>Histórico de férias</h5>
+
+                        <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Data Início</th>
+                                            <th>Data Fim</th>
+                                            <th>Observações</th>
+                                        </tr>
+                                    </thead>
+                                        <tbody>
+                                        <?php
+                                        if ($result6->num_rows > 0) {
+                                            while ($row = $result6->fetch_assoc()) {
+                                                $dataInicioUltFerias = $row['dataInicioUltFerias'];
+                                                $dataFimUltFerias = $row['dataFimUltFerias'];
+                                                $feriasObservacoes = $row['feriasObservacoes'];
+
+                                            echo '<tr>';
+                                            echo '<td><p>' . date('d/m/Y', strtotime($dataInicioUltFerias)) . '</p></td>';
+                                            echo '<td><p>' . date('d/m/Y', strtotime($dataFimUltFerias)) . '</p></td>';
+                                            echo '<td><p>' . $feriasObservacoes . '</p></td>';
+                                            echo '</tr>';
+                                            }
+
+                                            
+                                        }else{
+                                            echo '<tr><td colspan="2">Nenhum registro encontrato</td></tr>';
+                                        }
+                                        ?>
+                                        </tbody>
+                                </table>
+
+
                         </div>
 
                         <!--exibe as atribuições-->   

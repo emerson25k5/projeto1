@@ -2,7 +2,7 @@
 
 if (isset($_POST['entrar'])) {
 
-    include("conecta.php");
+    require("conecta.php");
 
     $login = $_POST['login'];
     $senha = $_POST['senha'];
@@ -11,17 +11,18 @@ if (isset($_POST['entrar'])) {
     $senha = $mysqli->real_escape_string($senha); //trata a variável evitando ataques sql injection
 
 
-    $sql = "SELECT usuarios.login, usuarios.senha, usuarios.nomeUsuario, usuarios.idUsuario, usuarios.funcionarioID, usedperfilacesso.nivelPerfilID
-            FROM usuarios
+    $sql = "SELECT usuarios.login, usuarios.senha, usuarios.idUsuario, usuarios.funcionarioID, usedperfilacesso.nivelPerfilID, funcionarios.nome
+            FROM funcionarios
+            LEFT JOIN usuarios ON funcionarios.idFuncionario = usuarios.funcionarioID
             LEFT JOIN usedperfilacesso ON usuarios.idUsuario = usedperfilacesso.usuarioID
-            WHERE login = '$login'";
+            WHERE email = '$login'";
 
     $result = $mysqli->query($sql);
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $senhaArmazenada = $row['senha'];
-        $nome = $row['nomeUsuario'];
+        $nome = $row['nome'];
         $idSessao = $row['idUsuario'];
         $idFunc = $row['funcionarioID'];
         $nivelAcesso = $row['nivelPerfilID'];
@@ -44,6 +45,7 @@ if (isset($_POST['entrar'])) {
             }else{
                 header("Location: userInfo.php?id=$idFunc");
             }
+
         } else {
             echo '<script>alert("Senha incorreta!")<script>';
             echo "<script>setTimeout(function(){ window.location.href = 'index.php'; }, 5);</script>";
@@ -78,13 +80,11 @@ if (isset($_POST['entrar'])) {
     
     <nav class="nav">
         <div class="nav-wrapper container">
-        <a href="index.php" class="brand-logo center"><img class="logo" src="imagens/patrol_texto_bg.png" alt="patrol_logo"></a>
+        <a href="#" class="brand-logo center"><img class="logo" src="imagens/patrol_texto_bg.png" alt="patrol_logo"></a>
         <ul id="sidenav">
         </ul>
         </div>
     </nav>
-
-        <?php include("mascaraContent.php"); ?>
 
 </header>
 
@@ -101,7 +101,7 @@ if (isset($_POST['entrar'])) {
 
             <div class="login input-field col s12 center">
                 <i class="material-icons prefix">email</i>
-                <input type="email" name="login" id="login" maxlength="50" class="validate" onblur="converterParaCaixaAlta(this)" required>
+                <input type="email" name="login" id="login" maxlength="50" class="validate" required>
                 <label for="login">E-mail</label>
             </div>
 

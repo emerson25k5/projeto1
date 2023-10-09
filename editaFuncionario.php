@@ -3,6 +3,7 @@
 require "autenticaContent.php";
 require "conecta.php";
 require "funcoes.php";
+require "mascaraContent.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
     // Recupere o ID do registro a ser exibido
@@ -13,6 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
         exit;
     }
 
+    date_default_timezone_set('America/Sao_Paulo'); //define o fuso no php para usar o date ou
 
 $sql = "SELECT * FROM funcionarios WHERE idFuncionario = $id";
 $result = $mysqli->query($sql);
@@ -29,6 +31,7 @@ if ($result->num_rows > 0) {
         $dataCadastro = $row['dataCadFuncionario'];
         $status = $row['status'];
         $funcObservacoes = $row['funcObservacoes'];
+        $responsavelCadastro = $row['responsavelCadastro'];
 
     }
 }
@@ -105,6 +108,7 @@ if($result4->num_rows > 0){
     $tamCalcado = "Não atribuído a nenhum uniforme!";
 }
 
+//query da data de admissao
 $sql = "SELECT * FROM admissao WHERE funcionarioID = $id";
 $result5 = $mysqli->query($sql);
 
@@ -117,14 +121,6 @@ if($result5->num_rows > 0){
 $sql2 = "SELECT * FROM controleferias WHERE funcionarioID = $id";
 $result6 = $mysqli->query($sql2);
 
-if($result6->num_rows > 0){
-    while ($row = $result6->fetch_assoc()) {
-    $dataUltFerias = $row['dataUltFerias'];
-}
-}else{
-    $dataUltFerias = "Nenhuma data cadastrada";
-}
-
 include("conecta.php");
 
 $sql = "SELECT idCargo, nomeCargo FROM cargos WHERE status = 1 ORDER BY nomeCargo";
@@ -132,6 +128,7 @@ $result23 = $mysqli->query($sql);
 
 $sql2 = "SELECT idUnidade, nomeUnidade FROM unidades WHERE status = 1 ORDER BY nomeUnidade";
 $result24 = $mysqli->query($sql2);
+
 
 $mysqli->close();
 
@@ -186,7 +183,7 @@ $mysqli->close();
                         <li class="tab col s3"><a href="#option1">Informações Gerais</a></li>
                         <li class="tab col s3"><a href="#option2">Endereço</a></li>
                         <li class="tab col s3"><a href="#option3">Atribuições</a></li>
-                        <li class="tab col s3"><a href="#option4">Uniforme</a></li>
+                        <li class="tab col s3"><a href="#option4">Uniforme</a></li><br>
                         </ul>
                         <br>
                         </div>
@@ -196,7 +193,7 @@ $mysqli->close();
                         <label for="nome">Nome completo:</label><br>
                         <input type="text" name="nome" id="nome" oninput="converterParaCaixaAlta(this)" value="<?php echo $nome?>"><br>
                         <label for="dataAdmissao">Data da admissao:</label><br>
-                        <input type="date" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>"><br>
+                        <input type="date" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>" readonly><br>
                         <label for="id">Funcionário ID:</label><br>
                         <input type="text" name="id" id="id" value="<?php echo $idFuncionario?>" readonly><br>
                         <label for="cpfInput">CPF:</label><br>
@@ -206,16 +203,19 @@ $mysqli->close();
                         <label for="genero">Genero:</label><br>
                         <?php echo lista_suspensa_genero($genero);?>
                         <label for="email">E-mail:</label><br>
-                        <input type="text" name="email" id="email" oninput="converterParaCaixaAlta(this)" value="<?php echo $email ?>" ><br>
+                        <input type="text" name="email" id="email" value="<?php echo $email ?>" ><br>
                         <label for="telefone">Telefone:</label><br>
                         <input type="text" name="telefone" id="telefone" oninput="formatarTelefone(this)" value="<?php echo $telefone ?>" ><br>
                         <label for="dataCad">Data e hora do cadastro:</label><br>
                         <input type="text" name="dataCad" id="dataCad" readonly value="<?php echo $dataCadastro ?>"><br>
                         <label for="status">Status do funcionário:</label><br>
                         <?php echo lista_suspensa_inativa($status)?> <!-- chama a espetacular criação de EMERSON function da lista suspensa de ativo e inativo -->
-                        <br><br>
+                        <br>
+                        <label for="responsavelCadastro">Resposável pelo cadastro:</label><br>
+                        <input type="text" name="responsavelCadastro" id="responsavelCadastro" value="<?php echo $responsavelCadastro;?>"  readonly><br>
                         <legend>Observações:</legend>
-                                <textarea name="funcObservacoes" data-length="500" class="textarea"><?php echo $funcObservacoes;?></textarea>
+                            <textarea name="funcObservacoes" data-length="500" class="textarea"><?php echo $funcObservacoes;?></textarea>
+                            <br><br>
                         </div>
 
                     </form>
@@ -254,9 +254,6 @@ $mysqli->close();
                         <label for="complemento">Complemento:</label><br>
                         <input type="text" name="complemento" id="complemento" oninput="converterParaCaixaAlta(this)" value="<?php echo $complemento ?>" ><br>
 
-                        <label for="complemento">Data e hora do cadastro:</label><br>
-                        <input type="text" name="dataCadastroEnd" id="dataCadastroEnd" value="<?php echo $dataCadastroEnd ?>" ><br>
-
                         </div>
 
                 </form>
@@ -267,7 +264,7 @@ $mysqli->close();
                         <input type="hidden" name="form_id" value="3">
 
                             <!--exibe e edita as atribuições-->
-                        <div id="option3" class="col s12">
+                        <div id="option3" class="row col s12">
                             <button type="submit" name="submit_form3" class="search btn" id="submit_form3" value="Salvar alterações"><i class="material-icons left">check</i>Salvar</button>
                             <a href="listaFuncionarios.php" class="search btn"><i class="material-icons left">reply</i>Voltar</a><br><br>
                             <input type="hidden" name="id" id="id" value="<?php echo $idFuncionario?>">
@@ -315,12 +312,49 @@ $mysqli->close();
                             </div>
 
                             <label for="dataAdmissao">Data da admissao:</label><br>
-                            <input type="date" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao;?>"><br>
+                            <input type="date" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao;?>" readonly><br><br>
 
-                            <label for="dataUltFerias">Data ultimas férias:</label><br>
-                            <input type="date" name="dataUltFerias" id="dataUltFerias" value="<?php echo $dataUltFerias;?>"><br>
+                            <h5>Histórico de férias</h5>
+                            <br>
+                            <a class="search" href="controleFerias?id=<?php echo $idFuncionario;?>">Adicionar novo registro</a>
 
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Data Início</th>
+                                            <th>Data Fim</th>
+                                            <th>Rspnsavel pelo Cadastro</th>
+                                            <th>Observações</th>
+                                        </tr>
+                                    </thead>
+                                        <tbody>
+                                        <?php
+                                        if ($result6->num_rows > 0) {
+                                            while ($row = $result6->fetch_assoc()) {
+                                                $dataInicioUltFerias = $row['dataInicioUltFerias'];
+                                                $dataFimUltFerias = $row['dataFimUltFerias'];
+                                                $feriasObservacoes = $row['feriasObservacoes'];
+                                                $responsavelCadastro = $row['nomeResponsavelCadastro'];                                           
+
+                                            echo '<tr>';
+                                            echo '<td><p>' . date('d/m/Y', strtotime($dataInicioUltFerias)) . '</p></td>';
+                                            echo '<td><p>' . date('d/m/Y', strtotime($dataFimUltFerias)) . '</p></td>';
+                                            echo '<td><p>' . $responsavelCadastro . '</p></td>';
+                                            echo '<td><p>' . $feriasObservacoes . '</p></td>';
+                                            echo '</tr>';
+                                            }
+
+                                            
+                                        }else{
+                                            echo '<tr><td colspan="2">Nenhum registro encontrato</td></tr>';
+                                        }
+                                        ?>
+                                        </tbody>
+                                </table>
+
+                            </div>
                         </div>
+
                 </form>
 
 

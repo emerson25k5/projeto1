@@ -7,8 +7,8 @@
     height: 4px;
 }
 
-html{
-    font-size: 12px !important;
+table {
+    font-size: 12px;
 }
 
 .options_list_user {
@@ -16,7 +16,7 @@ html{
     width: 8px !important;
     text-align: center !important;
     border-radius: 8px;
-}
+} 
 
 .logo {
     width: 40px;

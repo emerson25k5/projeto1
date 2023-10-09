@@ -8,6 +8,9 @@ if($_SESSION['nivelAcesso'] != 2) {
     exit;
 }
 
+date_default_timezone_set('America/Sao_Paulo');
+$dataHoraAtual = new DateTime();
+
 $_statusCad = "";
 
 if ($_POST) {
@@ -24,9 +27,9 @@ $nascimento = $_POST['nascimento'];
 $genero = $_POST['genero'];
 $responsavelCadastro = $_SESSION['nomeCompleto']; //para enviar para a tabela de cadastro de funcionarios o cara que está logado e que está fazendo a inserção do usuário
 $usuarioResponsavelPeloCadastro = $_SESSION['nomeUsuario']; //para enviar a tabela de associa perfil de acesso
+$dataCadFuncionario = $dataHoraAtual->format('Y-m-d H:i:s'); //variável com a hora atual
 
 //usuario (login e senha)
-$nomeUsuario = $_POST["nome"];
 $login = $_POST["email"];
 $senha = $_POST["cpf"];
 $senhaLimpa = str_replace(['.', '-'], '', $senha);
@@ -52,16 +55,16 @@ $tam_perna_selecionado = $_POST["tam_perna"];
 $tam_calcado_selecionado = $_POST["tam_calcado"];
 
     // Inserir o usuário
-    $cadastrarFuncionario = $mysqli->prepare("INSERT INTO funcionarios (nome, email, cpf, rg, telefone, nascimento, genero, responsavelCadastro) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $cadastrarFuncionario->bind_param("ssssssss", $nome, $email, $cpf, $rg, $telefone, $nascimento, $genero, $responsavelCadastro);
+    $cadastrarFuncionario = $mysqli->prepare("INSERT INTO funcionarios (nome, email, cpf, rg, telefone, nascimento, genero, responsavelCadastro, dataCadFuncionario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $cadastrarFuncionario->bind_param("sssssssss", $nome, $email, $cpf, $rg, $telefone, $nascimento, $genero, $responsavelCadastro, $dataCadFuncionario);
 
     if ($cadastrarFuncionario->execute()) {
         $ultimo_id = $mysqli->insert_id;
         $ultimo_id_inserido = $ultimo_id;
 
         //inserir usuario
-        $cadastrarUsuario = $mysqli->prepare("INSERT INTO usuarios (nomeUsuario, login, senha, funcionarioID) VALUES (?, ?, ?, ?)");
-        $cadastrarUsuario->bind_param("ssss", $nomeUsuario, $login, $hashSenha, $ultimo_id_inserido);
+        $cadastrarUsuario = $mysqli->prepare("INSERT INTO usuarios (login, senha, funcionarioID) VALUES (?, ?, ?)");
+        $cadastrarUsuario->bind_param("sss", $login, $hashSenha, $ultimo_id_inserido);
 
         if($cadastrarUsuario->execute()) {
             $ultimo_id_usuario = $mysqli->insert_id;//para enviar para a usedperfilacesso
@@ -143,9 +146,44 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
     $mysqli->rollback();
     $mysqli->close();
 }
+
+        //INSERIR NO LOG A INSERÇÃO DE UM NOVO FUNCIONARIO
+        include("conecta.php");
+
+        if($cadastrarUniforme){
+
+            $mysqli->begin_transaction();
+
+            $idLogUsuarioResponsavel = $_SESSION['idUsuarioLogado'];
+            $nomeUsuarioResponsavel = $_SESSION['nomeCompleto'];
+            $tipoLog = "Cadastro novo funcionario";
+            $dataLogAlteracao = $dataHoraAtual->format('Y-m-d H:i:s');
+            $nome = $_POST["nome"];
+            $email = $_POST["email"];
+            $cpf = $_POST["cpf"];
+            $rg = $_POST['rg'];
+            $telefone = $_POST['telefone'];
+            $nascimento = $_POST['nascimento'];
+            $genero = $_POST['genero'];
+            $dataCadFuncionario = $dataHoraAtual->format('Y-m-d H:i:s');
+            $ultimo_id_inserido;
+
+            $insertLog = $mysqli->prepare("INSERT INTO logalteracoes (idLogUsuarioResponsavel, tipoLog, dataLogAlteracao, nomeUsuarioResponsavel, cpfAlt, dataCadFuncionarioAlt, emailAlt, generoAlt,
+            idFuncionarioAlt, nascimentoAlt, nomeAlt, rgAlt, telefoneAlt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $insertLog->bind_param("isssssssissss", $idLogUsuarioResponsavel, $tipoLog, $dataLogAlteracao, $nomeUsuarioResponsavel, $cpf, $dataCadFuncionario, $email, $genero, $ultimo_id_inserido,
+            $nascimento, $nome, $rg, $telefone);
+
+            if ($insertLog->execute()) {
+                $mysqli->commit();
+            }else{
+                echo "Falha no registro de LOG" . " Erro: " . $mysqli->error;
+                $mysqli->rollback();
+                $mysqli->close();
+            }
+        }
 }
 
-include("conecta.php");
+
 
 $sql = "SELECT idCargo, nomeCargo FROM cargos WHERE status = 1 ORDER BY nomeCargo";
 $result = $mysqli->query($sql);
@@ -249,8 +287,8 @@ $result2 = $mysqli->query($sql2);
 
                         <div class="row container col s12 center">
                         <div class="nascimento col s6">
-                        <label for="nascimento" class="labSelect">Data de nascimento:</label>
-                        <input type="date" class="validate" name="nascimento" id="nascimento" required>
+                        <label for="datepicker" class="labSelect">Data de nascimento:</label>
+                        <input type="date" class="datepicker" name="nascimento" id="datepicker" required>
                         </div>
 
                         <div class="genero col s6">
@@ -280,7 +318,7 @@ $result2 = $mysqli->query($sql2);
 
                         <div class="input-field col s12">
                         <i class="material-icons prefix">email</i>
-                        <input type="email" name="email" id="email" maxlength="50" class="validate" oninput="converterParaCaixaAlta(this)" required>
+                        <input type="email" name="email" id="email" maxlength="50" class="validate" required>
                         <label for="email">E-mail</label>
                         </div>
 
@@ -310,9 +348,7 @@ $result2 = $mysqli->query($sql2);
                         </div>
                     </nav>
 
-
                     <br><br>
-
 
                         <div class="input-field" style="width: 50%;">
                         <i class="material-icons prefix" style="font-size:125%">place</i>
@@ -429,7 +465,7 @@ $result2 = $mysqli->query($sql2);
                         
                         <div class="admissao col s12">
                         <label for="dataAdmissao" class="labSelect">Data da Admissão:</label>
-                        <input type="date" name="dataAdmissao" id="dataAdmissao" required class="validate">
+                        <input type="date" name="dataAdmissao" id="dataAdmissao" class="validate" required>
                         </div>
 
                         <br><br><br><br><br><br>

@@ -1,5 +1,3 @@
-<br><br><br><br><br><br><br><br>
-
 <footer class="page-footer">
           <div class="container">
             <div class="row">
@@ -21,8 +19,8 @@
           </div>
           <div class="footer-copyright">
             <div class="container">
-            © 2023 EBDS Todos os direitos reservados
-            <a class="grey-text text-lighten-4 right" href="#!">Suporte</a>
+                © 2023 EBDS Todos os direitos reservados
+              <a class="grey-text text-lighten-4 right" href="registroAlteracoes.php">log</a>
             </div>
           </div>
-        </footer>
+  </footer>

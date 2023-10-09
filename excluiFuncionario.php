@@ -1,11 +1,14 @@
 <?php
-session_start();
+require "autenticaContent.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["idFuncionario"])) {
     // Recupere o ID do registro a ser excluído
     $idFuncionario = $_GET["idFuncionario"];
 
     include("conecta.php");
+
+    date_default_timezone_set('America/Sao_Paulo'); //obtem a data e hora
+    $dataHoraAtual = new DateTime();
 
     //antes de excluir guarda as informações no LOG
     $idLogUsuarioResponsavel = $_SESSION['idUsuarioLogado'];
@@ -20,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["idFuncionario"])) {
         $mysqli->begin_transaction();
 
         $row = $result->fetch_assoc();
+        $tipoLog = "Exlusão registro de funcionário";
         $cpfAlt = $row['cpf'];
         $dataCadFuncionarioAlt = $row['dataCadFuncionario'];
         $emailAlt = $row['email'];
@@ -31,10 +35,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["idFuncionario"])) {
         $rgAlt = $row['rg'];
         $statusAlt = $row['status'];
         $telefoneAlt = $row['telefone'];
+        $dataLogAlteracao = $dataHoraAtual->format('Y-m-d H:i:s');
 
-        $insertLog = $mysqli->prepare("INSERT INTO logAlteracoes (idLogUsuarioResponsavel, nomeUsuarioResponsavel, cpfAlt, dataCadFuncionarioAlt, emailAlt, funcObservacoesAlt, generoAlt,
-         idFuncionarioAlt, nascimentoAlt, nomeAlt, rgAlt, statusAlt, telefoneAlt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $insertLog->bind_param("issssssisssss", $idLogUsuarioResponsavel, $nomeUsuarioResponsavel, $cpfAlt, $dataCadFuncionarioAlt, $emailAlt, $funcObservacoesAlt, $generoAlt, $idFuncionarioAlt,
+        $insertLog = $mysqli->prepare("INSERT INTO logalteracoes (idLogUsuarioResponsavel, tipoLog, dataLogAlteracao, nomeUsuarioResponsavel, cpfAlt, dataCadFuncionarioAlt, emailAlt, funcObservacoesAlt, generoAlt,
+         idFuncionarioAlt, nascimentoAlt, nomeAlt, rgAlt, statusAlt, telefoneAlt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $insertLog->bind_param("isssssssissssss", $idLogUsuarioResponsavel, $tipoLog, $dataLogAlteracao, $nomeUsuarioResponsavel, $cpfAlt, $dataCadFuncionarioAlt, $emailAlt, $funcObservacoesAlt, $generoAlt, $idFuncionarioAlt,
         $nascimentoAlt, $nomeAlt, $rgAlt, $statusAlt, $telefoneAlt);
 
         if ($insertLog->execute()) {
@@ -46,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["idFuncionario"])) {
         }
     }
 
-    if($insertLog){ //se inserir no logo prossiga com a exclusão
+    if($insertLog){ //se inserir no log prossiga com a exclusão
 
     $sql = "DELETE FROM funcionarios WHERE idFuncionario = $idFuncionario";
     

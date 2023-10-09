@@ -14,7 +14,7 @@
     
     <nav class="nav">
         <div class="nav-wrapper container">
-        <a href="cadastroFuncionario.php" class="brand-logo center"><img class="logo" src="imagens/brasao_patrol.png" alt="patrol_logo"></a>
+        <a href="#" class="brand-logo center"><img class="logo" src="imagens/brasao_patrol.png" alt="patrol_logo"></a>
         <ul id="sidenav">
             <li href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></li>
             <li class="dropdown-trigger right" href="#" data-target="dropdown1">Olá, <?php echo $_SESSION['nomeUsuario'];?></li>

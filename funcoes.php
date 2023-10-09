@@ -10,6 +10,28 @@ function traduz_status($status){
 switch($status){
     
     case 1:
+        $statusAtual = '<div style="color: white; background-color:green; border-radius:3px; text-align:center;"><b>Ativo</b></div>';
+
+        break;
+    
+    case 0:
+        $statusAtual = '<div style="color: white; background-color:red; border-radius:3px; text-align:center;"><b>Inativo</b></div>';
+
+        break;
+}
+
+    return $statusAtual;
+
+}
+
+//traduz para exibir sem levar tag <p> e style como acima
+function traduz_status_para_exibir($status){
+
+    $statusAtual = "";
+
+switch($status){
+    
+    case 1:
         $statusAtual = 'Ativo';
 
         break;
