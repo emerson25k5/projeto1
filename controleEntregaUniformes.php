@@ -67,6 +67,8 @@ $_statusCad = "";
                     WHERE controleentregauniformes.status = 1 ORDER BY funcionarios.nome";
     $resultado = $mysqli->query($chamaAsEntregas);
 
+    $mysqli->close();
+
 ?>
 
 

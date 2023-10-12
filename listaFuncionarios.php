@@ -30,6 +30,8 @@ $result = $mysqli->query($sql);
     $result = $mysqli->query($sql);
 }
 
+$mysqli->close();
+
 ?>
 
 <!DOCTYPE html>

@@ -57,12 +57,13 @@
                 <?php
     if($_SESSION['nivelAcesso'] == 2 ){
         echo '
-                <li><a href="listaFuncionarios.php" class="menu"><i class="a material-icons">badge</i>Funcionários</a></li>
-                <li><a href="cadastroFuncionario.php" class="menu"><i class="a material-icons">person_add</i>Cadastro de funcionários</a></li>
-                <li><a href="controleEntregaUniformes.php" class="menu"><i class="a material-icons">checkroom</i>Controle entrega uniformes</a></li>
-                <li><a href="cadastrocargo.php" class="menu"><i class="a material-icons">post_add</i>Cadastro de cargos</a></li>
-                <li><a href="cadastrounidade.php" class="menu"><i class="a material-icons">add_location_alt</i>Cadastro de unidades</a></li>
-                <li><a href="associaPerfilAcesso.php" class="menu"><i class="a material-icons">admin_panel_settings</i>Associar perfis de acesso</a></li>';               
+                <li><a href="listaFuncionarios.php" class="menu"><i class="material-icons">badge</i>Funcionários</a></li>
+                <li><a href="cadastroFuncionario.php" class="menu"><i class="material-icons">person_add</i>Cadastro de funcionários</a></li>
+                <li><a href="controleEntregaUniformes.php" class="menu"><i class="material-icons">checkroom</i>Controle de uniformes</a></li>
+                <li><a href="listaFuncionariosFerias.php" class="menu"><i class="material-icons">flight</i>Controle de férias</a></li>
+                <li><a href="cadastrocargo.php" class="menu"><i class="material-icons">post_add</i>Cadastro de cargos</a></li>
+                <li><a href="cadastrounidade.php" class="menu"><i class="material-icons">add_location_alt</i>Cadastro de unidades</a></li>
+                <li><a href="associaPerfilAcesso.php" class="menu"><i class="material-icons">admin_panel_settings</i>Associar perfis de acesso</a></li>';               
     }?>
 
     </ul>

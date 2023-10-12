@@ -329,7 +329,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 
 							<h5>Histórico de férias</h5>
 							<br>
-							<a class="search" href="controleFerias?id=<?php echo $idFuncionario;?>">Adicionar novo registro</a>
+							<a class="search" href="controleFerias.php?id=<?php echo $idFuncionario;?>">Adicionar novo registro</a>
 
 								<table>
 									<thead>

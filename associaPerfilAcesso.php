@@ -16,7 +16,6 @@ include("conecta.php");
 
 if(array_key_exists('usuario_selecionado', $_POST) && array_key_exists('perfil_selecionado', $_POST)){
 
-
     $mysqli->begin_transaction();
 
     $usuario_selecionado = $_POST['usuario_selecionado'];
@@ -42,7 +41,7 @@ if(array_key_exists('usuario_selecionado', $_POST) && array_key_exists('perfil_s
 $maria = "SELECT usuarios.*, funcionarios.nome
         FROM funcionarios
         LEFT JOIN usuarios ON funcionarios.idFuncionario = usuarios.funcionarioID
-        WHERE idUsuario NOT IN (SELECT usuarioID FROM usedperfilacesso)";
+        WHERE idUsuario NOT IN (SELECT usuarioID FROM usedperfilacesso) AND funcionarios.status = 1";
 $result1 = $mysqli->query($maria);
 
 $jose = "SELECT * FROM perfis WHERE status = 1";
@@ -57,7 +56,7 @@ $cleito = "SELECT usedperfilacesso.*, perfis.nomePerfil, funcionarios.nome, usua
             ORDER BY usedperfilacesso.dataCadNivelPerfil";
 $result3 = $mysqli->query($cleito);
 
-
+$mysqli->close();
 
 ?>
 
@@ -152,7 +151,7 @@ $result3 = $mysqli->query($cleito);
 
 
                 <div class="col s12">
-                <table class="responsive-table">
+                <table class="">
                     <thead>
                         <tr>
                             <th>Nome de usuário</th>

@@ -75,5 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["idFuncionario"])) {
     }
 }
 }
+
+$mysqli->close();
 ?>
 

@@ -13,7 +13,7 @@
                   <li><a class="grey-text text-lighten-3" href="https://www.facebook.com/PatrolServicos">Facebook</a></li>
                   <li><a class="grey-text text-lighten-3" href="https://www.linkedin.com/company/patrolservicos/">Linkedin</a></li>
                   <li><a class="grey-text text-lighten-3" href="https://www.youtube.com/channel/UCvaaMq-Q7YtHxBNAPw6KIPA">Youtube</a></li>
-                  <li><a class="grey-text text-lighten-3" href="https://patrolservicos.com.br/blog/">BLOG</a></li>
+                  <li><a class="grey-text text-lighten-3" href="registroAlteracoes.php">Auditoria</a></li>
                 </ul>
               </div>
             </div>
@@ -21,7 +21,7 @@
           <div class="footer-copyright">
             <div class="container">
                 © 2023 EBDS Todos os direitos reservados
-              <a class="grey-text text-lighten-4 right" href="registroAlteracoes.php">log</a>
+              <a class="grey-text text-lighten-4 right" href="#">SUPORTE</a>
             </div>
           </div>
   </footer>

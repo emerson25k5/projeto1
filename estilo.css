@@ -96,7 +96,6 @@ table {
 .search {
     background-color: #000000 !important;
     color: white;
-    font-weight: bold;
     border-radius: 5px !important;
     height: 45px;
 }
@@ -104,7 +103,6 @@ table {
 .search:hover {
     background-color: #000000 !important;
     color: rgb(255, 196, 0) !important;
-    font-weight: bold;
     border-radius: 5px !important;
 }
 

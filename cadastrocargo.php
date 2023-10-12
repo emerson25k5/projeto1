@@ -81,10 +81,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 }
 
-
 $sql = "SELECT * FROM cargos ORDER BY nomeCargo";
 $result = $mysqli->query($sql);
 
+$mysqli->close();
 
 ?>
 

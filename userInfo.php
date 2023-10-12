@@ -128,6 +128,8 @@ $result6 = $mysqli->query($sql2);
 
 }
 
+$mysqli->close();
+
 ?>
 
 <!DOCTYPE html>

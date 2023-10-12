@@ -8,6 +8,12 @@ if($_SESSION['nivelAcesso'] != 2) {
     exit;
 }
 
+$sql = "SELECT idCargo, nomeCargo FROM cargos WHERE status = 1 ORDER BY nomeCargo";
+$result = $mysqli->query($sql);
+
+$sql2 = "SELECT idUnidade, nomeUnidade FROM unidades WHERE status = 1 ORDER BY nomeUnidade";
+$result2 = $mysqli->query($sql2);
+
 date_default_timezone_set('America/Sao_Paulo');
 $dataHoraAtual = new DateTime();
 
@@ -150,7 +156,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
         //INSERIR NO LOG A INSERÇÃO DE UM NOVO FUNCIONARIO
         include("conecta.php");
 
-        if($cadastrarUniforme){
+        if($cadastrarUniforme == TRUE){
 
             $mysqli->begin_transaction();
 
@@ -175,21 +181,17 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
 
             if ($insertLog->execute()) {
                 $mysqli->commit();
+                $mysqli->close();
             }else{
                 echo "Falha no registro de LOG" . " Erro: " . $mysqli->error;
                 $mysqli->rollback();
                 $mysqli->close();
             }
+        }else{
+            echo "Erro ao salvar no registro de alterações!".$mysqli->error;
+            exit();
         }
 }
-
-
-
-$sql = "SELECT idCargo, nomeCargo FROM cargos WHERE status = 1 ORDER BY nomeCargo";
-$result = $mysqli->query($sql);
-
-$sql2 = "SELECT idUnidade, nomeUnidade FROM unidades WHERE status = 1 ORDER BY nomeUnidade";
-$result2 = $mysqli->query($sql2);
 
 ?>
 
@@ -295,7 +297,7 @@ $result2 = $mysqli->query($sql2);
                             <label for="genero" class="left">Gênero:</label>
                             <select name="genero" id="genero" class="validate" required>
                                 <option value="" disabled selected>Selecione...</option>
-                                <option value="m">Marculino</option>
+                                <option value="m">Masculino</option>
                                 <option value="f">Feminino</option>
                             </select>
                         </div>
@@ -359,7 +361,7 @@ $result2 = $mysqli->query($sql2);
                         <div class="input-field col s8">
                         <i class="material-icons prefix" style="font-size:125%">add_road</i>
                         <input type="text" name="nomeRua" id="nomeRua" maxlength="70" class="validate" oninput="converterParaCaixaAlta(this)" required>
-                        <label for="nomeRua">Logradouro</label>
+                        <label for="nomeRua">Rua</label>
                         </div>
 
                         <div class="input-field col s4">
@@ -497,7 +499,7 @@ $result2 = $mysqli->query($sql2);
                         </div>
 
                         <div class="uniforme_calcado col s4">
-                            <label for="uniforme_calcado" class="left">Tamanho calado:</label>
+                            <label for="uniforme_calcado" class="left">Tamanho calçado:</label>
                             <select name="tam_calcado" id="uniforme_calcado" required>
                                 <option value="" disabled selected>Selecione...</option>
                                 <option value="35">Tam 35</option>

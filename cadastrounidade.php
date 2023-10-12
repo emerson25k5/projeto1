@@ -83,6 +83,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 $sql = "SELECT * FROM unidades ORDER BY nomeUnidade";
 $result = $mysqli->query($sql);
 
+$mysqli->close();
+
 ?>
 
 <!DOCTYPE html>

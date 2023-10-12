@@ -3,21 +3,20 @@
 include("autenticaContent.php");
 include("conecta.php");
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 //verifica se o nivel de acesso é de adm, se n for é exibida mensagem de erro e o resto da página não carrega
 if($_SESSION['nivelAcesso'] != 2) {
     echo "Acesso negado!";
     exit;
 }
 
-$_statusCad = "";
-
 //select com base no ID do funcionario para trazer as férias dele
 if (isset($_GET["id"])) {
     // Recupere o ID do registro a ser exibido
     $id = $_GET["id"];
 }
-
-
 
 //post insert para enviar novo cadastro de férias
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -27,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $id = $_GET["id"];
 
-    if (isset($_POST["form_id"])) {
+    if (isset($_POST["form_id"]) || (isset($_POST['salvar_alteracoes']))){
         $form_id = $_POST["form_id"];
 
         if ($form_id == 1) {
@@ -57,9 +56,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $mysqli->rollback();
                 $_statusCad = "Erro no cadastro: ".$mysqli->error;
             }
-
-            header("Location: controleferias.php?id=$id");//após atualização/inserção no banco é redirecionado para a mesma página para evitar duplicidade com F5
-            exit;
         }
 
         if ($form_id == 2) {
@@ -81,14 +77,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($stmtUpdateFerias->execute()) {
                 $mysqli->commit();
-                $_statusCad = "Observação atualizada com sucesso";        
+                $_statusCad = "Observação atualizada com sucesso";      
             }else {
                 $mysqli->rollback();
                 $_statusCad = "Erro ao atualizar: ".$mysqli->error;
             }
-
-            header("Location: controleferias.php?id=$id");//após atualização/inserção no banco é redirecionado para a mesma página para evitar duplicidade com F5
-            exit;
 
         }
 
@@ -103,6 +96,8 @@ $sqlFerias = "SELECT controleferias.*, funcionarios.nome
                 WHERE funcionarioID = $id ORDER BY STR_TO_DATE(controleferias.dataInicioUltFerias, '%d/%m/%Y') DESC";
 $resultFerias = $mysqli->query($sqlFerias);
 
+$mysqli->close();
+
 ?>
 
 
@@ -110,57 +105,60 @@ $resultFerias = $mysqli->query($sqlFerias);
 <HTML lang="pt-BR">
     <HEAD>
         <TITLE>PATROL | CONTROLE FÉRIAS</TITLE>
-
     <?php 
     require "headContent.php";
     require "mascaraContent.php";
     ?>
+
+    <script>//inicializador do modal
+        
+        document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+    
+      });
+        
+        </script>   
     </HEAD>
 
     <body>
 
-    <h4 class="center">Registro de férias:</h4>
+    <h4 class="center">Registro de férias</h4>
 
-    <br><br><br>
-
-    <?php
-    echo '<div class="center">';
-    echo '<h5>'.$_statusCad.'</h6>';
-    echo '</div>';
-    ?>
-
+    <br><br>
 
     <div class="row col s12 container">
-
 
                         <form method="post" action="">
 
                             <input type="hidden" name="form_id" value="1">
 
-                            <label for="dataInicioUltFerias" class="col s6">Data inicio das férias:</label><br>
-                            <input type="tel" name="dataInicioUltFerias" id="dataInicioUltFerias" oninput="formatarData(this)" placeholder="DD/MM/AAAA">
+                            <label for="dataInicioUltFerias" class="col s6">Data inicial:</label><br>
+                            <input type="tel" name="dataInicioUltFerias" id="dataInicioUltFerias" oninput="formatarData(this)" placeholder="DD/MM/AAAA" required>
 
-                            <label for="dataFimUltFerias" class="col s6">Data fim das férias:</label><br>
-                            <input type="tel" name="dataFimUltFerias" id="dataFimUltFerias" oninput="formatarData(this)" placeholder="DD/MM/AAAA"><br><br>
+                            <label for="dataFimUltFerias" class="col s6">Data final:</label><br>
+                            <input type="tel" name="dataFimUltFerias" id="dataFimUltFerias" oninput="formatarData(this)" placeholder="DD/MM/AAAA" required><br><br>
 
-                            <textarea name="feriasObservacoes" data-length="500" class="textareaFerias" style="border-radius:6px" placeholder="OBSERVAÇÕES"></textarea>
+                            <textarea name="feriasObservacoes" data-length="500" class="textareaFerias" style="border-radius:6px; height: 100px" placeholder="OBSERVAÇÕES"></textarea>
+                            <br><br>
 
                             <div class="center">
-                               <button type="submit" class="search" >Adicionar férias</button>
+                               <button type="submit" class="search">Adicionar período de férias</button>
                             </div>
 
                         </form><br><br><br>
 
                             <div class="">
+
+                                    <h5>Histórico de férias</h5>
+
                             <fieldset style="border-radius:10px">
                             <table>
                                     <thead>
                                         <tr>
+                                            <th>Funcionário</th>
                                             <th>Data Início</th>
                                             <th>Data Fim</th>
-                                            <th>Rspnsavel pelo Cadastro</th>
-                                            <th>Data e hora cadastro</th>
-                                            <th>Editar observação</th>
                                         </tr>
                                     </thead>
                                         <tbody>
@@ -168,24 +166,40 @@ $resultFerias = $mysqli->query($sqlFerias);
                                         if ($resultFerias->num_rows > 0) {
                                             while ($row = $resultFerias->fetch_assoc()) {
                                                 $idUltFerias = $row['idUltFerias'];
+                                                $nomeFuncionario = $row['nome'];
                                                 $dataInicioUltFerias = $row['dataInicioUltFerias'];
                                                 $dataFimUltFerias = $row['dataFimUltFerias'];
                                                 $feriasObservacoes = $row['feriasObservacoes'];
                                                 $responsavelCadastro = $row['nomeResponsavelCadastro'];
-                                                $dataCadastroFerias = $row['dataCadastro'];                                             
+                                                $dataCadastroFerias = $row['dataCadastro'];
+                                                $modalId = 'modal' . $idUltFerias;
 
                                             echo '<tr>';
+                                            echo '<td><p>' . $nomeFuncionario . '</p></td>';
                                             echo '<td><p>' . $dataInicioUltFerias . '</p></td>';
                                             echo '<td><p>' . $dataFimUltFerias . '</p></td>';
-                                            echo '<td><p>' . $responsavelCadastro . '</p></td>';
-                                            echo '<td><p>' . date('d/m/Y H:i:s', strtotime($dataCadastroFerias)) . '</p></td>';
+                                            echo '<td><button class="search modal-trigger" href="#'. $modalId .'"><i class="material-icons">search</i></button></td>';
+                                            echo '</tr>';
+
+                                                                                #modal para exibir as informações de forma individual
+                                            echo '<div id="'. $modalId . '" class="modal" style="border-radius: 10px">';
+                                            echo '<div class="modal-content">';
+                                            echo '<h5>' . $nomeFuncionario . '</h5>';
                                             echo '<form method="post" id="form" action="">';
                                             echo '<input type="hidden" name="form_id" value="2">';
                                             echo '<input type="hidden" name="idFerias" value="' . $idUltFerias . '">';
-                                            echo '<td><input type="text" name="novaFeriasObservacoes" value="' . $feriasObservacoes . '"></td>';
-                                            echo '<td><button type="submit" class="search btn" name="salvar_alteracoes"><i class="material-icons">check</i></button></td>';
+                                            echo '<p><b>Data inicial: </b>' . $dataInicioUltFerias . '</p>';
+                                            echo '<p><b>Data final: </b>' . $dataFimUltFerias . '</p>';
+                                            echo '<p><b>Observações: </b><input type="text" name="novaFeriasObservacoes" value="' . $feriasObservacoes . '"></p>';
+                                            echo '<p><b>Responsável pelo cadastro:</b></p>';
+                                            echo '<p>' . $responsavelCadastro . '</p>';
+                                            echo '<p>' . date('d/m/Y H:i:s', strtotime($dataCadastroFerias)) . '</p>';
+                                            echo '</div>';
+                                            echo '<div class="modal-footer">';
+                                            echo '<button type="submit" href="#!" class="search modal-close" name="salvar_alteracoes">Salvar</button>';
+                                            echo '</div>';
                                             echo '</form>';
-                                            echo '</tr>';
+                                            echo '</div>';
                                             }
 
                                         }else{
@@ -196,6 +210,7 @@ $resultFerias = $mysqli->query($sqlFerias);
                                 </table>
                                 </fieldset>
                             </div>
+
 
     </div>
 
