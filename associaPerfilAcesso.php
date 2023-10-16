@@ -7,6 +7,9 @@ if($_SESSION['nivelAcesso'] != 2) {
     exit;
 }
 
+date_default_timezone_set('America/Sao_Paulo');
+$dataHoraAtual = new DateTime();
+
 $_statusCad = "";
 $usuario_selecionado = "";
 $perfil_selecionado = "";
@@ -20,9 +23,10 @@ if(array_key_exists('usuario_selecionado', $_POST) && array_key_exists('perfil_s
 
     $usuario_selecionado = $_POST['usuario_selecionado'];
     $perfil_selecionado = $_POST['perfil_selecionado'];
+    $dataHoraAtual = $dataHoraAtual->format('Y-m-d H:i:s');
 
-    $associaPerfil = $mysqli->prepare("INSERT INTO usedperfilacesso (usuarioID, nivelPerfilID, responsavelAssociacao) VALUES (?, ?, ?)");
-    $associaPerfil->bind_param("iss", $usuario_selecionado, $perfil_selecionado, $usuarioResponsavelPelaAlteracao);
+    $associaPerfil = $mysqli->prepare("INSERT INTO usedperfilacesso (usuarioID, nivelPerfilID, responsavelAssociacao, dataCadNivelPerfil) VALUES (?, ?, ?, ?)");
+    $associaPerfil->bind_param("isss", $usuario_selecionado, $perfil_selecionado, $usuarioResponsavelPelaAlteracao, $dataHoraAtual);
 
     if ($associaPerfil->execute()) {
         $mysqli->commit();
@@ -53,7 +57,7 @@ $cleito = "SELECT usedperfilacesso.*, perfis.nomePerfil, funcionarios.nome, usua
             LEFT JOIN usedperfilacesso ON usuarios.idUsuario = usedperfilacesso.usuarioID
             LEFT JOIN perfis ON usedperfilacesso.nivelPerfilID = perfis.idNivelPerfil
             WHERE usedperfilacesso.usuarioID IS NOT NULL
-            ORDER BY usedperfilacesso.dataCadNivelPerfil";
+            ORDER BY usedperfilacesso.nivelPerfilID DESC";
 $result3 = $mysqli->query($cleito);
 
 $mysqli->close();
@@ -70,24 +74,28 @@ $mysqli->close();
         include("funcoes.php"); 
         ?>
 
-        <script>
-                //JS para inicializar das listas suspensas SELECT (uniformes, cargos e unidade)
-                document.addEventListener('DOMContentLoaded', function() {
-                var elems = document.querySelectorAll('select');
-                var instances = M.FormSelect.init(elems);
-                });
-        </script>
+        <style>
+
+            fieldset {
+                border-radius: 10px;
+            }
+
+        </style>
 
     </HEAD>
     <body>
         <main class="box container">
 
 
-            <div class="container center col s12">
+            <div class="container col s12">
 
                 <h4>ASSOCIAR PERFIS DE ACESSO</h4>
 
                 <br><br>
+
+                <fieldset>
+
+                <br>
 
                     <!-- Form para associar usuário com determinado perfil de acesso -->
 
@@ -106,7 +114,7 @@ $mysqli->close();
                                             echo '<option value="' . $idUsuario . '">'. $nomeUsuario.'</option>';
                                         }
                                     } else {
-                                        echo '<option value="" disabled selected>Nenhum usuário sem perfil atribuído</option>';
+                                        echo '<option value="" disabled selected>Nenhum usuário sem perfil</option>';
                                     }
                                     ?>
                                 </select>
@@ -115,7 +123,7 @@ $mysqli->close();
                             <div class="perfis col s6" >
                                 <label for="perfil_selecionado" class="labSelect">Perfil de acesso:</label>
                                 <select name="perfil_selecionado" id="perfil_selecionado">
-                                <option value="" selected>Selecione o perfil</option>
+                                <option value="" selected>Selecione o nível de acesso</option>
                                     <?php
                                     // Verifique se há registros e gere as opções do select
                                     if ($result2->num_rows > 0) {
@@ -131,21 +139,27 @@ $mysqli->close();
                                 </select>
                             </div>
 
-                            <br><br><br>
+                            <br>
 
+                            <div class="center">
                             <button name="associa" value="associa" class="search">Salvar alterações</button> 
+                            </div>
                 </form>
 
                 <br>
 
                 <p><b>Administrador</b> visualizar e editar todos os dados e parâmetros (cargos e unidades).</p>
-            <p><b>Comum</b> visualizar apenas os seus próprios dados.</p>
+                <p><b>Comum</b> visualizar apenas os seus próprios dados.</p>
+                </fieldset>
+
 
                             
                             
-                <br><br><br>
+                <br><br>
 
-                <h5>Perfis associados (exclua para associar novamente):</h5><br>
+                <h5>Perfis associados</h5><br>
+
+                <fieldset>
 
                 <!-- Exibir associações já realizadas -->
 
@@ -156,9 +170,6 @@ $mysqli->close();
                         <tr>
                             <th>Nome de usuário</th>
                             <th>Tipo de perfil</th>
-                            <th>Login</th>
-                            <th>Responsável alteração</th>
-                            <th>Status</th>
                         </tr>
                     </thead>
                         <tbody>
@@ -173,25 +184,43 @@ $mysqli->close();
                                     $dataCadNivelPerfil = $row['dataCadNivelPerfil'];
                                     $login = $row['login'];
                                     $status = $row['status'];
-                                    $modalId = 'modal_' . $idAssocia;
+                                    $modalId = 'modal' . $idAssocia;
+                                    $modalIdEx = 'modal_' . $idAssocia;
 
 
                                     echo '<tr>';
                                     echo '<td>' . $nomeUsuario . '</td>';                                    
                                     echo '<td>' . $perfil . '</td>';
-                                    echo '<td>' . $login . '</td>';
-                                    echo '<td>' . $responsavelAssociacao . '</td>';
-                                    echo '<td>'. traduz_status($status) .'</td>';
-                                    echo '<td><a class="opt waves-effect waves-light modal-trigger col s4" href="#'.$modalId.'"><i class="btnopcao material-icons">delete</i></a></td>';
+                                    echo '<td><button class="search waves-effect waves-light modal-trigger col s4" href="#'.$modalId.'"><i class="material-icons">search</i></button></td>';
                                     echo '</tr>';
 
+                                    #modal para exibir mais informações
+                                    echo '<div id="'. $modalId . '" class="modal" style="border-radius: 10px">';
+                                    echo '<div class="modal-content">';
+                                    echo '<h6>' . $nomeUsuario . '</h6><br>';
+                                    echo '<div class="divider"></div><br>';
+                                    echo '<label for="tipoAcesso">Tipo de acesso</label>';
+                                    echo '<p>' . $perfil . '</p>';
+                                    echo '<label for="tipoAcesso">E-mail (login)</label>';
+                                    echo '<p>' . $login . '</p>';
+                                    echo '<div class="divider"></div><br>';
+                                    echo '<label for="tipoAcesso">Responsável por associar o perfil</label>';
+                                    echo '<p>' . $responsavelAssociacao . '</p>';
+                                    echo '<label for="tipoAcesso">Data e hora associação</label>';
+                                    echo '<p>' . date('d/m/Y H:i:s', strtotime($dataCadNivelPerfil)) . '</p>';
+                                    echo '</div>';
+                                    echo '<div class="modal-footer">';
+                                    echo '<a class="waves-effect waves-light modal-trigger left" href="#'.$modalIdEx.'"><i class="btnopcao material-icons">delete</i></a>';
+                                    echo '<button href="#!" class="search modal-close">Fechar</button>';
+                                    echo '</div>';
+                                    echo '</div>';
 
 
                                     //modal de confirmação antes de excluir
-                                    echo '<div id="'.$modalId.'" class="modal">';
+                                    echo '<div id="'.$modalIdEx.'" class="modal" style="border-radius: 10px">';
                                     echo '<div class="modal-content">';
-                                    echo '<h4>Exclusão de perfil de acesso para <br>'.$nomeUsuario.'?</h4>';
-                                    echo '<p>Você poderá ssociar um novo perfil de acesso depois!</p>';
+                                    echo '<h6>Excluir perfil <b>'.$perfil.'</b> para <b>'.$nomeUsuario.'</b>?</h6>';
+                                    echo '<p>Você terá que ssociar um novo perfil de acesso!</p>';
                                     echo '</div>';
                                     echo '<div class="modal-footer">';
                                     echo '<a href="excluiPerfilAcesso.php?idAssocia='.$idAssocia.'" class="modal-close waves-effect waves-green btn-flat">EXCLUIR</a>';
@@ -205,21 +234,29 @@ $mysqli->close();
                             ?>
                         </tbody>
                 </table>
+
+                </fieldset>
             </div>
 
 
-                    <script>//js para iniciar o MODAL
+                    <script>
+
+                        //js para iniciar o MODAL
                         document.addEventListener('DOMContentLoaded', function() {
                         var elems = document.querySelectorAll('.modal');
                         var instances = M.Modal.init(elems);
                         });
+
+                        //JS para inicializar das listas suspensas SELECT (uniformes, cargos e unidade)
+                        document.addEventListener('DOMContentLoaded', function() {
+                        var elems = document.querySelectorAll('select');
+                        var instances = M.FormSelect.init(elems);
+                        });
+
                     </script>
 
 
             <br><br>
-
-
-
 
             
             </div>

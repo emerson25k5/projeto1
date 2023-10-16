@@ -103,25 +103,6 @@ if (isset($_SESSION['login'])) {
 
       <button type="submit" value="Confirmar" id="submit" class="search">Confirmar alteração</button>
 
-      <script>
-
-function ValidaCPF() {
-  var cpf = document.getElementById("cpf").value;
-  var cpfValido = /^(([0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}))$/;
-  if (cpfValido.test(cpf) == false) {
-    cpf = cpf.replace(/\D/g, ""); 
-    if (cpf.length == 11) {
-      cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2"); 
-      cpf = cpf.replace(/(\d{3})(\d)/, "$1.$2"); 
-      cpf = cpf.replace(/(\d{3})(\d{1,2})$/, "$1-$2"); 
-      document.getElementById("cpf").value = cpf;
-    } else {
-      console.log("CPF inválido");
-    }
-  }
-}
-      </script>
-
     </form>
 
 </div>

@@ -13,19 +13,30 @@ table {
 
 /* botões de opção da lista de funcionários*/
 .options_list_user {
-    background-color: #ffffff !important;
-    border-radius: 7px !important;
-    padding: 10px;
+    background-color: #000000d3 !important;
+    border-radius: 20px !important;
+    padding: 7px;
     padding-left: 10px !important;
     width: auto !important;
+    height: auto !important;
     font-size: 25px !important;
 }
 
 .opt {
   padding: 10px;
   font-size: 30px !important;
-  color: black;
+  color: rgb(255, 255, 255);
 }
+
+.opt:hover{
+  padding: 10px;
+  font-size: 30px !important;
+  color: rgb(255, 196, 0) !important;
+  font-weight: bold !important;
+}
+/* fim botões de opção da lista de funcionários*/
+
+
 
 .logo {
     width: 40px;

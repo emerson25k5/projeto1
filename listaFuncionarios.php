@@ -107,11 +107,11 @@ $mysqli->close();
                         echo '</div>';
 
                         //dropdown da lista para excluir, editar e exibir informações dos funcionarios
-                        echo '<ul id="drop'.$idFuncionario.'" class="options_list_user dropdown-content"';
+                        echo '<ul id="drop'.$idFuncionario.'" class="options_list_user dropdown-content z-depth-4"';
                         echo '<li>';
-                        echo '<a class="opt modal-trigger" href="userInfo.php?id='.$idFuncionario.'"><i class="opt material-icons">quick_reference_all</i></a>';
-                        echo '<a class="opt modal-trigger" href="editaFuncionario.php?id='.$idFuncionario.'"><i class="opt material-icons">edit</i></a>';
-                        echo '<a class="opt modal-trigger" href="#'.$modalId.'"><i class="opt material-icons">delete</i></a>';
+                        echo '<a class="opt" href="userInfo.php?id='.$idFuncionario.'"><i class="opt material-icons">person_search</i></a>';
+                        echo '<a class="opt" href="editaFuncionario.php?id='.$idFuncionario.'"><i class="opt material-icons">edit</i></a>';
+                        echo '<a class="opt modal-trigger" href="#'.$modalId.'"><i class="opt material-icons">delete_forever</i></a>';
                         echo '</li>';
                         echo '</ul>';
 

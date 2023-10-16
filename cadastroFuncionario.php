@@ -210,43 +210,6 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
 
                 <h4>CADASTRO DE FUNCIONÁRIOS</h4>
 
-                    <script> //JS para inicializar das listas suspensas SELECT (uniformes, cargos e unidade)
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    var elems = document.querySelectorAll('select');
-                                    var instances = M.FormSelect.init(elems);
-                                });
-
-                            //js para passar a etapas do form
-                            let etapaAtual = 1;
-
-                            function proximaEtapa() {
-                                if (etapaAtual < 3) {
-                                    etapaAtual++;
-                                    atualizarEtapa();
-                                }
-                            }
-
-                            function anteriorEtapa() {
-                                if (etapaAtual > 1) {
-                                    etapaAtual--;
-                                    atualizarEtapa();
-                                }
-                            }
-
-                            function atualizarEtapa() {
-                                document.getElementById('etapa1').style.display = etapaAtual === 1 ? 'block' : 'none';
-                                document.getElementById('etapa2').style.display = etapaAtual === 2 ? 'block' : 'none';
-                                document.getElementById('etapa3').style.display = etapaAtual === 3 ? 'block' : 'none';
-                            }
-
-
-                            //corrigi o bug do label sobrepor o input quando já tem dado
-                            $(document).ready(function() {
-                                Materialize.updateTextFields();
-                            });
-
-                    </script>
-
                     <?php include("mascaraContent.php");?>
 
                 <div class="statusCad center" id="statusCad"> <!--div para exibir se o cadastro foi realizado ou não e então exibir o erro -->
@@ -532,6 +495,43 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
             </div>
 
         </main>
+
+        <script> //JS para inicializar das listas suspensas SELECT (uniformes, cargos e unidade)
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    var elems = document.querySelectorAll('select');
+                                    var instances = M.FormSelect.init(elems);
+                                });
+
+                            //js para passar a etapas do form
+                            let etapaAtual = 1;
+
+                            function proximaEtapa() {
+                                if (etapaAtual < 3) {
+                                    etapaAtual++;
+                                    atualizarEtapa();
+                                }
+                            }
+
+                            function anteriorEtapa() {
+                                if (etapaAtual > 1) {
+                                    etapaAtual--;
+                                    atualizarEtapa();
+                                }
+                            }
+
+                            function atualizarEtapa() {
+                                document.getElementById('etapa1').style.display = etapaAtual === 1 ? 'block' : 'none';
+                                document.getElementById('etapa2').style.display = etapaAtual === 2 ? 'block' : 'none';
+                                document.getElementById('etapa3').style.display = etapaAtual === 3 ? 'block' : 'none';
+                            }
+
+
+                            //corrigi o bug do label sobrepor o input quando já tem dado
+                            $(document).ready(function() {
+                                Materialize.updateTextFields();
+                            });
+
+                    </script>
             
             <?php include("footerContent.php");?> <!--adiciona o conteúdo do rodapé de modo modular usando o INCLUDE em PHP-->
 

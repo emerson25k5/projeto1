@@ -276,7 +276,7 @@ if (isset($_GET["id"])) {
                                             echo '<p id="responsavel">' . $responsavelCadastro . '</p>';
                                             echo '</div>';
                                             echo '<div class="modal-footer">';
-                                            echo '<button href="#!" class="search modal-close" name="salvar_alteracoes">Fechar</button>';
+                                            echo '<button href="#!" class="search modal-close">Fechar</button>';
                                             echo '</div>';
                                             echo '</div>';
                                             

@@ -28,25 +28,7 @@
             <li><a href="encerra_sessao.php"><i class="material-icons prefix">logout</i>Sair</a></li>
         </ul>
 
-    <script>
 
-        //JS do Menu suspenso das opções do usuário logado (trocar senha, sair)
-        document.addEventListener('DOMContentLoaded', function() {
-            var dropdowns = document.querySelectorAll('.dropdown-trigger');   
-            var options = {
-                coverTrigger: false,
-                openOnClick: true,
-                outDuration: 100
-            };
-            M.Dropdown.init(dropdowns, options);
-        });
-
-        //JS para inicializar a sidenav
-        document.addEventListener('DOMContentLoaded', function() {
-                var elems = document.querySelectorAll('.sidenav');
-                var instances = M.Sidenav.init(elems);
-            });
-    </script>
 
     <ul id="slide-out" class="right sidenav">
 
@@ -66,5 +48,25 @@
     }?>
 
     </ul>
+
+    <script>
+
+    //JS do Menu suspenso das opções do usuário logado (trocar senha, sair)
+    document.addEventListener('DOMContentLoaded', function() {
+        var dropdowns = document.querySelectorAll('.dropdown-trigger');   
+        var options = {
+            coverTrigger: false,
+            openOnClick: true,
+            outDuration: 100
+        };
+        M.Dropdown.init(dropdowns, options);
+    });
+
+    //JS para inicializar a sidenav
+    document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.sidenav');
+            var instances = M.Sidenav.init(elems);
+        });
+</script>
 
 </header>
