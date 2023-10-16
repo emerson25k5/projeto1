@@ -11,16 +11,20 @@ table {
     font-size: 12px;
 }
 
+/* botões de opção da lista de funcionários*/
 .options_list_user {
     background-color: #ffffff !important;
-    width: 25px !important;
-    text-align: center !important;
-    align-items: center!important;
-    align-content: center !important;
-    align-tracks: center !important;
-    vertical-align: center !important;
     border-radius: 7px !important;
-    color: rgb(255, 255, 255) !important;
+    padding: 10px;
+    padding-left: 10px !important;
+    width: auto !important;
+    font-size: 25px !important;
+}
+
+.opt {
+  padding: 10px;
+  font-size: 30px !important;
+  color: black;
 }
 
 .logo {
@@ -32,13 +36,6 @@ table {
 .box {
     width: 90% !important;
     height: 50%;
-}
-
-.labSelect {
-    font-size: 100% !important;
-    float: left !important;
-    font-weight: bold;
-    color: #000000;
 }
 
 .barra_etapa {
@@ -84,7 +81,7 @@ table {
 .btnopcao {
     color: #000000 !important;
     font-size: 30px !important;
-    text-align: center;
+    text-align: center !important;
 }
 .btnopcao:hover {
     color: rgb(255, 196, 0) !important;
@@ -98,6 +95,13 @@ table {
     color: white;
     border-radius: 5px !important;
     height: 45px;
+}
+
+label {
+  font-weight: bold;
+}
+h5 {
+  color: grey;
 }
 
 .search:hover {
@@ -149,9 +153,6 @@ table {
     background-color: #000000 !important;
     width: 15% !important;
     color: white !important;
-    a {
-        color: white !important;
-    }
   }
 
   li:hover {

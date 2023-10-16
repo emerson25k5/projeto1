@@ -107,10 +107,12 @@ $mysqli->close();
                         echo '</div>';
 
                         //dropdown da lista para excluir, editar e exibir informações dos funcionarios
-                        echo '<ul id="drop'.$idFuncionario.'" class="options_list_user dropdown-content" style="text-align: center">';
-                        echo '<li><a class="opt waves-effect waves-light modal-trigger col s4" href="userInfo.php?id='.$idFuncionario.'"><i class="btnopcao material-icons">search</i></a></li>';
-                        echo '<li><a class="opt waves-effect waves-light modal-trigger col s4" href="editaFuncionario.php?id='.$idFuncionario.'"><i class="btnopcao material-icons">edit</i></a></li>';
-                        echo '<li><a class="opt waves-effect waves-light modal-trigger col s4" href="#'.$modalId.'"><i class="btnopcao material-icons">delete</i></a></li>';
+                        echo '<ul id="drop'.$idFuncionario.'" class="options_list_user dropdown-content"';
+                        echo '<li>';
+                        echo '<a class="opt modal-trigger" href="userInfo.php?id='.$idFuncionario.'"><i class="opt material-icons">quick_reference_all</i></a>';
+                        echo '<a class="opt modal-trigger" href="editaFuncionario.php?id='.$idFuncionario.'"><i class="opt material-icons">edit</i></a>';
+                        echo '<a class="opt modal-trigger" href="#'.$modalId.'"><i class="opt material-icons">delete</i></a>';
+                        echo '</li>';
                         echo '</ul>';
 
                     }
@@ -120,9 +122,18 @@ $mysqli->close();
                 ?>
 
                     <script>//js para iniciar o MODAL
+                        document.addEventListener('DOMContentLoaded', function() {
+                        var elems = document.querySelectorAll('.modal');
+                        var instances = M.Modal.init(elems);
+                        });
+                        
+                    //js para iniciar o MODAL
                     document.addEventListener('DOMContentLoaded', function() {
-                    var elems = document.querySelectorAll('.modal');
-                    var instances = M.Modal.init(elems);
+                        var elems = document.querySelectorAll('.fixed-action-btn');
+                        var instances = M.FloatingActionButton.init(elems, {
+                        direction: 'left',
+                        hoverEnabled: false
+                        });
                     });
                     </script>
 

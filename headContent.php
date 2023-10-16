@@ -1,12 +1,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="SistemaEBDS">
+        <meta name="description" content="Patrol-Sistem_byEBDS">
         <link rel="icon" href="imagens/brasao_patrol.png" type="image/png">
         <meta name="keywords" content="HTML, CSS, JavaScript">
         <link rel="stylesheet" type="text/css" href="estilo.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
@@ -59,7 +58,7 @@
         echo '
                 <li><a href="listaFuncionarios.php" class="menu"><i class="material-icons">badge</i>Funcionários</a></li>
                 <li><a href="cadastroFuncionario.php" class="menu"><i class="material-icons">person_add</i>Cadastro de funcionários</a></li>
-                <li><a href="controleEntregaUniformes.php" class="menu"><i class="material-icons">checkroom</i>Controle de uniformes</a></li>
+                <li><a href="listaFuncionariosUniformes.php" class="menu"><i class="material-icons">checkroom</i>Controle de uniformes</a></li>
                 <li><a href="listaFuncionariosFerias.php" class="menu"><i class="material-icons">flight</i>Controle de férias</a></li>
                 <li><a href="cadastrocargo.php" class="menu"><i class="material-icons">post_add</i>Cadastro de cargos</a></li>
                 <li><a href="cadastrounidade.php" class="menu"><i class="material-icons">add_location_alt</i>Cadastro de unidades</a></li>

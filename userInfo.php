@@ -139,15 +139,6 @@ $mysqli->close();
 
         <?php include("headContent.php"); ?>
 
-        <style>
-            label {
-                font-weight: bold;
-            }
-            h5 {
-                color: grey;
-            }
-        </style>
-
         <script>
             document.addEventListener('DOMContentLoaded', function() {
             // Inicialize as tabs

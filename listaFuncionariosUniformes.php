@@ -24,7 +24,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE>PATROL | FÉRIAS</TITLE>
+        <TITLE>PATROL | CONTROLE UNIFORMES</TITLE>
     <?php 
     require "headContent.php";
     require "mascaraContent.php";
@@ -33,7 +33,7 @@ $mysqli->close();
 
     <body>
 
-    <h4 class="center">Controle de férias</h4>
+    <h4 class="center">Controle de uniformes</h4>
 
     <br><br><br>
 
@@ -56,7 +56,7 @@ $mysqli->close();
 
                                             echo '<tr>';
                                             echo '<td><p>' . $nomeFuncionario . '</p></td>';
-                                            echo '<td><a class="search btn" href="controleFerias.php?id='. $idFuncionario .'&nome='.$nomeFuncionario.'"><i class="material-icons">beach_access</i></a></td>';
+                                            echo '<td><a class="search btn" href="controleEntregaUniformes.php?id='. $idFuncionario .'&nome=' . $nomeFuncionario . '"><i class="material-icons">checkroom</i></a></td>';
                                             echo '</tr>';
 
                                             }

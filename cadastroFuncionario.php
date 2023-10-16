@@ -290,7 +290,8 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
                         <div class="row container col s12 center">
                         <div class="nascimento col s6">
                         <label for="datepicker" class="left">Data de nascimento:</label>
-                        <input type="date" class="datepicker" name="nascimento" id="datepicker" required>
+                        <input type="tel" name="nascimento" id="data" oninput="formatarData(this)" placeholder="DD/MM/AAAA" required>
+                        <div class="erro-data"></div>
                         </div>
 
                         <div class="genero col s6">
@@ -352,14 +353,14 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
 
                     <br><br>
 
-                        <div class="input-field" style="width: 50%;">
-                        <i class="material-icons prefix" style="font-size:125%">place</i>
+                        <div class="input-field col s8">
+                        <i class="material-icons prefix">place</i>
                         <input type="text" name="cep" id="cep" maxlength="9" class="validate" oninput="formatarCEP(this)" required>
                         <label for="cep">CEP</label>
                         </div>
 
                         <div class="input-field col s8">
-                        <i class="material-icons prefix" style="font-size:125%">add_road</i>
+                        <i class="material-icons prefix">add_road</i>
                         <input type="text" name="nomeRua" id="nomeRua" maxlength="70" class="validate" oninput="converterParaCaixaAlta(this)" required>
                         <label for="nomeRua">Rua</label>
                         </div>
@@ -467,7 +468,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
                         
                         <div class="admissao col s12">
                         <label for="dataAdmissao" class="left">Data da Admissão:</label>
-                        <input type="date" name="dataAdmissao" id="dataAdmissao" class="validate" required>
+                        <input type="tel" name="dataAdmissao" id="dataAdmissao" class="validate" oninput="formatarData(this)" placeholder="DD/MM/AAAA" required>
                         </div>
 
                         <br><br><br><br><br><br>
@@ -476,7 +477,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
 
                         <br><br><br>
 
-                        <div class="uniforme_tronco col s4">
+                        <div class="uniforme_tronco">
                             <label for="tam_tronco" class="left">Tamanho tronco:</label>
                             <select name="tam_tronco" id="tam_tronco" required>
                             <option value="" disabled selected>Selecione...</option>
@@ -487,7 +488,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
                             </select>
                         </div>
 
-                        <div class="uniforme_perna col s4">
+                        <div class="uniforme_perna">
                             <label for="tam_perna" class="left">Tamanho pernas:</label>
                             <select name="tam_perna" id="tam_perna" required>
                                 <option value="" disabled selected>Selecione...</option>
@@ -498,7 +499,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
                             </select>
                         </div>
 
-                        <div class="uniforme_calcado col s4">
+                        <div class="uniforme_calcado">
                             <label for="uniforme_calcado" class="left">Tamanho calçado:</label>
                             <select name="tam_calcado" id="uniforme_calcado" required>
                                 <option value="" disabled selected>Selecione...</option>

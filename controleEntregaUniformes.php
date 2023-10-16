@@ -9,10 +9,14 @@ if($_SESSION['nivelAcesso'] != 2) {
     exit;
 }
 
-$_statusCad = "";
+if (isset($_GET["id"])) {
+    // Recupere o ID do registro a ser exibido
+    $id = $_GET["id"];
+    $nome = $_GET["nome"];
+}
 
     //select todos os funcionarios ativos para a lista suspensa
-    $sql = "SELECT * FROM funcionarios WHERE status = 1 ORDER BY nome";
+    $sql = "SELECT * FROM funcionarios WHERE status = 1 AND idFuncionario = $id ORDER BY nome";
     $result = $mysqli->query($sql);
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") { 
@@ -28,7 +32,7 @@ $_statusCad = "";
 
                 $mysqli->begin_transaction();
 
-                $idFuncionario = $_POST['funcionario_selecionado'];
+                $idFuncionario = $id;
                 $dataEntrega = $_POST['dataEntrega'];
 
                 $camisa_quantidade = $_POST['camisa_quantidade'];
@@ -64,7 +68,7 @@ $_statusCad = "";
     $chamaAsEntregas = "SELECT funcionarios.nome, controleentregauniformes.* 
                     FROM funcionarios
                     LEFT JOIN controleentregauniformes ON funcionarios.idFuncionario = controleentregauniformes.funcionarioID
-                    WHERE controleentregauniformes.status = 1 ORDER BY funcionarios.nome";
+                    WHERE controleentregauniformes.status = 1 AND idFuncionario = $id ORDER BY dataEntregaUniforme ASC";
     $resultado = $mysqli->query($chamaAsEntregas);
 
     $mysqli->close();
@@ -103,6 +107,16 @@ $_statusCad = "";
             height: 40px !important;
         }
     </style>
+
+    <script>//inicializador do modal
+        
+        document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+    
+      });
+        
+    </script>   
     </HEAD>
 
     <body>
@@ -124,22 +138,7 @@ $_statusCad = "";
                     <br>
 
                             <div class="funcionarios col s6">
-                                <label for="funcionario_selecionado">Funcionario:</label>
-                                <select name="funcionario_selecionado" id="funcionario_selecionado" required>
-                                    <option value="" selected>Selecione:</option>
-                                    <?php
-                                        // Verifique se há registros e gere as opções do select
-                                        if ($result->num_rows > 0) {
-                                            while ($row = $result->fetch_assoc()) {
-                                                $idFuncionario = $row['idFuncionario'];
-                                                $nomeFuncionario = $row['nome'];
-                                                echo '<option value="' . $idFuncionario . '">'. $nomeFuncionario.'</option>';
-                                            }
-                                        } else {
-                                            echo '<option value="" disabled selected>Nenhum funcionário encontrado</option>';
-                                        }
-                                    ?>
-                                </select>
+                                <h5 class="center"><?php echo $nome;?></h5>
                                 <br>
 
                             <label for="dataEntrega" class="col s6">Data de entrega:</label>
@@ -229,12 +228,8 @@ $_statusCad = "";
                             <table>
                                     <thead>
                                         <tr>
-                                            <th>Funcionário</th>
                                             <th>Data entrega</th>
-                                            <th>Camisa/Quant</th>
-                                            <th>Calça/Quant</th>
-                                            <th>Calçado/Quant</th>
-                                            <th>Jaqueta/Quant</th>
+                                            <th>Quantidade de peças</th>
                                             <th>Obs:</th>
                                             
                                         </tr>
@@ -243,23 +238,48 @@ $_statusCad = "";
                                         <?php
                                         if ($resultado->num_rows > 0) {
                                             while ($row = $resultado->fetch_assoc()) {
-                                                $nomeFuncionario = $row['nome'];
+                                                $idEntregaUniforme = $row['idEntregaUniforme'];
                                                 $quantidade_camisa = $row['quantidade_camisa'];
                                                 $quantidade_calca = $row['quantidade_calca'];
                                                 $quantidade_calcado = $row['quantidade_calcado'];
                                                 $quantidade_jaqueta = $row['quantidade_jaqueta'];
                                                 $dataEntregaUniforme = $row['dataEntregaUniforme'];
-                                                $unifObs = $row['entregaUnifObs'];              
+                                                $responsavelCadastro = $row['responsavelEntrega'];
+                                                $unifObs = $row['entregaUnifObs'];
+                                                $totalUniformes = $quantidade_camisa + $quantidade_calca + $quantidade_calcado + $quantidade_jaqueta;  //soma todas as peças para exibir na tela principal
+                                                $modalId = 'modal' . $idEntregaUniforme;
 
                                             echo '<tr>';
-                                            echo '<td><p>' . $nomeFuncionario . '</p></td>';
                                             echo '<td><p>' . $dataEntregaUniforme . '</p></td>';
-                                            echo '<td><p>' . $quantidade_camisa . '</p></td>';
-                                            echo '<td><p>' . $quantidade_calca . '</p></td>';
-                                            echo '<td><p>' . $quantidade_calcado . '</p></td>';
-                                            echo '<td><p>' . $quantidade_jaqueta . '</p></td>';
+                                            echo '<td><h5>' . $totalUniformes . '</h5></td>';
                                             echo '<td><p>' . $unifObs . '</p></td>';
+                                            echo '<td><button class="search modal-trigger" href="#'. $modalId .'"><i class="material-icons">search</i></button></td>';
                                             echo '</tr>';
+
+                                            echo '<div id="'. $modalId . '" class="modal" style="border-radius: 10px">';
+                                            echo '<div class="modal-content">';
+                                            echo '<h6>' . $nome . '</h6><br>';
+                                            echo '<div class="divider"></div><br>';
+                                            echo '<label for="data">Data entrega</label>';
+                                            echo '<p>' . $dataEntregaUniforme . '</p>';
+                                            echo '<label for="camisa">Camisa(s) entregues:</label>';
+                                            echo '<p class="col s6">' . $quantidade_camisa . '</p>';
+                                            echo '<label for="calca">Calça(s) entregues:</label>';
+                                            echo '<p class="col s6">' . $quantidade_calca . '</p>';
+                                            echo '<label for="calcado">Calçado(s) entregues:</label>';
+                                            echo '<p>' . $quantidade_calcado . '</p>';
+                                            echo '<label for="jaqueta">Jaqueta(s) entregues:</label>';
+                                            echo '<p>' . $quantidade_jaqueta . '</p>';
+                                            echo '<label for="jaqueta">Observações:</label>';
+                                            echo '<p>' . $unifObs . '</p>';
+                                            echo '<label for="responsavel">Responsavel cadastro:</label>';
+                                            echo '<p id="responsavel">' . $responsavelCadastro . '</p>';
+                                            echo '</div>';
+                                            echo '<div class="modal-footer">';
+                                            echo '<button href="#!" class="search modal-close" name="salvar_alteracoes">Fechar</button>';
+                                            echo '</div>';
+                                            echo '</div>';
+                                            
                                             }
 
                                         }else{

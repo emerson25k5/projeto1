@@ -16,6 +16,7 @@ if($_SESSION['nivelAcesso'] != 2) {
 if (isset($_GET["id"])) {
     // Recupere o ID do registro a ser exibido
     $id = $_GET["id"];
+    $nome = $_GET["nome"];
 }
 
 //post insert para enviar novo cadastro de férias
@@ -118,7 +119,21 @@ $mysqli->close();
     
       });
         
-        </script>   
+    </script>
+    
+    <style>
+
+        fieldset {
+            border-radius: 10px;
+            align-items: center;
+        }
+
+        textarea {
+            border-radius: 10px;
+            height: 40px !important;
+        }
+    </style>
+
     </HEAD>
 
     <body>
@@ -128,6 +143,12 @@ $mysqli->close();
     <br><br>
 
     <div class="row col s12 container">
+
+                    <fieldset>
+
+                    <h5 class="center"><?php echo $nome;?></h5>
+
+                    <br>
 
                         <form method="post" action="">
 
@@ -148,9 +169,15 @@ $mysqli->close();
 
                         </form><br><br><br>
 
+                    </fieldset>
+
                             <div class="">
 
+                            <br>
+
                                     <h5>Histórico de férias</h5>
+
+                                    <br>
 
                             <fieldset style="border-radius:10px">
                             <table>

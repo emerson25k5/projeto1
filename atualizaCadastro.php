@@ -146,10 +146,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $cidade = $_POST['cidade'];
                     $municipio = $_POST['municipio'];
                     $complemento = $_POST['complemento'];
-                    $dataCadastroEnd = $_POST['dataCadastroEnd'];
                     
                     // Executar a atualização no banco de dados
-                    $sql = "UPDATE usedenderecos SET cep=?, rua=?, numero=?, bairro=?, cidade=?, municipio=?, complemento=?, dataCadastro=? WHERE funcionarioID = $id";
+                    $sql = "UPDATE usedenderecos SET cep=?, rua=?, numero=?, bairro=?, cidade=?, municipio=?, complemento=? WHERE funcionarioID = $id";
 
                     $stmt = $mysqli->prepare($sql);
     
@@ -157,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         die('Erro na preparação da consulta: ' . $mysqli->error);
                     }
 
-                    $stmt->bind_param("ssssssss", $cep, $rua, $numero, $bairro, $cidade, $municipio, $complemento, $dataCadastroEnd);
+                    $stmt->bind_param("sssssss", $cep, $rua, $numero, $bairro, $cidade, $municipio, $complemento);
 
                     if ($stmt->execute()) {
                         header("Refresh:0.1; url=listaFuncionarios.php");

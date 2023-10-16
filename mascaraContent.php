@@ -72,13 +72,52 @@
                                 });
 
 
-                        //Função para adicionar as barras nos inputs de datas
+                        // Função para adicionar e remover as barras automaticamente e limitar ao formato "00/00/0000"
+                        // Função para adicionar e remover as barras automaticamente e validar a data
                         function formatarData(input) {
-                            var value = input.value.replace(/\D/g, '');
-                            if (value.length === 10) {
-                                input.value = value.substring(0, 2) + '/' + value.substring(2, 4) + '/' + value.substring(4, 8);
+                            var value = input.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+                            if (value.length > 8) {
+                                value = value.substring(0, 8); // Limita a 8 caracteres
+                            }
+                            if (value.length > 2) {
+                                value = value.substring(0, 2) + '/' + value.substring(2);
+                            }
+                            if (value.length > 5) {
+                                value = value.substring(0, 5) + '/' + value.substring(5);
+                            }
+                            input.value = value;
+
+                            // Validar a data
+                            var parts = value.split('/');
+                            if (parts.length === 3) {
+                                var dia = parseInt(parts[0], 10);
+                                var mes = parseInt(parts[1], 10);
+                                var ano = parseInt(parts[2], 10);
+
+                                if (
+                                    dia < 1 || dia > 31 ||
+                                    mes < 1 || mes > 12 ||
+                                    ano < 1900 || ano > 2099
+                                ) {
+                                    input.setCustomValidity('Data inválida');
+                                } else {
+                                    input.setCustomValidity('');
+                                }
                             } else {
-                                input.value = value.substring(0, 2) + '/' + value.substring(2, 4) + '/' + value.substring(4, 10);
+                                input.setCustomValidity('Formato inválido');
+                            }
+                        }
+
+                        // Função para exibir a mensagem de erro abaixo da input de data
+                        function exibirMensagemErro(input, mensagem) {
+                            var divErro = input.nextElementSibling; // Obtém o próximo elemento, que deve ser a div de erro
+                            if (divErro && divErro.className === 'erro-data') {
+                                divErro.innerHTML = mensagem; // Define o conteúdo da mensagem de erro
+                            } else {
+                                divErro = document.createElement('div');
+                                divErro.className = 'erro-data';
+                                divErro.innerHTML = mensagem;
+                                input.parentNode.appendChild(divErro);
                             }
                         }
 
