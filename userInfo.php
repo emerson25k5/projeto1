@@ -110,13 +110,6 @@ $result5 = $mysqli->query($sql);
 if($result5->num_rows > 0){
     while ($row = $result5->fetch_assoc()) {
     $admissao = $row['dataAdmissao'];
-    $sep = explode("-", $admissao);
-
-    $ano = $sep[0];
-    $mes = $sep[1];
-    $dia = $sep[2];
-
-    $admissao = "" .$dia."/".$mes."/".$ano."";
 }
 }else{
     $admissao = "Nenhuma data de admissão cadastrada!";
@@ -162,7 +155,7 @@ $mysqli->close();
                         <ul class="tabs">
                         <li class="tab col s3"><a href="#option1">Geral</a></li>
                         <li class="tab col s3"><a href="#option2">Endereço</a></li>
-                        <li class="tab col s3"><a href="#option3">Atribuições</a></li>
+                        <li class="tab col s3"><a href="#option3">Atribuições</a></li>  
                         <li class="tab col s3"><a href="#option4">Uniforme</a></li>
                         </ul>
                         <br>
@@ -193,10 +186,8 @@ $mysqli->close();
                         <input type="text" name="responsavelCadastro" id="responsavelCadastro" value="<?php echo $responsavelCadastro;?>" readonly><br>
 
                         <?php if ($_SESSION['nivelAcesso'] == 2){
-                        echo '<fieldset>
-                        <label>Observações:</label>
-                                <p name="funcObservacoes" data-length="500" class="textarea" readonly>'.$funcObservacoes.'</p>
-                        </fieldset>';
+                        echo '<label>Observações:</label>
+                            <textarea name="funcObservacoes" data-length="500" class="textarea" readonly>'.$funcObservacoes.'</textarea>';
                         }
                         ?>
 

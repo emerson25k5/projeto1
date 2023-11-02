@@ -31,7 +31,8 @@ if (isset($_SESSION['login'])) {
                 echo "<script>alert('Senha alterada com sucesso!');</script>";
                 //antes de redirecionar verifica se é adm
                 if($_SESSION['nivelAcesso'] != 2) {
-                  echo "<script>setTimeout(function(){ window.location.href = 'userinfo.php?id=$id; }, 100);</script>";
+
+                  echo "<script>setTimeout(function(){ window.location.href = 'userinfo.php?id=$id'; }, 100);</script>";
                 }else{
                   echo "<script>setTimeout(function(){ window.location.href = 'listaFuncionarios.php'; }, 100);</script>";
                 }

@@ -17,7 +17,7 @@ $sql = "SELECT funcionarios.idFuncionario, funcionarios.nome, funcionarios.statu
         LEFT JOIN usedunidades ON funcionarios.idFuncionario = usedunidades.funcionarioID
         LEFT JOIN usedcargos ON funcionarios.idFuncionario = usedcargos.funcionarioID
         LEFT JOIN unidades ON usedunidades.unidadeID = unidades.idUnidade
-        LEFT JOIN cargos ON usedcargos.cargoID = cargos.idCargo";
+        LEFT JOIN cargos ON usedcargos.cargoID = cargos.idCargo ORDER BY funcionarios.nome";
 $result = $mysqli->query($sql);
 }else{
     $sql = "SELECT funcionarios.idFuncionario, funcionarios.nome, funcionarios.status, cargos.nomeCargo, unidades.nomeUnidade
@@ -26,7 +26,7 @@ $result = $mysqli->query($sql);
     LEFT JOIN usedcargos ON usedcargos.funcionarioID = funcionarios.idFuncionario
     LEFT JOIN unidades ON unidades.idUnidade = usedunidades.unidadeID
     LEFT JOIN cargos ON cargos.idCargo = usedcargos.cargoID
-    WHERE funcionarios.idFuncionario = $funcionarioLogado";
+    WHERE funcionarios.idFuncionario = $funcionarioLogado ORDER BY funcionarios.nome";
     $result = $mysqli->query($sql);
 }
 
@@ -50,16 +50,10 @@ $mysqli->close();
 
         <BR>
         
-    <div class="center">
-    <form action="" method="post">
-    <input class="center" type="text" id="busca" name="busca" placeholder="Buscar funcionários" style="width:50%;"><br>
-    <button class="search center btn" type="submit" id="submit" style="padding-left: 5px;"><i class="btnopcao material-icons" style="color: white !important; font-size: 15px !important;">search</i>Buscar (em breve)</button>
-    </form>
-    </div>
-
-    <BR><BR><BR>
 
         <main class="box container">
+            
+            <h4>Funcionarios</h4>
 
             <div>
                 <table class="highlight">
@@ -95,7 +89,7 @@ $mysqli->close();
 
 
                         //modal de confirmação antes de excluir
-                        echo '<div id="'. $modalId .'" class="modal">';
+                        echo '<div id="'. $modalId .'" class="modal" style="border-radius: 10px">';
                         echo '<div class="modal-content">';
                         echo '<h4>Exclusão de funcionário</h4>';
                         echo '<p>Tem certeza que deseja prosseguir? Esta ação não poderá ser desfeita.</p>';

@@ -37,27 +37,37 @@ if (isset($_GET["id"])) {
 
                 $camisa_quantidade = $_POST['camisa_quantidade'];
                 $calca_quantidade = $_POST['calca_quantidade'];
-                $calcado_quantidade = $_POST['calcado_quantidade'];
+                $sapato_quantidade = $_POST['sapato_quantidade'];
+                $bota_quantidade = $_POST['bota_quantidade'];
                 $jaqueta_quantidade = $_POST['jaqueta_quantidade'];
+                $touca_quantidade = $_POST['touca_quantidade'];
+                $gravata_quantidade = $_POST['gravata_quantidade'];
 
+                $soma = (int)$_POST['camisa_quantidade'] + (int)$_POST['calca_quantidade'] + (int)$_POST['sapato_quantidade'] + (int)$_POST['bota_quantidade'] + (int)$_POST['jaqueta_quantidade'] + (int)$_POST['touca_quantidade'] + (int)$_POST['gravata_quantidade'];
+
+                if($soma > 0){
                 $entregaUnifObservacoes = $_POST['entregaUnifObservacoes'];
                 $dataCadastro = $dataHoraAtual->format('Y-m-d H:i:s');
                 $responsavelCadastro = $_SESSION['nomeCompleto'];
 
-                $cadastroEntrega = $mysqli->prepare("INSERT INTO controleentregauniformes (funcionarioID, quantidade_camisa, quantidade_calca, quantidade_calcado, quantidade_jaqueta, dataEntregaUniforme, dataCadastro, responsavelEntrega, entregaUnifObs) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $cadastroEntrega->bind_param("iiiiissss", $idFuncionario, $camisa_quantidade, $calca_quantidade, $calcado_quantidade, $jaqueta_quantidade,
+                $cadastroEntrega = $mysqli->prepare("INSERT INTO controleentregauniformes (funcionarioID, quantidade_camisa, quantidade_calca, quantidade_sapato, quantidade_bota, quantidade_jaqueta, quantidade_touca, quantidade_gravata, dataEntregaUniforme, dataCadastro, responsavelEntrega, entregaUnifObs) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $cadastroEntrega->bind_param("iiiiiiiissss", $idFuncionario, $camisa_quantidade, $calca_quantidade, $sapato_quantidade, $bota_quantidade, $jaqueta_quantidade, $touca_quantidade, $gravata_quantidade,
                 $dataEntrega, $dataCadastro, $responsavelCadastro, $entregaUnifObservacoes);
 
                 if ($cadastroEntrega->execute()) {
                     $mysqli->commit();
                     echo "<script>alert('Entrega cadastrada com sucesso!');</script>";
-                    echo "<script>setTimeout(function(){ window.location.href = 'controleEntregaUniformes.php'; }, 5);</script>";
+                    echo "<script>setTimeout(function(){ window.location.href = 'controleEntregaUniformes.php?id=$id&nome=$nome'; }, 5);</script>";
                 } else {
                     $mysqli->rollback();
                     echo "<script>alert('Falha no cadastro da entrega de uniformes '.$mysqli->error.');</script>";
-                    echo "<script>setTimeout(function(){ window.location.href = 'controleEntregaUniformes.php'; }, 5);</script>";
+                    echo "<script>setTimeout(function(){ window.location.href = 'controleEntregaUniformes.php?id=$id&nome=$nome'; }, 5);</script>";
                 }
+            }else{
+                echo "<script>alert('Deve ser informado ao menos UMA peça de uniforme.');</script>";
+                echo "<script>setTimeout(function(){ window.location.href = 'controleEntregaUniformes.php?id=$id&nome=$nome'; }, 5);</script>";
+            }
 
             }
 
@@ -166,9 +176,16 @@ if (isset($_GET["id"])) {
                             <p>
                                 <label>
                                     <input type="checkbox" class="checkbox" value="1">
-                                    <span>Calçado</span>
+                                    <span>Sapato</span>
                                 </label>
-                                <input type="number" name="calcado_quantidade" class="quantity" style="display: none;" placeholder="quantidade (1 a 3)" min="1" max="3">
+                                <input type="number" name="sapato_quantidade" class="quantity" style="display: none;" placeholder="quantidade (1 a 3)" min="1" max="3">
+                            </p>
+                            <p>
+                                <label>
+                                    <input type="checkbox" class="checkbox" value="1">
+                                    <span>Bota</span>
+                                </label>
+                                <input type="number" name="bota_quantidade" class="quantity" style="display: none;" placeholder="quantidade (1 a 3)" min="1" max="3">
                             </p>
                             <p>
                                 <label>
@@ -177,7 +194,20 @@ if (isset($_GET["id"])) {
                                 </label>
                                 <input type="number" name="jaqueta_quantidade" class="quantity" style="display: none;" placeholder="quantidade (1 a 3)" min="1" max="3">
                             </p>
-
+                            <p>
+                                <label>
+                                    <input type="checkbox" class="checkbox" value="1">
+                                    <span>Touca</span>
+                                </label>
+                                <input type="number" name="touca_quantidade" class="quantity" style="display: none;" placeholder="quantidade (1 a 3)" min="1" max="3">
+                            </p>
+                            <p>
+                                <label>
+                                    <input type="checkbox" class="checkbox" value="1">
+                                    <span>Gravata</span>
+                                </label>
+                                <input type="number" name="gravata_quantidade" class="quantity" style="display: none;" placeholder="quantidade (1 a 3)" min="1" max="3">
+                            </p>
                             
                             <script>//script para aparecer o input apenas quando o checkbox é marcado
                                 const checkboxes = document.querySelectorAll('.checkbox');
@@ -241,12 +271,15 @@ if (isset($_GET["id"])) {
                                                 $idEntregaUniforme = $row['idEntregaUniforme'];
                                                 $quantidade_camisa = $row['quantidade_camisa'];
                                                 $quantidade_calca = $row['quantidade_calca'];
-                                                $quantidade_calcado = $row['quantidade_calcado'];
+                                                $quantidade_sapato = $row['quantidade_sapato'];
+                                                $quantidade_bota = $row['quantidade_bota'];
                                                 $quantidade_jaqueta = $row['quantidade_jaqueta'];
+                                                $quantidade_touca = $row['quantidade_touca'];
+                                                $quantidade_gravata = $row['quantidade_gravata'];
                                                 $dataEntregaUniforme = $row['dataEntregaUniforme'];
                                                 $responsavelCadastro = $row['responsavelEntrega'];
                                                 $unifObs = $row['entregaUnifObs'];
-                                                $totalUniformes = $quantidade_camisa + $quantidade_calca + $quantidade_calcado + $quantidade_jaqueta;  //soma todas as peças para exibir na tela principal
+                                                $totalUniformes = $quantidade_camisa + $quantidade_calca + $quantidade_sapato + $quantidade_bota + $quantidade_jaqueta + $quantidade_touca + $quantidade_gravata;  //soma todas as peças para exibir na tela principal
                                                 $modalId = 'modal' . $idEntregaUniforme;
 
                                             echo '<tr>';
@@ -266,11 +299,17 @@ if (isset($_GET["id"])) {
                                             echo '<p class="col s6">' . $quantidade_camisa . '</p>';
                                             echo '<label for="calca">Calça(s) entregues:</label>';
                                             echo '<p class="col s6">' . $quantidade_calca . '</p>';
-                                            echo '<label for="calcado">Calçado(s) entregues:</label>';
-                                            echo '<p>' . $quantidade_calcado . '</p>';
+                                            echo '<label for="sapato">Calçado(s) entregues:</label>';
+                                            echo '<p>' . $quantidade_sapato . '</p>';
+                                            echo '<label for="sapato">Bota(s) entregues:</label>';
+                                            echo '<p>' . $quantidade_bota . '</p>';
                                             echo '<label for="jaqueta">Jaqueta(s) entregues:</label>';
                                             echo '<p>' . $quantidade_jaqueta . '</p>';
-                                            echo '<label for="jaqueta">Observações:</label>';
+                                            echo '<label for="touca">Touca(s) entregues:</label>';
+                                            echo '<p>' . $quantidade_touca . '</p>';
+                                            echo '<label for="gravata">Gravata(s) entregues:</label>';
+                                            echo '<p>' . $quantidade_gravata . '</p>';
+                                            echo '<label for="obs">Observações:</label>';
                                             echo '<p>' . $unifObs . '</p>';
                                             echo '<label for="responsavel">Responsavel cadastro:</label>';
                                             echo '<p id="responsavel">' . $responsavelCadastro . '</p>';

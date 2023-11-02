@@ -197,7 +197,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 							<input type="text" name="nome" id="nome" oninput="converterParaCaixaAlta(this)" value="<?php echo $nome?>">
 
 							<label for="dataAdmissao">Data da admissao:</label>
-							<input type="date" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>" readonly><br>
+							<input type="text" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao?>" readonly><br>
 
 							<label for="id">Funcionário ID:</label>
 							<input type="text" name="id" id="id" value="<?php echo $idFuncionario?>" readonly><br>
@@ -325,12 +325,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 							</div>
 
 							<label for="dataAdmissao">Data da admissao:</label><br>
-							<input type="date" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao;?>" readonly><br><br>
+							<input type="text" name="dataAdmissao" id="dataAdmissao" value="<?php echo $admissao;?>" readonly><br><br>
 
 							<h5>Histórico de férias</h5>
 							<br>
-							<a class="search" href="controleFerias.php?id=<?php echo $idFuncionario;?>">Adicionar novo registro</a>
-
 								<table>
 									<thead>
 										<tr>

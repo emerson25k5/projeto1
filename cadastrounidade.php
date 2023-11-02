@@ -11,12 +11,13 @@ if($_SESSION['nivelAcesso'] != 2) {
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $_statusCad = "";
-    $novoStatus = "";
 
     if (isset($_POST["form_id"])) {
         $form_id = $_POST["form_id"];
 
         if ($form_id == 1) {
+
+            try{
 
             if (isset($_POST["insere_unidade"])) {
 
@@ -27,12 +28,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_statusCad = ($cadastrarUnidade) ? "Cadastro realizado com sucesso!" . $mysqli->error : "Falha ao realizar o cadastro!" ." Código do erro:  " . $mysqli->error;
             }
 
-            header("Location: cadastrounidade.php");//após atualização/inserção no banco é redirecionado para a mesma página para evitar duplicidade com F5
+            header("Location: cadastroUnidade.php");//após atualização/inserção no banco é redirecionado para a mesma página para evitar duplicidade com F5
             exit;
+
+
+        }catch (mysqli_sql_exception $e) {
+            if ($e->getCode() == 1062) {
+                echo '<script>alert("Já existe uma unidade com este nome!");</script>';
+                echo "<script>setTimeout(function(){ window.location.href = 'cadastroUnidade.php'; }, 100);</script>";
+            } else {
+                // Trate outros erros como costume
+                echo '<script>alert("Falha ao atualizar dados: "</script>'.$e->getMessage();
+            }
         }
+
+
+        }
+
 
             //processa a atualização da unidades individualmente
         if ($form_id == 2) {
+
+            try{//try para verificar se existe unidade com este nome
 
             if (isset($_POST["salvar_alteracoes"])) {
     
@@ -70,11 +87,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $_statusCad = "Falha ao realizar o cadastro!" ." Código do erro:  " . $mysqli->error;
                 }
 
-                header("Location: cadastrounidade.php");//após atualização/inserção no banco é redirecionado para a mesma página para evitar duplicidade com F5
+                header("Location: cadastroUnidade.php");//após atualização/inserção no banco é redirecionado para a mesma página para evitar duplicidade com F5
                 exit;
 
             }
+            }catch (mysqli_sql_exception $e) {//catch para exibir alert caso tenha unidade com o mesmo nome cadastrada
+                if ($e->getCode() == 1062) {
+                    echo '<script>alert("Já existe uma unidade com este nome!");</script>';
+                    echo "<script>setTimeout(function(){ window.location.href = 'cadastroUnidade.php'; }, 100);</script>";
+                } else {
+                    // Trate outros erros como costume
+                    echo '<script>alert("Falha ao atualizar dados: "</script>'.$e->getMessage();
+                }
+            }
+
         }
+
     }
 
 }
@@ -115,7 +143,7 @@ $mysqli->close();
                     <div class="input-field col s12">
                     <i class="material-icons prefix">maps_home_work</i>
                     <input type="hidden" name="form_id" value="1">
-                    <input type="text" name="nomeUnidade" id="nomeUnidade" maxlength="25" class="validate" required>
+                    <input type="text" name="nomeUnidade" id="nomeUnidade" maxlength="25" class="validate" oninput="converterParaCaixaAlta(this)" required>
                     <label for="nomeUnidade">Nome da nova Unidade</label>
                     </div>
                     
@@ -152,7 +180,7 @@ $mysqli->close();
                                     echo '<form method="post" action="">';
                                     echo '<input type="hidden" name="form_id" value="2">';
                                     echo '<input type="hidden" name="idUnidade" value="'. $idUnidade.'">';
-                                    echo '<td><input type="text" name="novoNomeUnidade" value="' . $nome . '"></td>';
+                                    echo '<td><input type="text" name="novoNomeUnidade" value="' . $nome . '" oninput="converterParaCaixaAlta(this)"></td>';
                                     echo '<td>';
                                     echo '<div class="switch">';
                                     echo '<label>Inativo';
@@ -191,7 +219,10 @@ $mysqli->close();
 
         </main>
 
-        <?php include("footerContent.php");?> <!--adiciona o conteúdo do rodapé de modo modular usando o INCLUDE em PHP-->
+        <?php 
+        require("mascaraContent.php"); //adiciona o conteúdo JS para caixa alta dentre outros
+        include("footerContent.php");
+        ?> <!--adiciona o conteúdo do rodapé de modo modular usando o INCLUDE em PHP-->
 
     </body>
 </HTML>

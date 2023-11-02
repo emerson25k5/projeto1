@@ -3,6 +3,7 @@
 require "autenticaContent.php";
 require "conecta.php";
 
+
 if($_SESSION['nivelAcesso'] != 2) {
     echo "Acesso negado!";
     exit;
@@ -18,6 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $form_id = $_POST["form_id"];
 
         if ($form_id == 1) {
+            
+            try{//try para verificar se existe cargo com este nome
 
             if (isset($_POST["insere_cargo"])) {
 
@@ -28,12 +31,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_statusCadCargo = ($cadastrarCargo) ? "Cadastro realizado com sucesso!" . $mysqli->error : "Falha ao realizar o cadastro!" ." Código do erro:  " . $mysqli->error;
             }
 
-            header("Location: cadastrocargo.php");//após atualização/inserção no banco é redirecionado para a mesma página para evitar duplicidade com F5
+            header("Location: cadastroCargo.php");//após atualização/inserção no banco é redirecionado para a mesma página para evitar duplicidade com F5
             exit;
+
+        }catch (mysqli_sql_exception $e) {//catch para exibir alert caso tenha cargo com o mesmo nome cadastrada
+            if ($e->getCode() == 1062) {
+                echo '<script>alert("Já existe um cargo com este nome!");</script>';
+                echo "<script>setTimeout(function(){ window.location.href = 'cadastroCargo.php'; }, 100);</script>";
+            } else {
+                echo '<script>alert("Falha ao atualizar dados: "</script>'.$e->getMessage();
+            }
+        }
         }
 
         //processa a atualização dos cargos individualmente
         if ($form_id == 2) {
+
+            try{
 
             if (isset($_POST["salvar_alteracoes"])) {
 
@@ -72,10 +86,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $_statusCadCargo = "Falha ao realizar o cadastro!" ." Código do erro:  " . $mysqli->error;
                 }
 
-                header("Location: cadastrocargo.php");//após atualização/inserção no banco é redirecionado para a mesma página para evitar duplicidade com F5
+                header("Location: cadastroCargo.php");//após atualização/inserção no banco é redirecionado para a mesma página para evitar duplicidade com F5
                 exit;
 
             }
+
+        }catch (mysqli_sql_exception $e) {//catch para exibir alert caso tenha cargo com o mesmo nome cadastrada
+            if ($e->getCode() == 1062) {
+                echo '<script>alert("Já existe um cargo com este nome!");</script>';
+                echo "<script>setTimeout(function(){ window.location.href = 'cadastroCargo.php'; }, 100);</script>";
+            } else {
+                echo '<script>alert("Falha ao atualizar dados: "</script>'.$e->getMessage();
+            }
+        }
+
         }
     }
 
@@ -116,7 +140,7 @@ $mysqli->close();
                     <div class="input-field col s12">
                     <i class="material-icons prefix">engineering</i>
                     <input type="hidden" name="form_id" value="1">
-                    <input type="text" name="nomeCargo" id="nomeCargo" maxlength="25" class="validate" required>
+                    <input type="text" name="nomeCargo" id="nomeCargo" maxlength="25" class="validate" oninput="converterParaCaixaAlta(this)" required>
                     <label for="nomeCargo">Nome do novo cargo</label>
                     </div>
                     
@@ -153,7 +177,7 @@ $mysqli->close();
                                     echo '<form method="post" action="">';
                                     echo '<input type="hidden" name="form_id" value="2">';
                                     echo '<input type="hidden" name="idCargo" value="'. $idCargo.'">';
-                                    echo '<td><input type="text" name="novoNomeCargo" value="' . $nome . '"></td>';
+                                    echo '<td><input type="text" name="novoNomeCargo" value="' . $nome . '" oninput="converterParaCaixaAlta(this)"></td>';
                                     echo '<td>';
                                     echo '<div class="switch">';
                                     echo '<label>Inativo';
@@ -192,7 +216,10 @@ $mysqli->close();
 
         </main>
 
-        <?php require "footerContent.php";?> <!--adiciona o conteúdo do rodapé de modo modular usando o INCLUDE em PHP-->
+        <?php 
+        require("mascaraContent.php"); //adiciona o conteúdo JS para caixa alta dentre outros
+        require "footerContent.php";
+        ?> <!--adiciona o conteúdo do rodapé de modo modular usando o INCLUDE em PHP-->
 
     </body>
 </HTML>

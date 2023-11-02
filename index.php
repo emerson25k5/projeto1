@@ -1,5 +1,5 @@
 <?php
-session_start();
+use Detection\MobileDetect;
 if (isset($_SESSION["authenticated"]) && $_SESSION["authenticated"] == true) {
     header("Location: listaFuncionarios.php");
     exit;
@@ -8,6 +8,9 @@ if (isset($_SESSION["authenticated"]) && $_SESSION["authenticated"] == true) {
 if (isset($_POST['entrar'])) {
 
     require("conecta.php");
+
+    date_default_timezone_set('America/Sao_Paulo');
+    $dataHoraAtual = new DateTime();
 
     $login = $_POST['login'];
     $senha = $_POST['senha'];
@@ -36,7 +39,9 @@ if (isset($_POST['entrar'])) {
         $pnome = $sep[0];
 
         if (password_verify($senha, $senhaArmazenada)) {
+            if (session_status() == PHP_SESSION_NONE) {
             session_start();
+            }
             $_SESSION["authenticated"] = true;
             $_SESSION['login'] = $login;
             $_SESSION['nomeUsuario'] = $pnome;
@@ -46,19 +51,100 @@ if (isset($_POST['entrar'])) {
             $_SESSION['idUsuarioLogado'] = $idSessao;
 
             if($nivelAcesso == 2){
+
+                $tipoAcesso = "Acesso administrador";
+
+                require_once 'Mobile-Detect/Mobile_Detect.php';
+                $detect = new Mobile_Detect;
+
+                if ($detect->isMobile()) {
+                    $dispositivo = "Smartphone";
+                } elseif ($detect->isTablet()) {
+                    $dispositivo = "Tablet";
+                } else {
+                    $dispositivo = "Desktop";
+                }
+
+                $ip = $_SERVER['REMOTE_ADDR'];
+                $browser = $_SERVER['HTTP_USER_AGENT'];
+                $dataTentativa = $dataHoraAtual->format('Y-m-d H:i:s');
+                $stmt = $mysqli->prepare("INSERT INTO historicoacesso (funcionarioID, tipoAcesso, dataCadastro, enderecoIp, browser, dispositivo) VALUES (?, ?, ?, ?, ?, ?)"); //insert no histórico de acessos
+
+                $stmt->bind_param("isssss", $idFunc, $tipoAcesso, $dataTentativa, $ip, $browser, $dispositivo);
+
+                if ($stmt->execute()) {
                 header("Location: listaFuncionarios.php");
+                }else{
+                    echo "<script>alert('Erro ao inserir acesso no banco de dados. Fale com o suporte.');</script>";
+                    echo "<script>setTimeout(function(){ window.location.href = 'index.php'; }, 5);</script>";
+                }
             }else{
-                header("Location: userInfo.php?id=$idFunc");
+
+                $tipoAcesso = "Acesso usuário comum";
+
+                require_once 'Mobile-Detect/Mobile_Detect.php';
+                $detect = new Mobile_Detect;
+
+                if ($detect->isMobile()) {
+                    $dispositivo = "Smartphone";
+                } elseif ($detect->isTablet()) {
+                    $dispositivo = "Tablet";
+                } else {
+                    $dispositivo = "Desktop";
+                }
+
+                $ip = $_SERVER['REMOTE_ADDR'];
+                $browser = $_SERVER['HTTP_USER_AGENT'];
+                $dataTentativa = $dataHoraAtual->format('Y-m-d H:i:s');
+                $stmt = $mysqli->prepare("INSERT INTO historicoacesso (funcionarioID, tipoAcesso, dataCadastro, enderecoIp, browser, dispositivo) VALUES (?, ?, ?, ?, ?, ?)"); //insert no histórico de acessos
+
+                $stmt->bind_param("isssss", $idFunc, $tipoAcesso, $dataTentativa, $ip, $browser, $dispositivo);
+
+                if ($stmt->execute()) {
+                    header("Location: userInfo.php?id=$idFunc");
+                }else{
+                    echo "<script>alert('Erro ao inserir acesso no banco de dados. Fale com o suporte.');</script>";
+                    echo "<script>setTimeout(function(){ window.location.href = 'index.php'; }, 5);</script>";
+                }
             }
 
-        } else {
-            echo '<script>alert("Senha incorreta!")<script>';
-            echo "<script>setTimeout(function(){ window.location.href = 'index.php'; }, 5);</script>";
+        } else {                   
+            $tipoAcesso = "Senha incorreta";
+
+            require_once 'Mobile-Detect/Mobile_Detect.php';
+            $detect = new Mobile_Detect;
+
+            if ($detect->isMobile()) {
+                $dispositivo = "Smartphone";
+            } elseif ($detect->isTablet()) {
+                $dispositivo = "Tablet";
+            } else {
+                    $dispositivo = "Desktop";
+            }
+
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $browser = $_SERVER['HTTP_USER_AGENT'];
+            $dataTentativa = $dataHoraAtual->format('Y-m-d H:i:s');
+            $stmt = $mysqli->prepare("INSERT INTO historicoacesso (funcionarioID, tipoAcesso, dataCadastro, enderecoIp, browser, dispositivo) VALUES (?, ?, ?, ?, ?, ?)"); //insert no histórico de acessos
+
+            $stmt->bind_param("isssss", $idFunc, $tipoAcesso, $dataTentativa, $ip, $browser, $dispositivo);
+
+            if ($stmt->execute()) {
+                echo "<script>alert('Senha incorreta!');</script>";
+                echo "<script>setTimeout(function(){ window.location.href = 'index.php'; }, 5);</script>";
+            } else {
+                echo "Erro ao inserir tipo acesso no banco de dados.";
+            }
+            
+
         }
     }else {
-        echo "<script>alert('Usuário não encontrado ou inativo, fale com um administrador!');</script>";
+        echo "<script>alert('Usuário não existe ou está inativo, fale com um administrador!');</script>";
         echo "<script>setTimeout(function(){ window.location.href = 'index.php'; }, 5);</script>";
     }
+
+    $stmt->close();
+    $mysql->close();
 
 }
 
@@ -96,7 +182,7 @@ if (isset($_POST['entrar'])) {
     </HEAD>
     <body>
 
-    <h4 class="center">Login</h4>
+    <h4 class="center">Acesso | PATROL</h4>
 
         <BR><BR><BR><BR>
 
@@ -122,7 +208,7 @@ if (isset($_POST['entrar'])) {
 
         </form>
         
-
+        <BR><BR><BR><BR><BR><BR><BR>
         </main>
 
         <?php include("footerContent.php");?> <!--adiciona o conteúdo do rodapé de modo modular usando o INCLUDE em PHP-->

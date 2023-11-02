@@ -62,8 +62,9 @@ table {
     color: rgb(255, 196, 0);
 }
 
-.page-footer {
-    background-color: #000000 !important;
+.footer {
+    bottom: 0;
+    width: 100%;
 }
 
 .butao {

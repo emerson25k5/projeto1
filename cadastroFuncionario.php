@@ -19,6 +19,8 @@ $dataHoraAtual = new DateTime();
 
 $_statusCad = "";
 
+try{
+
 if ($_POST) {
 
     $mysqli->begin_transaction();
@@ -141,7 +143,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
 
         if ($cadastrarUniforme->execute()) {
             $mysqli->commit();
-            $_statusCad = "Cadastro realizado com sucesso!";
+            $_statusCad = "Funcionário cadastrado com sucesso!";
         } else {
             $_statusCad = "Falha no cadastro do uniforme!" . " Erro: " . $mysqli->error;
             $mysqli->rollback();
@@ -152,7 +154,6 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
     $mysqli->rollback();
     $mysqli->close();
 }
-
         //INSERIR NO LOG A INSERÇÃO DE UM NOVO FUNCIONARIO
         include("conecta.php");
 
@@ -181,6 +182,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
 
             if ($insertLog->execute()) {
                 $mysqli->commit();
+                header("Location: listaFuncionarios.php");
                 $mysqli->close();
             }else{
                 echo "Falha no registro de LOG" . " Erro: " . $mysqli->error;
@@ -191,6 +193,16 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
             echo "Erro ao salvar no registro de alterações!".$mysqli->error;
             exit();
         }
+}
+}catch (mysqli_sql_exception $e) {
+    if ($e->getCode() == 1062) {
+        $_statusCad = "Funcionário já cadastrado. Verifique as informações e tente novamente.";
+    } else {
+        // Trate outros erros como costume
+        $_statusCad = "Falha no cadastro do funcionário: " . $e->getMessage();
+    }
+    $mysqli->rollback();
+    $mysqli->close();
 }
 
 ?>
