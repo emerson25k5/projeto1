@@ -8,7 +8,7 @@
               <ul class="row center container">
                 
                 <li><a class="col s4">EBDS</a></li>
-                <li><a class="col s4">v2.3</a></li>
+                <li><a class="col s4">v2.8</a></li>
                 <li><a class="col s4" href="registroAlteracoes.php">Auditoria</a></li>
               </ul>
 </div>

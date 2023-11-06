@@ -15,7 +15,7 @@
         <div class="nav-wrapper container">
         <a href="#" class="brand-logo center"><img class="logo" src="imagens/brasao_patrol.png" alt="patrol_logo"></a>
         <ul id="sidenav">
-            <li href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i>MENU</li>
+            <li href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></li>
             <li class="dropdown-trigger right" href="#" data-target="dropdown1">Olá, <?php echo $_SESSION['nomeUsuario'];?></li>
         </ul>
         </div>
@@ -23,17 +23,18 @@
     <nav class="finin">
     </nav>
         <ul id='dropdown1' class='menu-perfil dropdown-content'>
-        <li><a href="userInfo.php?id=<?php echo $_SESSION['idFuncionarioLogado'];?>"><i class="material-icons prefix">badge</i>Meus dados</a></li>
-            <li><a href="atualizaSenha.php"><i class="material-icons prefix">key</i>Alterar senha</a></li>
-            <li><a href="encerra_sessao.php"><i class="material-icons prefix">logout</i>Sair</a></li>
+            <li class="lista-menu-suspenso-opt"><a class="a-menu-suspenso-opt" href="userInfo.php?id=<?php echo $_SESSION['idFuncionarioLogado'];?>"><i class="material-icons prefix">badge</i>Meus dados</a></li>
+            <li class="lista-menu-suspenso-opt"><a class="a-menu-suspenso-opt" href="atualizaSenha.php"><i class="material-icons prefix">key</i>Alterar senha</a></li>
+            <li class="lista-menu-suspenso-opt"><a class="a-menu-suspenso-opt" href="encerra_sessao.php"><i class="material-icons prefix">logout</i>Sair</a></li>
         </ul>
 
 
 
     <ul id="slide-out" class="right sidenav">
+<br>
+<div class="center row"><img src="imagens/patrol_texto_bg.png" class="patrolSideNavImage center"></div>
 
-<li>
-                <img src="imagens/patrol_texto_bg.png" class="patrolSideNavImage">
+<li><a class="subheader">Opções</a></li>
 
                 <?php
     if($_SESSION['nivelAcesso'] == 2 ){
@@ -58,7 +59,7 @@
         var options = {
             coverTrigger: false,
             openOnClick: true,
-            outDuration: 100
+            constrainWidth: true
         };
         M.Dropdown.init(dropdowns, options);
     });

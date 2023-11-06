@@ -171,7 +171,7 @@ if (isset($_POST['entrar'])) {
     
     <nav class="nav">
         <div class="nav-wrapper container">
-        <a href="#" class="brand-logo center"><img class="logo" src="imagens/patrol_texto_bg.png" alt="patrol_logo"></a>
+        <a href="#" class="brand-logo center"><img class="logo" src="imagens/brasao_patrol.png" alt="patrol_logo"></a>
         <ul id="sidenav">
         </ul>
         </div>
@@ -182,11 +182,15 @@ if (isset($_POST['entrar'])) {
     </HEAD>
     <body>
 
-    <BR><BR><BR>
+    <BR>
 
-    <h4 class="center container" style="font-weight:bold;">Acesso | Patrol</h4>
+    
+    
+    <BR><BR>
 
-        <BR><BR><BR>
+    <h4 class="center container" style="font-weight:bold;">Acesso | Patrol</h5>
+
+        <BR><BR>
 
         <main class="row col s12 container center">
 
@@ -211,17 +215,19 @@ if (isset($_POST['entrar'])) {
                 </div>
 
                 <div>
-                    <input type="submit" name="entrar" value="Acessar" class="submit-login">
+                    <input type="submit" name="entrar" value="Acessar" class="submitLogin">
                 </div>
 
-                <BR>
+
+                <BR><BR>
+
 
 
         </div>
 
         </form>
         
-        <BR><BR><BR><BR><BR><BR><BR>
+        <BR><BR>
         </main>
 
         <script>
