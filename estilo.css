@@ -36,8 +36,6 @@ table {
 }
 /* fim botões de opção da lista de funcionários*/
 
-
-
 .logo {
     width: 40px;
     height: auto;
@@ -151,6 +149,8 @@ h5 {
     color: rgb(255, 196, 0) !important;
   }
 
+  
+
   label {
     font-size: 15px !important;
     font-weight: bold !important;
@@ -158,7 +158,6 @@ h5 {
 
   label:hover {
     font-size: 15px !important;
-    color: rgb(255, 196, 0) !important;
   }
 
   .menu-perfil {
@@ -175,3 +174,41 @@ h5 {
     color: #000000 !important;
     font-weight: bold !important;
   }
+
+  /* estilos da tela de login*/
+
+  .todo-login {
+    width: 80%;
+  }
+
+  .input-login {
+    height: 40px;
+    width: 80%;
+    border-radius: 7px;
+    font-size: 25px;
+  }
+
+  .recupera-senha {
+    color: rgb(255, 196, 0);
+  }
+
+  .submit-login {
+    width: 25%;
+    height: 40px;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+  }
+
+  .submit-login:active {
+    width: 25%;
+    height: 40px;
+    background-color: black;
+    color: rgb(255, 196, 0);
+    font-weight: bold;
+    border-radius: 7px;
+  }
+  /* fim dos estilos da tela de login*/
+
+  

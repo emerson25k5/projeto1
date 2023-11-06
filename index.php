@@ -182,34 +182,59 @@ if (isset($_POST['entrar'])) {
     </HEAD>
     <body>
 
-    <h4 class="center">Acesso | PATROL</h4>
+    <BR><BR><BR>
 
-        <BR><BR><BR><BR>
+    <h4 class="center container" style="font-weight:bold;">Acesso | Patrol</h4>
+
+        <BR><BR><BR>
 
         <main class="row col s12 container center">
 
         <form action="" method="post" class="form">
 
-            <div class="login input-field col s12 center">
-                <i class="material-icons prefix">email</i>
-                <input type="email" name="login" id="login" maxlength="50" class="validate" required>
-                <label for="login">E-mail</label>
-            </div>
+        <div class="todo-login container">
+            
 
-            <div class="login input-field col s12 center">
-                <i class="material-icons prefix">password</i>
-                <input type="password" name="senha" id="senha" maxlength="50" class="validate" required>
-                <label for="senha">Senha</label>
-            </div>
+            <BR>
 
-            <BR><BR>
+                <div class="login input-field col s12 center">
+                    <i class="material-icons prefix">email</i>
+                    <input type="email" name="login" id="login" maxlength="50" class="input-login validate" required>
+                    <label for="login">E-mail</label>
+                </div>
 
-            <input type="submit" name="entrar" value="Entrar" class="search">
+                <div class="login input-field col s12 center">
+                    <i class="material-icons prefix">pin</i>
+                    <input type="password" name="senha" id="senha" maxlength="50" class="input-login validate" required>
+                    <label for="senha">Senha</label>
+                    <a href="#" class="recupera-senha right">Esqueceu a senha?</a>
+                </div>
+
+                <div>
+                    <input type="submit" name="entrar" value="Acessar" class="submit-login">
+                </div>
+
+                <BR>
+
+
+        </div>
 
         </form>
         
         <BR><BR><BR><BR><BR><BR><BR>
         </main>
+
+        <script>
+$(document).ready(function() {
+  $('#email').on('focus', function() {
+    $('#emailIcon').css('color', 'red'); // Defina a cor desejada aqui
+  });
+
+  $('#email').on('blur', function() {
+    $('#emailIcon').css('color', ''); // Retorna à cor padrão (removendo a cor personalizada)
+  });
+});
+</script>
 
         <?php include("footerContent.php");?> <!--adiciona o conteúdo do rodapé de modo modular usando o INCLUDE em PHP-->
 
