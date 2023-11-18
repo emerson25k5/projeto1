@@ -144,7 +144,6 @@ if (isset($_POST['entrar'])) {
     }
 
     $stmt->close();
-    $mysql->close();
 
 }
 

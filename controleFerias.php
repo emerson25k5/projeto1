@@ -3,9 +3,6 @@
 include("autenticaContent.php");
 include("conecta.php");
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 //verifica se o nivel de acesso é de adm, se n for é exibida mensagem de erro e o resto da página não carrega
 if($_SESSION['nivelAcesso'] != 2) {
     echo "Acesso negado!";
@@ -217,7 +214,7 @@ $mysqli->close();
                                             echo '<input type="hidden" name="idFerias" value="' . $idUltFerias . '">';
                                             echo '<p><b>Data inicial: </b>' . $dataInicioUltFerias . '</p>';
                                             echo '<p><b>Data final: </b>' . $dataFimUltFerias . '</p>';
-                                            echo '<p><b>Observações: </b><input type="text" name="novaFeriasObservacoes" value="' . $feriasObservacoes . '"></p>';
+                                            echo '<b>Observações:</b><textarea name="novaFeriasObservacoes">' . $feriasObservacoes. '</textarea>';
                                             echo '<p><b>Responsável pelo cadastro:</b></p>';
                                             echo '<p>' . $responsavelCadastro . '</p>';
                                             echo '<p>' . date('d/m/Y H:i:s', strtotime($dataCadastroFerias)) . '</p>';

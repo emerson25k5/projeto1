@@ -380,11 +380,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 							<div class="uniforme_tronco">
 								<label for="tam_tronco" class="labSelect">Tronco:</label>
 								<select name="tam_tronco" id="tam_tronco" required>
-								<option value="<?php echo $tamTronco;?>" selected><?php echo $tamTronco;?></option>
-									<option value="P">Pequeno(P)</option>
-									<option value="M">Médio(M)</option>
-									<option value="G">Grande(G)</option>
-									<option value="GG">Extra grande(GG)</option>
+									<option value="<?php echo $tamTronco;?>" selected><?php echo $tamTronco;?></option>
+									<option value="36">Tamanho 36</option>
+									<option value="38">Tamanho 38</option>
+									<option value="40">Tamanho 40</option>
+									<option value="42">Tamanho 42</option>
+									<option value="44">Tamanho 44</option>
+									<option value="46">Tamanho 46</option>
 								</select>
 							</div>
 
@@ -392,10 +394,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 								<label for="tam_perna" class="labSelect">Pernas:</label>
 								<select name="tam_perna" id="tam_perna" required>
 									<option value="<?php echo $tamPerna;?>"selected><?php echo $tamPerna;?></option>
-									<option value="P">Pequeno(P)</option>
-									<option value="M">Médio(M)</option>
-									<option value="G">Grande(G)</option>
-									<option value="GG">Extra grande(GG)</option>
+									<option value="36">Tamanho 36</option>
+									<option value="38">Tamanho 38</option>
+									<option value="40">Tamanho 40</option>
+									<option value="42">Tamanho 42</option>
+									<option value="44">Tamanho 44</option>
+									<option value="46">Tamanho 46</option>
 								</select>
 							</div>
 
@@ -403,16 +407,16 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 								<label for="uniforme_calcado" class="labSelect">Calçado:</label>
 								<select name="tam_calcado" id="uniforme_calcado" required>
 									<option value="<?php echo $tamCalcado;?>"selected><?php echo $tamCalcado;?></option>
-									<option value="35">Tam 35</option>
-									<option value="36">Tam 36</option>
-									<option value="37">Tam 37</option>
-									<option value="38">Tam 38</option>
-									<option value="39">Tam 39</option>
-									<option value="40">Tam 40</option>
-									<option value="41">Tam 41</option>
-									<option value="42">Tam 42</option>
-									<option value="43">Tam 43</option>
-									<option value="44">Tam 44</option>
+									<option value="35">Tamanho 35</option>
+									<option value="36">Tamanho 36</option>
+									<option value="37">Tamanho 37</option>
+									<option value="38">Tamanho 38</option>
+									<option value="39">Tamanho 39</option>
+									<option value="40">Tamanho 40</option>
+									<option value="41">Tamanho 41</option>
+									<option value="42">Tamanho 42</option>
+									<option value="43">Tamanho 43</option>
+									<option value="44">Tamanho 44</option>
 								<select>
 							</div>
 							

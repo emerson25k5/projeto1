@@ -9,8 +9,8 @@ if($_SESSION['nivelAcesso'] != 2) {
 }
 
 $sql = "SELECT * FROM logalteracoes ORDER BY dataLogAlteracao DESC";
-
 $result = $mysqli->query($sql);
+
 
 $mysqli->close();
 
@@ -67,6 +67,20 @@ $mysqli->close();
                                         $rgAlt = $row['rgAlt'];
                                         $nascimentoAlt = $row['nascimentoAlt'];
                                         $modalId = 'modal' . $idLog;
+
+                                        
+                                        if($idFuncionarioAlt != 0){
+                                            require "conecta.php";
+                                            $sql2 = "SELECT nome FROM funcionarios WHERE idFuncionario = $idFuncionarioAlt";
+                                            $result2 = $mysqli->query($sql2);
+
+                                            if($result2->num_rows > 0){
+                                                $row = $result2->fetch_assoc();
+                                                $nomeAlt = $row['nome'];
+                                            }
+                                            $mysqli->close();
+                                        }
+
                                         
                                             //coloca corzinha e personaliza para cad tipo de log
                                             if($tipoLog == "Exlusão registro de funcionário"){
@@ -75,8 +89,10 @@ $mysqli->close();
                                                 $descricao = '<b style="color:orange;">DADOS ANTES DA ALTERAÇÃO</b>';
                                             }elseif($tipoLog == "Cadastro novo funcionario"){
                                                 $descricao = '<b style="color:green;">DADOS DO NOVO FUNCIONÁRIO</b>';
+                                            }elseif($tipoLog == "Cadastro folga trabalhada"){
+                                                $descricao = '<b style="color:green;">DADOS CADASTRADOS</b>';
                                             }else{
-                                                $descricao = '<b style="color:orange;">DADOS ALTERADOS</b>';
+                                                $descricao = '<b style="color:orange;">DADOS ATUALIZADOS</b>';
                                             }
                                             
                                             //exibe na lista da tabela

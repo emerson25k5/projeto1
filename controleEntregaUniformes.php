@@ -259,7 +259,7 @@ if (isset($_GET["id"])) {
                                     <thead>
                                         <tr>
                                             <th>Data entrega</th>
-                                            <th>Quantidade de peças</th>
+                                            <th>Qtd</th>
                                             <th>Obs:</th>
                                             
                                         </tr>
@@ -285,7 +285,7 @@ if (isset($_GET["id"])) {
                                             echo '<tr>';
                                             echo '<td><p>' . $dataEntregaUniforme . '</p></td>';
                                             echo '<td><h5>' . $totalUniformes . '</h5></td>';
-                                            echo '<td><p>' . $unifObs . '</p></td>';
+                                            echo '<td><textarea disabled>' . $unifObs . '</textarea></td>';
                                             echo '<td><button class="search modal-trigger" href="#'. $modalId .'"><i class="material-icons">search</i></button></td>';
                                             echo '</tr>';
 
@@ -310,7 +310,7 @@ if (isset($_GET["id"])) {
                                             echo '<label for="gravata">Gravata(s) entregues:</label>';
                                             echo '<p>' . $quantidade_gravata . '</p>';
                                             echo '<label for="obs">Observações:</label>';
-                                            echo '<p>' . $unifObs . '</p>';
+                                            echo '<textarea readonly>' . $unifObs . '</textarea>';
                                             echo '<label for="responsavel">Responsavel cadastro:</label>';
                                             echo '<p id="responsavel">' . $responsavelCadastro . '</p>';
                                             echo '</div>';

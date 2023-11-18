@@ -65,6 +65,22 @@ table {
     width: 100%;
 }
 
+/*Estilo do campo de busca */
+
+.search-bar {
+  background-color: #ffffff !important;
+  width: 60% !important;
+}
+
+.input-search {
+  height: 40px !important;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 20px;
+}
+
+/*Estilo do campo de busca */
+
 .butao {
     background-color: #000000 !important;
     color: #fff !important;
@@ -89,7 +105,7 @@ table {
 }
 
 .btnopcao {
-    color: #000000 !important;
+    color: grey !important;
     font-size: 30px !important;
     text-align: center !important;
 }
@@ -162,6 +178,25 @@ h5 {
     font-size: 15px !important;
   }
 
+  /* estilo da lista do menu*/
+  .subheader {
+    color: white !important; 
+    background-color: rgba(0, 0, 0, 0.39); 
+    width: 94%; 
+    border-top-right-radius:5px !important; 
+    border-bottom-right-radius:5px !important;
+    text-align: right;
+    font-size: 20px !important;
+  }
+
+  .ico {
+    color: Blue !important;
+    font-size: 40px;
+  }
+
+
+
+  /* estilo da lista do menu*/
   .menu-perfil {
     background-color: #000000d3 !important;
     width: 175px !important;
@@ -225,7 +260,6 @@ h5 {
     font-weight: bold;
     border-radius: 7px;
   }
-
 
   /* fim dos estilos da tela de login*/
 

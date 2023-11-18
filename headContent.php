@@ -16,6 +16,7 @@
         <a href="#" class="brand-logo center"><img class="logo" src="imagens/brasao_patrol.png" alt="patrol_logo"></a>
         <ul id="sidenav">
             <li href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></li>
+            <li href="#" data-target="dropdown1" class="dropdown-trigger right"><i class="material-icons">arrow_drop_down</i></li>
             <li class="dropdown-trigger right" href="#" data-target="dropdown1">Olá, <?php echo $_SESSION['nomeUsuario'];?></li>
         </ul>
         </div>
@@ -34,19 +35,25 @@
 <br>
 <div class="center row"><img src="imagens/patrol_texto_bg.png" class="patrolSideNavImage center"></div>
 
-<li><a class="subheader">Opções</a></li>
+<li><a class="subheader">Gestão de funcionários</a></li>
 
                 <?php
     if($_SESSION['nivelAcesso'] == 2 ){
         echo '
                 <li><a href="listaFuncionarios.php" class="menu"><i class="material-icons">badge</i>Funcionários</a></li>
-                <li><a href="cadastroFuncionario.php" class="menu"><i class="material-icons">person_add</i>Cadastro de funcionários</a></li>
-                <li><a href="listaFuncionariosUniformes.php" class="menu"><i class="material-icons">checkroom</i>Controle de uniformes</a></li>
-                <li><a href="listaFuncionariosFerias.php" class="menu"><i class="material-icons">flight</i>Controle de férias</a></li>
-                <li><a href="cadastroCargo.php" class="menu"><i class="material-icons">post_add</i>Cadastro de cargos</a></li>
-                <li><a href="cadastroUnidade.php" class="menu"><i class="material-icons">add_location_alt</i>Cadastro de unidades</a></li>
-                <li><a href="associaPerfilAcesso.php" class="menu"><i class="material-icons">admin_panel_settings</i>Associar perfis de acesso</a></li>
-                <li><a href="registroAcessos.php" class="menu"><i class="material-icons">schedulety</i>Histórico de acessos</a></li>';
+                <li><a href="cadastroFuncionario.php" class="menu"><i class="material-icons">person_add</i>Cadastro funcionários</a></li><br>
+                <li><a class="subheader">Controle interno</a></li>
+                <li><a href="listaFuncionariosUniformes.php" class="menu"><i class="material-icons">checkroom</i>Controle uniformes</a></li>
+                <li><a href="listaFuncionariosFerias.php" class="menu"><i class="material-icons">date_range</i>Controle férias</a></li>
+                <li><a href="controleFolgaTrabalhada.php" class="menu"><i class="material-icons">event</i>Controle trabalho externo</a></li><br>
+                <li><a class="subheader">Cadastros</a></li>
+                <li><a href="cadastroFuncionario.php" class="menu"><i class="material-icons">person_add</i>Funcionários</a></li>
+                <li><a href="cadastroCargo.php" class="menu"><i class="material-icons">post_add</i>Cargos</a></li>
+                <li><a href="cadastroUnidade.php" class="menu"><i class="material-icons">add_location_alt</i>Unidades</a></li><br>
+                <li><a class="subheader">Segurança</a></li>
+                <li><a href="associaPerfilAcesso.php" class="menu"><i class="material-icons">admin_panel_settings</i>Permissões acesso</a></li>
+                <li><a href="registroAcessos.php" class="menu"><i class="material-icons">schedulety</i>Histórico acessos</a></li>
+                <li><a href="atualizaSenha.php" class="menu"><i class="material-icons">key</i>Alterar minha senha</a><br><br><br><br><br><p class="center">SWUPE - EBDS</p></li>';
     }?>
 
     </ul>

@@ -8,26 +8,27 @@ if($_SESSION['nivelAcesso'] != 2) {
     exit;
 }
 
-$funcionarioLogado = $_SESSION['idFuncionarioLogado'];
+if(isset($_GET['procura'])) {
 
-if($_SESSION['nivelAcesso'] == 2) {
+    $procura = $_GET['procura'];
 
 $sql = "SELECT funcionarios.idFuncionario, funcionarios.nome, funcionarios.status, cargos.nomeCargo, unidades.nomeUnidade
         FROM funcionarios
         LEFT JOIN usedunidades ON funcionarios.idFuncionario = usedunidades.funcionarioID
         LEFT JOIN usedcargos ON funcionarios.idFuncionario = usedcargos.funcionarioID
         LEFT JOIN unidades ON usedunidades.unidadeID = unidades.idUnidade
+        LEFT JOIN cargos ON usedcargos.cargoID = cargos.idCargo
+        WHERE funcionarios.nome LIKE '%$procura%'
+        ORDER BY funcionarios.nome";
+$result = $mysqli->query($sql);
+}else{ 
+    $sql = "SELECT funcionarios.idFuncionario, funcionarios.nome, funcionarios.status, cargos.nomeCargo, unidades.nomeUnidade
+        FROM funcionarios
+        LEFT JOIN usedunidades ON funcionarios.idFuncionario = usedunidades.funcionarioID
+        LEFT JOIN usedcargos ON funcionarios.idFuncionario = usedcargos.funcionarioID
+        LEFT JOIN unidades ON usedunidades.unidadeID = unidades.idUnidade
         LEFT JOIN cargos ON usedcargos.cargoID = cargos.idCargo ORDER BY funcionarios.nome";
 $result = $mysqli->query($sql);
-}else{
-    $sql = "SELECT funcionarios.idFuncionario, funcionarios.nome, funcionarios.status, cargos.nomeCargo, unidades.nomeUnidade
-    FROM funcionarios
-    LEFT JOIN usedunidades ON usedunidades.funcionarioID = funcionarios.idFuncionario
-    LEFT JOIN usedcargos ON usedcargos.funcionarioID = funcionarios.idFuncionario
-    LEFT JOIN unidades ON unidades.idUnidade = usedunidades.unidadeID
-    LEFT JOIN cargos ON cargos.idCargo = usedcargos.cargoID
-    WHERE funcionarios.idFuncionario = $funcionarioLogado ORDER BY funcionarios.nome";
-    $result = $mysqli->query($sql);
 }
 
 $mysqli->close();
@@ -44,16 +45,22 @@ $mysqli->close();
         require "funcoes.php";
         ?>
 
+        <BR>
+
+        <div class="search-bar container">
+            <div class="container">
+            <form method="get" action="">
+            <input type="search" name="procura" id="search" class="input-search browser-default" value="<?php echo isset($_GET['procura']) ? htmlspecialchars($_GET['procura']) : ''; ?>" placeholder="Buscar...">
+            </form>
+            </div>
+        </div>
+
 
     </HEAD>
     <body>
-
-        <BR>
         
 
         <main class="box container">
-            
-            <h4>Funcionarios</h4>
 
             <div>
                 <table class="highlight">
@@ -111,7 +118,7 @@ $mysqli->close();
 
                     }
                 }else {
-                    echo '<p colspan="2">Nenhum funcionário encontrado</p>';
+                    echo '<td colspan="2">Nenhum funcionário encontrado</td>';
                 }                   
                 ?>
 

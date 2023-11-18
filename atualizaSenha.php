@@ -76,15 +76,16 @@ if (isset($_SESSION['login'])) {
  <BODY>
 
 
- <br><br>
+ <br>
 
 <div style="text-align: center">
   <h3>Crie uma nova senha</h3>
 </div>
 
-<br><br><br><br><br><br>
+<br><br>
 
-<div class="box container center">
+<div class="container">
+<div class="box container center" style="width:60% !important;">
     <form class="col s12" action="" method="POST">
 
       <div class="input-field col s12">
@@ -94,12 +95,12 @@ if (isset($_SESSION['login'])) {
 
       <div class="input-field col s12">
         <input id="senha_nova" type="password" name="senha_nova" class="validate" maxlength="15" required>
-        <label for="senha_nova" maxlength="15" style="color:black;">Crie uma senha</label>
+        <label for="senha_nova" maxlength="15" style="color:black;">Crie uma nova senha</label>
       </div>
 
       <div class="input-field col s12">
         <input id="confirmar_senha" type="password" name="confirmar_senha" class="validate" maxlength="15" required>
-        <label for="confirmar_senha" maxlength="15" style="color:black;">Repita a senha</label>
+        <label for="confirmar_senha" maxlength="15" style="color:black;">Repita a nova senha</label>
       </div>
 
       <button type="submit" value="Confirmar" id="submit" class="search">Confirmar alteração</button>
@@ -107,7 +108,8 @@ if (isset($_SESSION['login'])) {
     </form>
 
 </div>
-                  <br><br><br><br><br>
+</div>
+                  <br><br>
 
 
     <?php
