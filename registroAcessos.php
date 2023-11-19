@@ -2,11 +2,25 @@
 
 include("autenticaContent.php");
 include("conecta.php");
+require "configuracoes.php";
 
 if($_SESSION['nivelAcesso'] != 2) {
     echo "Acesso negado!";
     exit;
 }
+
+if(isset($_GET['procura'])){
+    $procura = $_GET['procura'];
+
+    $sql = "SELECT historicoacesso.*, funcionarios.nome
+    FROM funcionarios
+    LEFT JOIN historicoacesso ON funcionarios.idFuncionario = historicoacesso.funcionarioID
+    WHERE historicoacesso.tipoacesso IS NOT NULL AND funcionarios.nome LIKE '%$procura%'
+    ORDER BY dataCadastro DESC";
+
+    $result = $mysqli->query($sql);
+
+}else{
 
 $sql = "SELECT historicoacesso.*, funcionarios.nome
         FROM funcionarios
@@ -15,6 +29,8 @@ $sql = "SELECT historicoacesso.*, funcionarios.nome
 
 $result = $mysqli->query($sql);
 
+}
+
 $mysqli->close();
 
 ?>
@@ -22,7 +38,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-            <TITLE>PATROL | HISTÓRICO DE ACESSOS</TITLE>
+            <TITLE><?php echo NOME_EMPRESA; ?> | HISTÓRICO DE ACESSOS</TITLE>
 
         <?php require "headContent.php"; ?>
 
@@ -34,6 +50,8 @@ $mysqli->close();
 
 
     <div class="col s12 container">
+
+    <?php require "campoBuscaFuncionarioContent.php"; ?>
 
 
                         <table>

@@ -2,6 +2,7 @@
 
 include("autenticaContent.php");
 include("conecta.php");
+require "configuracoes.php";
 
 if($_SESSION['nivelAcesso'] != 2) {
     echo "Acesso negado!";
@@ -210,7 +211,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE>PATROL | Cadastro </TITLE>
+        <TITLE><?php echo NOME_EMPRESA; ?> | Cadastro </TITLE>
 
         <?php include("headContent.php"); ?>
 

@@ -2,6 +2,7 @@
 
 require("autenticaContent.php");
 require("conecta.php");
+require "configuracoes.php";
 
 if($_SESSION['nivelAcesso'] != 2) {
     echo "Acesso negado!";
@@ -107,9 +108,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 }
 
+if(isset($_GET['procura'])){
 
-$sql = "SELECT * FROM unidades ORDER BY nomeUnidade";
-$result = $mysqli->query($sql);
+    $procura = $_GET['procura'];
+
+    $sql = "SELECT * FROM unidades WHERE nomeUnidade LIKE '%$procura%' ORDER BY nomeUnidade";
+    $result = $mysqli->query($sql);
+
+}else{
+
+    $sql = "SELECT * FROM unidades ORDER BY nomeUnidade";
+    $result = $mysqli->query($sql);
+
+}
 
 $mysqli->close();
 
@@ -118,7 +129,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE>EBDS | Cadastro Unidade</TITLE>
+        <TITLE><?php echo NOME_EMPRESA; ?> | Cadastro Unidade</TITLE>
 
         <?php 
         
@@ -160,6 +171,9 @@ $mysqli->close();
             <BR>
 
             <div class="mostraUnidade col s12">
+
+            <?php require "campoBuscaFuncionarioContent.php"; ?>
+
                 <table>
                     <thead>
                         <tr>

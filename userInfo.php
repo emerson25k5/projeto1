@@ -3,6 +3,7 @@
 require "autenticaContent.php";
 require "conecta.php";
 require "funcoes.php";
+require "configuracoes.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
     // Recupere o ID do registro a ser exibido
@@ -128,7 +129,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE>EBDS | Informações </TITLE>
+        <TITLE><?php echo NOME_EMPRESA; ?> | Informações </TITLE>
 
         <?php include("headContent.php"); ?>
 

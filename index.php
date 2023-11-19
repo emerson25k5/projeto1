@@ -1,4 +1,6 @@
 <?php
+require "configuracoes.php";
+
 use Detection\MobileDetect;
 if (isset($_SESSION["authenticated"]) && $_SESSION["authenticated"] == true) {
     header("Location: listaFuncionarios.php");
@@ -73,7 +75,7 @@ if (isset($_POST['entrar'])) {
                 $stmt->bind_param("isssss", $idFunc, $tipoAcesso, $dataTentativa, $ip, $browser, $dispositivo);
 
                 if ($stmt->execute()) {
-                header("Location: listaFuncionarios.php");
+                header("Location: home.php");
                 }else{
                     echo "<script>alert('Erro ao inserir acesso no banco de dados. Fale com o suporte.');</script>";
                     echo "<script>setTimeout(function(){ window.location.href = 'index.php'; }, 5);</script>";
@@ -152,7 +154,7 @@ if (isset($_POST['entrar'])) {
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE>PATROL | LOGIN </TITLE>
+        <TITLE><?php echo NOME_EMPRESA; ?> | LOGIN </TITLE>
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">

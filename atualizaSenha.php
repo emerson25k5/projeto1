@@ -1,5 +1,6 @@
 <?php
 require "autenticaContent.php";
+require "configuracoes.php";
 
 if (isset($_SESSION['login'])) {
   $login = $_SESSION['login'];
@@ -64,7 +65,7 @@ if (isset($_SESSION['login'])) {
 <!DOCTYPE html>
 <HTML lang="pt-BR">
   <HEAD>
-    <TITLE>PATROL | Atualização de senha</TITLE>
+    <TITLE><?php echo NOME_EMPRESA; ?> | Atualização de senha</TITLE>
 
     <?php
     include("headContent.php");

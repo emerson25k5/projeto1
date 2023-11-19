@@ -2,6 +2,7 @@
 
 include("autenticaContent.php");
 include("conecta.php");
+require "configuracoes.php";
 
 //verifica se o nivel de acesso é de adm, se n for é exibida mensagem de erro e o resto da página não carrega
 if($_SESSION['nivelAcesso'] != 2) {
@@ -89,7 +90,7 @@ if (isset($_GET["id"])) {
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE>PATROL | CONTROLE UNIFORMES </TITLE>
+        <TITLE><?php echo NOME_EMPRESA; ?> | CONTROLE UNIFORMES </TITLE>
 
         <script>
 

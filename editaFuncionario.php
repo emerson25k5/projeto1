@@ -3,6 +3,7 @@
 require "autenticaContent.php";
 require "conecta.php";
 require "funcoes.php";
+require "configuracoes.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 	// Recupere o ID do registro a ser exibido
@@ -137,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 <!DOCTYPE html>
 <HTML lang="pt-BR">
 	<HEAD>
-		<TITLE>EBDS | Editar funcionário </TITLE>
+		<TITLE><?php echo NOME_EMPRESA; ?> | Editar funcionário </TITLE>
 
 		<?php require "headContent.php"; 
 			require "mascaraContent.php";

@@ -1,6 +1,7 @@
 <?php
 
 include("autenticaContent.php");
+require "configuracoes.php";
 
 if($_SESSION['nivelAcesso'] != 2) {
     echo "Acesso negado!";
@@ -51,14 +52,33 @@ $result1 = $mysqli->query($maria);
 $jose = "SELECT * FROM perfis WHERE status = 1";
 $result2 = $mysqli->query($jose);
 
-$cleito = "SELECT usedperfilacesso.*, perfis.nomePerfil, funcionarios.nome, usuarios.login, usuarios.idUsuario
-            FROM funcionarios
-            LEFT JOIN usuarios ON funcionarios.idFuncionario = usuarios.funcionarioID
-            LEFT JOIN usedperfilacesso ON usuarios.idUsuario = usedperfilacesso.usuarioID
-            LEFT JOIN perfis ON usedperfilacesso.nivelPerfilID = perfis.idNivelPerfil
-            WHERE usedperfilacesso.usuarioID IS NOT NULL
-            ORDER BY usedperfilacesso.nivelPerfilID DESC";
-$result3 = $mysqli->query($cleito);
+if(isset($_GET['procura'])){
+
+    $procura = $_GET['procura'];
+
+    $cleito = "SELECT usedperfilacesso.*, perfis.nomePerfil, funcionarios.nome, usuarios.login, usuarios.idUsuario
+    FROM funcionarios
+    LEFT JOIN usuarios ON funcionarios.idFuncionario = usuarios.funcionarioID
+    LEFT JOIN usedperfilacesso ON usuarios.idUsuario = usedperfilacesso.usuarioID
+    LEFT JOIN perfis ON usedperfilacesso.nivelPerfilID = perfis.idNivelPerfil
+    WHERE usedperfilacesso.usuarioID IS NOT NULL AND funcionarios.nome LIKE '%$procura%'
+    ORDER BY usedperfilacesso.nivelPerfilID DESC";
+    $result3 = $mysqli->query($cleito);
+
+}else{
+
+    $cleito = "SELECT usedperfilacesso.*, perfis.nomePerfil, funcionarios.nome, usuarios.login, usuarios.idUsuario
+    FROM funcionarios
+    LEFT JOIN usuarios ON funcionarios.idFuncionario = usuarios.funcionarioID
+    LEFT JOIN usedperfilacesso ON usuarios.idUsuario = usedperfilacesso.usuarioID
+    LEFT JOIN perfis ON usedperfilacesso.nivelPerfilID = perfis.idNivelPerfil
+    WHERE usedperfilacesso.usuarioID IS NOT NULL
+    ORDER BY usedperfilacesso.nivelPerfilID DESC";
+    $result3 = $mysqli->query($cleito);
+
+}
+
+
 
 $mysqli->close();
 
@@ -67,7 +87,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE>EBDS | Associar Perfis Acesso</TITLE>
+        <TITLE><?php echo NOME_EMPRESA; ?> | Associar Perfis Acesso</TITLE>
 
         <?php 
         include("headContent.php"); 
@@ -159,12 +179,15 @@ $mysqli->close();
 
                 <h5>Perfis associados</h5><br>
 
+                <?php require "campoBuscaFuncionarioContent.php"; ?>
+
                 <fieldset>
 
                 <!-- Exibir associações já realizadas -->
 
 
                 <div class="col s12">
+
                 <table class="">
                     <thead>
                         <tr>

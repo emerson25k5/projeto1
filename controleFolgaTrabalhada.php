@@ -2,6 +2,7 @@
 
 include("autenticaContent.php");
 include("conecta.php");
+require "configuracoes.php";
 
 //verifica se o nivel de acesso é de adm, se n for é exibida mensagem de erro e o resto da página não carrega
 if($_SESSION['nivelAcesso'] != 2) {
@@ -12,11 +13,28 @@ if($_SESSION['nivelAcesso'] != 2) {
 $func = "SELECT * FROM funcionarios WHERE status = 1 ORDER BY nome ASC";
 $result1 = $mysqli->query($func);
 
-$folga = "SELECT controlefolgatrabalhada.*, funcionarios.nome
+if(isset($_GET['procura'])){
+
+    $procura = $_GET['procura'];
+
+    $folga = "SELECT controlefolgatrabalhada.*, funcionarios.nome
+    FROM controlefolgatrabalhada
+    LEFT JOIN funcionarios ON controlefolgatrabalhada.funcionarioID = funcionarios.idFuncionario
+    WHERE controlefolgatrabalhada.status = 1 AND controlefolgatrabalhada.nomeFuncionario LIKE '%$procura%' OR funcionarios.nome LIKE '%$procura%'
+    ORDER BY controlefolgatrabalhada.dataCadastro DESC";
+    $resultFolga = $mysqli->query($folga);
+
+}else{
+
+    $folga = "SELECT controlefolgatrabalhada.*, funcionarios.nome
     FROM controlefolgatrabalhada
     LEFT JOIN funcionarios ON controlefolgatrabalhada.funcionarioID = funcionarios.idFuncionario
     WHERE controlefolgatrabalhada.status = 1 ORDER BY controlefolgatrabalhada.dataCadastro DESC";
-$resultFolga = $mysqli->query($folga);
+    $resultFolga = $mysqli->query($folga);
+
+}
+
+
 
 if($_POST && $_POST['form_id'] == 1){
 
@@ -153,7 +171,7 @@ if ($stmt->execute()) {
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE>PATROL | CONTROLE FOLGA TRABALHADA</TITLE>
+        <TITLE><?php echo NOME_EMPRESA; ?> | CONTROLE FOLGA TRABALHADA</TITLE>
     <?php 
     require "headContent.php";
     require "mascaraContent.php";
@@ -254,11 +272,13 @@ if ($stmt->execute()) {
 
                                     <br>
 
+                                    <?php require "campoBuscaFuncionarioContent.php"; ?>
+
                             <fieldset style="border-radius:10px">
                             <table>
                                     <thead>
                                         <tr>
-                                            <th><i class="material-icons">person</i></th>
+                                            <th><i class="material-icons">person</i></th>                                            
                                             <th><i class="material-icons">event</i></th>
                                             <th><i class="material-icons">monetization_on</i></th>
                                         </tr>
@@ -311,7 +331,7 @@ if ($stmt->execute()) {
                                             }
 
                                         }else{
-                                            echo '<tr><td colspan="2">Nenhum registro de férias encontrato</td></tr>';
+                                            echo '<tr><td colspan="2">Nenhum registro de trabalho encontrato</td></tr>';
                                         }
                                         ?>
                                         </tbody>

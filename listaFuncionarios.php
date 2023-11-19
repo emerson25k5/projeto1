@@ -2,13 +2,14 @@
 
 include("autenticaContent.php");
 include("conecta.php");
+require "configuracoes.php";
 
 if($_SESSION['nivelAcesso'] != 2) {
     echo "Acesso negado!";
     exit;
 }
 
-if(isset($_GET['procura'])) {
+if(isset($_GET['procura'])){
 
     $procura = $_GET['procura'];
 
@@ -20,8 +21,9 @@ $sql = "SELECT funcionarios.idFuncionario, funcionarios.nome, funcionarios.statu
         LEFT JOIN cargos ON usedcargos.cargoID = cargos.idCargo
         WHERE funcionarios.nome LIKE '%$procura%'
         ORDER BY funcionarios.nome";
-$result = $mysqli->query($sql);
-}else{ 
+$result = $mysqli->query($sql); 
+}else{
+
     $sql = "SELECT funcionarios.idFuncionario, funcionarios.nome, funcionarios.status, cargos.nomeCargo, unidades.nomeUnidade
         FROM funcionarios
         LEFT JOIN usedunidades ON funcionarios.idFuncionario = usedunidades.funcionarioID
@@ -38,7 +40,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE>PATROL | Funcionários </TITLE>
+        <TITLE><?php echo NOME_EMPRESA; ?> | Funcionários </TITLE>
 
         <?php
         require "headContent.php"; 
@@ -47,13 +49,7 @@ $mysqli->close();
 
         <BR>
 
-        <div class="search-bar container">
-            <div class="container">
-            <form method="get" action="">
-            <input type="search" name="procura" id="search" class="input-search browser-default" value="<?php echo isset($_GET['procura']) ? htmlspecialchars($_GET['procura']) : ''; ?>" placeholder="Buscar...">
-            </form>
-            </div>
-        </div>
+
 
 
     </HEAD>
@@ -61,6 +57,8 @@ $mysqli->close();
         
 
         <main class="box container">
+
+        <?php require "campoBuscaFuncionarioContent.php"; ?>
 
             <div>
                 <table class="highlight">
@@ -127,15 +125,7 @@ $mysqli->close();
                         var elems = document.querySelectorAll('.modal');
                         var instances = M.Modal.init(elems);
                         });
-                        
-                    //js para iniciar o MODAL
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var elems = document.querySelectorAll('.fixed-action-btn');
-                        var instances = M.FloatingActionButton.init(elems, {
-                        direction: 'left',
-                        hoverEnabled: false
-                        });
-                    });
+                    
                     </script>
 
                 <tbody>

@@ -2,6 +2,7 @@
 
 require "autenticaContent.php";
 require "conecta.php";
+require "configuracoes.php";
 
 
 if($_SESSION['nivelAcesso'] != 2) {
@@ -105,8 +106,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 }
 
-$sql = "SELECT * FROM cargos ORDER BY nomeCargo";
-$result = $mysqli->query($sql);
+if(isset($_GET['procura'])){
+
+    $procura = $_GET['procura'];
+
+    $sql = "SELECT * FROM cargos WHERE nomeCargo LIKE '%$procura%' ORDER BY nomeCargo";
+    $result = $mysqli->query($sql);
+
+}else{
+
+    $sql = "SELECT * FROM cargos ORDER BY nomeCargo";
+    $result = $mysqli->query($sql);
+
+}
+
+
 
 $mysqli->close();
 
@@ -115,7 +129,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE>EBDS | Cadastro Cargo</TITLE>
+        <TITLE><?php echo NOME_EMPRESA; ?> | Cadastro Cargo</TITLE>
 
         <?php 
 
@@ -157,6 +171,9 @@ $mysqli->close();
             <BR>
 
             <div class="mostraCargo col s12">
+
+            <?php require "campoBuscaFuncionarioContent.php"; ?>
+
                 <table>
                     <thead>
                         <tr>

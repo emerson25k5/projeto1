@@ -2,15 +2,26 @@
 
 include("autenticaContent.php");
 include("conecta.php");
+require "configuracoes.php";
 
 if($_SESSION['nivelAcesso'] != 2) {
     echo "Acesso negado!";
     exit;
 }
 
-$sql = "SELECT * FROM logalteracoes ORDER BY dataLogAlteracao DESC";
-$result = $mysqli->query($sql);
+if(isset($_GET['procura'])){
 
+    $procura = $_GET['procura'];
+
+    $sql = "SELECT * FROM logalteracoes WHERE nomeUsuarioResponsavel LIKE '%$procura%' ORDER BY dataLogAlteracao DESC";
+    $result = $mysqli->query($sql);
+
+}else{
+
+    $sql = "SELECT * FROM logalteracoes ORDER BY dataLogAlteracao DESC";
+    $result = $mysqli->query($sql);
+
+}
 
 $mysqli->close();
 
@@ -19,7 +30,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-            <TITLE>PATROL | AUDITORIA </TITLE>
+            <TITLE><?php echo NOME_EMPRESA; ?> | AUDITORIA </TITLE>
 
         <?php require "headContent.php"; ?>
 
@@ -41,6 +52,8 @@ $mysqli->close();
 
 
     <div class="col s12 container">
+
+    <?php require "campoBuscaFuncionarioContent.php"; ?>
 
 
                         <table>
@@ -141,7 +154,7 @@ $mysqli->close();
                                             }
                                     }
                                     }else{
-                                        echo '<p colspan="2">Nenhuma alteração encontrada</p>';
+                                        echo '<td colspan="2">Nenhuma alteração encontrada</td>';
                                     }         
                                     ?>
                                     <br><br>
