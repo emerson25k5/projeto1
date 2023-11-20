@@ -87,7 +87,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE><?php echo NOME_EMPRESA; ?> | Associar Perfis Acesso</TITLE>
+        <TITLE><?php echo $_SESSION['nomeEmpresa']; ?> | Associar Perfis Acesso</TITLE>
 
         <?php 
         include("headContent.php"); 

@@ -103,7 +103,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE><?php echo NOME_EMPRESA; ?> | CONTROLE FÉRIAS</TITLE>
+        <TITLE><?php echo $_SESSION['nomeEmpresa']; ?> | CONTROLE FÉRIAS</TITLE>
     <?php 
     require "headContent.php";
     require "mascaraContent.php";

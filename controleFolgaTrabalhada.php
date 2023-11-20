@@ -171,7 +171,7 @@ if ($stmt->execute()) {
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE><?php echo NOME_EMPRESA; ?> | CONTROLE FOLGA TRABALHADA</TITLE>
+        <TITLE><?php echo $_SESSION['nomeEmpresa']; ?> | CONTROLE FOLGA TRABALHADA</TITLE>
     <?php 
     require "headContent.php";
     require "mascaraContent.php";

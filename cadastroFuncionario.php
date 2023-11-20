@@ -211,7 +211,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE><?php echo NOME_EMPRESA; ?> | Cadastro </TITLE>
+        <TITLE><?php echo $_SESSION['nomeEmpresa']; ?> | Cadastro </TITLE>
 
         <?php include("headContent.php"); ?>
 

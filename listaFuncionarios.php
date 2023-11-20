@@ -40,7 +40,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE><?php echo NOME_EMPRESA; ?> | Funcionários </TITLE>
+        <TITLE><?php echo $_SESSION['nomeEmpresa']; ?> | Funcionários </TITLE>
 
         <?php
         require "headContent.php"; 

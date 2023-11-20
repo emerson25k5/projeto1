@@ -38,7 +38,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-            <TITLE><?php echo NOME_EMPRESA; ?> | HISTÓRICO DE ACESSOS</TITLE>
+            <TITLE><?php echo $_SESSION['nomeEmpresa']; ?> | HISTÓRICO DE ACESSOS</TITLE>
 
         <?php require "headContent.php"; ?>
 

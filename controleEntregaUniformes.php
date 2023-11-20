@@ -90,7 +90,7 @@ if (isset($_GET["id"])) {
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE><?php echo NOME_EMPRESA; ?> | CONTROLE UNIFORMES </TITLE>
+        <TITLE><?php echo $_SESSION['nomeEmpresa']; ?> | CONTROLE UNIFORMES </TITLE>
 
         <script>
 

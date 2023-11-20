@@ -1,9 +1,8 @@
 <?php
 require "configuracoes.php";
-
 use Detection\MobileDetect;
 if (isset($_SESSION["authenticated"]) && $_SESSION["authenticated"] == true) {
-    header("Location: listaFuncionarios.php");
+    header("Location: home.php");
     exit;
 }
 
@@ -42,7 +41,7 @@ if (isset($_POST['entrar'])) {
 
         if (password_verify($senha, $senhaArmazenada)) {
             if (session_status() == PHP_SESSION_NONE) {
-            session_start();
+                session_start();
             }
             $_SESSION["authenticated"] = true;
             $_SESSION['login'] = $login;
@@ -51,6 +50,8 @@ if (isset($_POST['entrar'])) {
             $_SESSION['nivelAcesso'] = $nivelAcesso;
             $_SESSION['idFuncionarioLogado'] = $idFunc;
             $_SESSION['idUsuarioLogado'] = $idSessao;
+            $_SESSION['nomeEmpresa'] = NOME_EMPRESA;
+            $_SESSION['versao'] = VERSAO_ATUAL;
 
             if($nivelAcesso == 2){
 
@@ -75,7 +76,7 @@ if (isset($_POST['entrar'])) {
                 $stmt->bind_param("isssss", $idFunc, $tipoAcesso, $dataTentativa, $ip, $browser, $dispositivo);
 
                 if ($stmt->execute()) {
-                header("Location: home.php");
+                    header("Location: home.php");
                 }else{
                     echo "<script>alert('Erro ao inserir acesso no banco de dados. Fale com o suporte.');</script>";
                     echo "<script>setTimeout(function(){ window.location.href = 'index.php'; }, 5);</script>";
@@ -145,6 +146,8 @@ if (isset($_POST['entrar'])) {
         echo "<script>setTimeout(function(){ window.location.href = 'index.php'; }, 5);</script>";
     }
 
+    
+
     $stmt->close();
 
 }
@@ -154,7 +157,7 @@ if (isset($_POST['entrar'])) {
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE><?php echo NOME_EMPRESA; ?> | LOGIN </TITLE>
+        <TITLE>LOGIN</TITLE>
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -242,8 +245,6 @@ $(document).ready(function() {
   });
 });
 </script>
-
-        <?php include("footerContent.php");?> <!--adiciona o conteúdo do rodapé de modo modular usando o INCLUDE em PHP-->
 
     </body>
 </HTML>

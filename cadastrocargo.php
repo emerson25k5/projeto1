@@ -1,8 +1,7 @@
 <?php
-
 require "autenticaContent.php";
 require "conecta.php";
-require "configuracoes.php";
+require("configuracoes.php");
 
 
 if($_SESSION['nivelAcesso'] != 2) {
@@ -87,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     $_statusCadCargo = "Falha ao realizar o cadastro!" ." Código do erro:  " . $mysqli->error;
                 }
 
-                header("Location: cadastroCargo.php");//após atualização/inserção no banco é redirecionado para a mesma página para evitar duplicidade com F5
+                echo "<script>setTimeout(function(){ window.location.href = 'cadastroCargo.php'; }, 100);</script>"; //após atualização/inserção no banco é redirecionado para a mesma página para evitar duplicidade com F5
                 exit;
 
             }
@@ -129,7 +128,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE><?php echo NOME_EMPRESA; ?> | Cadastro Cargo</TITLE>
+        <TITLE><?php echo $_SESSION['nomeEmpresa'];?> | Cadastro Cargo</TITLE>
 
         <?php 
 
@@ -197,7 +196,7 @@ $mysqli->close();
                                     echo '<td><input type="text" name="novoNomeCargo" value="' . $nome . '" oninput="converterParaCaixaAlta(this)"></td>';
                                     echo '<td>';
                                     echo '<div class="switch">';
-                                    echo '<label>Inativo';
+                                    echo '<label>';
                                     switch ($status){
                                         case 1:
                                             echo '<input type="checkbox" name="novoStatus" checked>';
@@ -207,7 +206,7 @@ $mysqli->close();
                                             break;
                                     }
                                     echo '<span class="lever"></span>';
-                                    echo 'Ativo</label>';
+                                    echo '</label>';
                                     echo '</div>';
                                     echo '</td>';
                                     echo '<td><button type="submit" class="search btn" name="salvar_alteracoes"><i class="material-icons">check</i></button></td>';

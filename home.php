@@ -9,9 +9,8 @@ if($_SESSION['nivelAcesso'] != 2) {
     exit;
 }
 
-$itensMenu = "SELECT * FROM itensmenu WHERE status = 1";
+$itensMenu = "SELECT * FROM itensmenu WHERE status = 1 ORDER BY idItem ASC";
 $result = $mysqli->query($itensMenu);
-
 
 //conta quanto funcionarios tem
 $funcionarios = "SELECT * FROM funcionarios";
@@ -79,6 +78,19 @@ if($rstUnidadesAtv){
 
 
 
+//array com os valores obtidos nos selects
+$valoresDash = [
+
+    "Funcionários" => $funcQuantidade,
+    "Funcionários Ativos" => $funcAtivos,
+    "Administradores" => $quantidadeAdm,
+    "Cargos" => $cargosQuantidade,
+    "Cargos Ativos" => $cargosAtivos,
+    "Unidades" => $unidadesQuantidade,
+    "Unidades Ativas" => $unidadesAtivas
+
+];
+
 
 $mysqli->close();
 
@@ -88,7 +100,7 @@ $mysqli->close();
 <HTML lang="pt-BR">
     <HEAD>
         
-        <TITLE><?php echo NOME_EMPRESA; ?> | HOME </TITLE>
+        <TITLE><?php echo $_SESSION['nomeEmpresa']; ?> | HOME </TITLE>
 
         <?php
         require "headContent.php"; 
@@ -102,6 +114,7 @@ $mysqli->close();
 
     <div class="menu-inicial-content  container">
 
+        <!-- exibe os itens do menu -->
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {   
@@ -120,70 +133,29 @@ $mysqli->close();
             <?php } ?>
         <?php } ?>
 
+    </div>
+
+
+    <!-- exibe os valores do dashboard -->
+    <div class="container"><h4>Dashboard</h4></div>
+
+    <div class="menu-inicial-content  container">
+
+        
+        <?php
+        foreach ($valoresDash as $key => $value) {
+        ?>
 
         <div class="menu-home-item">
             <p class="titulo-content">
-                Total funcionários
+            <?php echo $key; ?>
             </p>
-            <div class="icone-contenta">
-                <h1><?php echo $funcQuantidade; ?></h1>
+            <div class="icone-content">
+                <h6 class="item-icone"><?php echo $value; ?></h6>
             </div>
         </div>
 
-        <div class="menu-home-item">
-            <p class="titulo-content">
-                Funcionários ativos
-            </p>
-            <div class="icone-contenta">
-                <h1><?php echo $funcAtivos; ?></h1>
-            </div>
-        </div>
-
-        <div class="menu-home-item">
-            <p class="titulo-content">
-                Acesso de administrador
-            </p>
-            <div class="icone-contenta">
-                <h1><?php echo $quantidadeAdm; ?></h1>
-            </div>
-        </div>
-
-        <div class="menu-home-item">
-            <p class="titulo-content">
-                Total cargos
-            </p>
-            <div class="icone-contenta">
-                <h1><?php echo $cargosQuantidade; ?></h1>
-            </div>
-        </div>
-
-        <div class="menu-home-item">
-            <p class="titulo-content">
-                Cargos ativos
-            </p>
-            <div class="icone-contenta">
-                <h1><?php echo $cargosAtivos; ?></h1>
-            </div>
-        </div>
-
-        <div class="menu-home-item">
-            <p class="titulo-content">
-                Total unidades
-            </p>
-            <div class="icone-contenta">
-                <h1><?php echo $unidadesQuantidade; ?></h1>
-            </div>
-        </div>
-
-        <div class="menu-home-item">
-            <p class="titulo-content">
-                Unidades ativas
-            </p>
-            <div class="icone-contenta">
-                <h1><?php echo $unidadesAtivas; ?></h1>
-            </div>
-        </div>
-
+        <?php } ?>
     </div>
 
     <?php include("footerContent.php");?> <!--adiciona o conteúdo do rodapé de modo modular usando o INCLUDE em PHP-->
