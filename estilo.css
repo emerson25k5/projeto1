@@ -67,6 +67,23 @@ table {
 
 
 
+/* floating button */
+.haha {
+  background-color: rgba(0, 0, 0, 0.493);
+  padding: 3px !important;
+  padding-top: 15px !important;
+  border-radius: 10px;
+  font-size: 20px !important;
+  user-select: none;
+}
+
+.fixed-action-btn {
+  user-select: none;
+}
+/* fim floating button */
+
+
+
 
 /* inicio estilo menu-home */
 
@@ -93,10 +110,13 @@ table {
 
 .icone-content {
   float: left;
+  user-select: none;
 }
 
 .item-icone {
   font-size: 80px !important;
+  user-select: none;
+
 }
 
 /* inicio estilo menu-home */

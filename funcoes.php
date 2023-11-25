@@ -10,12 +10,12 @@ function traduz_status($status){
 switch($status){
     
     case 1:
-        $statusAtual = '<div style="color: white; background-color:green; border-radius:3px; text-align:center;"><b>Ativo</b></div>';
+        $statusAtual = '<div style="color: white; background-color:green; border-radius:3px; text-align:center;">Ativo</div>';
 
         break;
     
     case 0:
-        $statusAtual = '<div style="color: white; background-color:red; border-radius:3px; text-align:center;"><b>Inativo</b></div>';
+        $statusAtual = '<div style="color: white; background-color:red; border-radius:3px; text-align:center;">Inativo</div>';
 
         break;
 }

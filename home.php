@@ -91,6 +91,7 @@ $valoresDash = [
 
 ];
 
+$inativaFloat = true;
 
 $mysqli->close();
 

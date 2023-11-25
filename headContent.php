@@ -15,7 +15,11 @@
         <div class="nav-wrapper container">
         <a href="#" class="brand-logo center"><img class="logo" src="imagens/brasao_patrol.png" alt="patrol_logo"></a>
         <ul id="sidenav">
-            <li href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></li>
+        <?php //limita o acesso ao menu por um usuário comum
+            if($_SESSION['nivelAcesso'] == 2 ) { ?>
+            <li href="#" data-target="slide-out" class="sidenav-trigger hide-on-med-and-down"><i class="material-icons">menu</i></li>
+            <li><a href="home.php" class="menu hide-on-large-only"><i class="material-icons">grid_view</i></a></li>
+            <?php } ?>
             <li href="#" data-target="dropdown1" class="dropdown-trigger right"><i class="material-icons">arrow_drop_down</i></li>
             <li class="dropdown-trigger right" href="#" data-target="dropdown1">Olá, <?php echo $_SESSION['nomeUsuario'];?></li>
         </ul>
@@ -30,14 +34,47 @@
         </ul>
 
 
+        <?php
+        require "conecta.php";
+
+        $itensMenuFloat = "SELECT * FROM itensmenu WHERE status = 1 ORDER BY idItem ASC";
+        $resultadoFloat = $mysqli->query($itensMenuFloat);
+
+        //desativa o float no menu
+        
+        if(isset($inativaFloat)){
+            $inativaFloat = "hide";
+        }else{
+            $inativaFloat = "hide-on-large-only";
+        }
+        ?>
+
+        
+<?php
+if($_SESSION['nivelAcesso'] == 2 ) { ?>
+        <div class="fixed-action-btn <?php echo $inativaFloat;?>">
+            <a class="btn-floating btn-large black">
+                <i class="large material-icons">menu</i>
+            </a>
+            <ul class="haha">
+            <?php
+            if ($resultadoFloat->num_rows > 0) {
+                while ($row = $resultadoFloat->fetch_assoc()) {   
+            ?>
+                <li ><a href="<?php echo $row['linkItem'];?>" style="background-color:<?php echo $row['corItem'];?>" class="btn-floating z-depth-5"><i style="color: <?php echo $row['corIcone'];?>" class="material-icons"><?php echo $row['iconeItem'];?></i><?php echo $row['nomeItem']; ?></a></li>
+            <?php } ?>
+        <?php } ?>
+        </ul>
+        </div>
+<?php } ?>
+
+
 
     <ul id="slide-out" class="side-mobile sidenav">
         <br>
         <div class="center row"><img src="imagens/patrol_texto_bg.png" class="patrolSideNavImage center"></div>
-
         <ul>
-
-                        <?php
+            <?php
             if($_SESSION['nivelAcesso'] == 2 ){
                 echo '
                         <li><a href="home.php" class="menu"><i class="material-icons">grid_view</i>MENU</a></li><br>
@@ -70,6 +107,16 @@
     </ul>
 
     <script>
+        
+    //js da lista suspensa do float action
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.fixed-action-btn');
+        var instances = M.FloatingActionButton.init(elems, {
+            direction: 'top',
+            hoverEnabled: false
+
+        });
+    });
 
     //JS do Menu suspenso das opções do usuário logado (trocar senha, sair)
     document.addEventListener('DOMContentLoaded', function() {
