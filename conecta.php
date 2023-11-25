@@ -2,7 +2,7 @@
 $host = "localhost";
 $username = "root";
 $password = "";
-$database = "projeto1";
+$database = "swupec92_swupe";
 
 // Conectar ao banco de dados usando MySQLi
 $mysqli = new mysqli($host, $username, $password, $database);
