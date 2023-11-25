@@ -101,7 +101,7 @@ $mysqli->close();
 <HTML lang="pt-BR">
     <HEAD>
         
-        <TITLE><?php echo $_SESSION['nomeEmpresa']; ?> | HOME </TITLE>
+        <TITLE><?php echo NOME_EMPRESA;?> | HOME </TITLE>
 
         <?php
         require "headContent.php"; 
