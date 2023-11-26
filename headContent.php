@@ -20,8 +20,7 @@
             <li href="#" data-target="slide-out" class="sidenav-trigger hide-on-med-and-down"><i class="material-icons">menu</i></li>
             <li><a href="home.php" class="menu hide-on-large-only"><i class="material-icons">grid_view</i></a></li>
             <?php } ?>
-            <li href="#" data-target="dropdown1" class="dropdown-trigger right"><i class="material-icons">arrow_drop_down</i></li>
-            <li class="dropdown-trigger right" href="#" data-target="dropdown1">Olá, <?php echo $_SESSION['nomeUsuario'];?></li>
+            <li class="botao-acc dropdown-trigger right" href="#" data-target="dropdown1">Olá, <?php echo $_SESSION['nomeUsuario'];?><i class="material-icons">arrow_drop_down</i></li>
         </ul>
         </div>
     </nav>

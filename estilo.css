@@ -293,6 +293,13 @@ h5 {
     width: 70% !important;
   }
 
+
+  /* -------- ESTILO MENU SUSPENDO OPT USUÁRIOS (LOGOUT) -----*/
+  .botao-acc {
+    display: flex;
+    justify-content: end;
+  }
+
   .menu-perfil {
     background-color: #000000d3 !important;
     width: 175px !important;
@@ -312,6 +319,9 @@ h5 {
   .a-menu-suspenso-opt {
     color: white !important;
   }
+  /* -------- ESTILO MENU SUSPENDO OPT USUÁRIOS (LOGOUT) -----*/
+
+
 
   li:hover {
     color:rgb(255, 196, 0) !important;
