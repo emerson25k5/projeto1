@@ -2,7 +2,7 @@
 
 include("autenticaContent.php");
 include("conecta.php");
-include("configuracoes.php");
+include("config.php");
 
 if($_SESSION['nivelAcesso'] != 2) {
     echo "Acesso negado!";

@@ -1,5 +1,5 @@
 <?php
-include("configuracoes.php");
+include("config.php");
 require "autenticaContent.php";
 
 if (isset($_SESSION['login'])) {

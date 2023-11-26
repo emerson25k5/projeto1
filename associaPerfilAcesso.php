@@ -1,5 +1,5 @@
 <?php
-include("configuracoes.php");
+include("config.php");
 include("autenticaContent.php");
 
 if($_SESSION['nivelAcesso'] != 2) {

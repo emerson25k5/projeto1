@@ -1,5 +1,5 @@
 <?php
-include("configuracoes.php");
+include("config.php");
 include("autenticaContent.php");
 include("conecta.php");
 

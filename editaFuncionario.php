@@ -1,5 +1,5 @@
 <?php
-include("configuracoes.php");
+include("config.php");
 require "autenticaContent.php";
 require "conecta.php";
 require "funcoes.php";

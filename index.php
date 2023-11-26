@@ -1,5 +1,5 @@
 <?php
-include("configuracoes.php");
+include("config.php");
 use Detection\MobileDetect;
 if (isset($_SESSION["authenticated"]) && $_SESSION["authenticated"] == true) {
     header("Location: home.php");

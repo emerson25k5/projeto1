@@ -2,7 +2,7 @@
 
 include("autenticaContent.php");
 include("conecta.php");
-include("configuracoes.php");
+include("config.php");
 
 //verifica se o nivel de acesso é de adm, se n for é exibida mensagem de erro e o resto da página não carrega
 if($_SESSION['nivelAcesso'] != 2) {
