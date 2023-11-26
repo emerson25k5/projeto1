@@ -65,7 +65,7 @@ if (isset($_SESSION['login'])) {
 <!DOCTYPE html>
 <HTML lang="pt-BR">
   <HEAD>
-    <TITLE><?php echo $_SESSION['nomeEmpresa']; ?> | Atualização de senha</TITLE>
+    <TITLE><?php echo NOME_EMPRESA; ?> | Atualização de senha</TITLE>
 
     <?php
     include("headContent.php");

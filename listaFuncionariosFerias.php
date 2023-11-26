@@ -35,7 +35,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE><?php echo $_SESSION['nomeEmpresa']; ?> | FÉRIAS</TITLE>
+        <TITLE><?php echo NOME_EMPRESA; ?> | FÉRIAS</TITLE>
     <?php 
     require "headContent.php";
     require "mascaraContent.php";

@@ -129,7 +129,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE><?php echo $_SESSION['nomeEmpresa']; ?> | Informações </TITLE>
+        <TITLE><?php echo NOME_EMPRESA; ?> | Informações </TITLE>
 
         <?php include("headContent.php"); ?>
 

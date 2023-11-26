@@ -138,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 <!DOCTYPE html>
 <HTML lang="pt-BR">
 	<HEAD>
-		<TITLE><?php echo $_SESSION['nomeEmpresa']; ?> | Editar funcionário </TITLE>
+		<TITLE><?php echo NOME_EMPRESA; ?> | Editar funcionário </TITLE>
 
 		<?php require "headContent.php"; 
 			require "mascaraContent.php";

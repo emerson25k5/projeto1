@@ -35,7 +35,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE><?php echo $_SESSION['nomeEmpresa']; ?> | CONTROLE UNIFORMES</TITLE>
+        <TITLE><?php echo NOME_EMPRESA; ?> | CONTROLE UNIFORMES</TITLE>
     <?php 
     require "headContent.php";
     require "mascaraContent.php";
