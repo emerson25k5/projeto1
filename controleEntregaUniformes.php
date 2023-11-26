@@ -143,7 +143,6 @@ if (isset($_GET["id"])) {
 
     <div class="col s12 container">
 
-
                 <form method="post" action="">
 
                             <input type="hidden" name="form_id" value="1">

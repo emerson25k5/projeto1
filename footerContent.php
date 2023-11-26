@@ -8,7 +8,7 @@
               <ul class="row center container">
                 
                 <li><a class="col s4">SWUPE</a></li>
-                <li><a class="col s4">v<?php echo $_SESSION['versao'];?></a></li>
+                <li><a class="col s4">v<?php echo VERSAO_ATUAL;?></a></li>
                 <li><a class="col s4" href="registroAlteracoes.php">Auditoria</a></li>
               </ul>
 </div>

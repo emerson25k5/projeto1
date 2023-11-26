@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+include("config.php");
 include("conecta.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["idAssocia"])) {
