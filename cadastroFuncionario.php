@@ -246,8 +246,8 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
                         <div class="nav-wrapper">
                         <div class="col s12">
                             <a class="col s4" id="here">Geral</a>
-                            <a class="col s4">Endereço</a>
-                            <a class="col s4">Mais</a>
+                            <a class="col s4" id="proximo" onclick="proximaEtapa()">Endereço</a>
+                            <a class="col s4" id="proximo" onclick="avancaDuas()">Mais</a>
                         </div>
                         </div>
                     </nav>
@@ -272,7 +272,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
 
                         <div class="genero col s6">
                             <label for="genero" class="left">Gênero:</label>
-                            <select name="genero" id="genero" class="validate" required>
+                            <select name="genero" id="genero" class="select-funcionario validate" required>
                                 <option value="" disabled selected>Selecione...</option>
                                 <option value="m">Masculino</option>
                                 <option value="f">Feminino</option>
@@ -320,9 +320,9 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
                     <nav class="barra_etapa">
                         <div class="nav-wrapper">
                         <div class="col s12">
-                            <a class="col s4">Geral</a>
+                            <a class="col s4" id="anterior" onclick="anteriorEtapa()">Geral</a>
                             <a class="col s4" id="here">Endereço</a>
-                            <a class="col s4">Mais</a>
+                            <a class="col s4" id="proximo" onclick="proximaEtapa()">Mais</a>
                         </div>
                         </div>
                     </nav>
@@ -386,9 +386,9 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
                     <nav class="barra_etapa">
                         <div class="nav-wrapper">
                         <div class="col s12">
-                            <a class="col s4">Geral</a>
-                            <a class="col s4">Endereço</a>
-                            <a class="col s4"id="here">Mais</a>
+                            <a class="col s4" id="anterior" onclick="retornaDuas()">Geral</a>
+                            <a class="col s4" id="anterior" onclick="anteriorEtapa()">Endereço</a>
+                            <a class="col s4" id="here">Mais</a>
                         </div>
                         </div>
                     </nav>
@@ -403,7 +403,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
 
                         <div class="cargo col s6" >
                             <label for="cargo_escolhido" class="left">Cargo:</label>
-                            <select name="cargo_escolhido" id="cargo_escolhido">
+                            <select class="select-funcionario validate" name="cargo_escolhido" id="cargo_escolhido">
                             <option value="" disabled selected>Selecione...</option>
                                 <?php
                                 // Verifique se há registros e gere as opções do select
@@ -423,7 +423,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
 
                         <div class="unidade col s6">
                             <label for="unidade_escolhida" class="left">Unidade:</label>
-                            <select name="unidade_escolhida" id="unidade_escolhida">
+                            <select class="select-funcionario validate" name="unidade_escolhida" id="unidade_escolhida">
                             <option value="" disabled selected>Selecione...</option>
                                 <?php
                                 // Verifique se há registros e gere as opções do select
@@ -455,7 +455,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
 
                         <div class="uniforme_tronco">
                             <label for="tam_tronco" class="left">Tamanho tronco:</label>
-                            <select name="tam_tronco" id="tam_tronco" required>
+                            <select class="select-funcionario validate" name="tam_tronco" id="tam_tronco" required>
                             <option value="" disabled selected>Selecione...</option>
                                 <option value="36">Tamanho 36</option>
                                 <option value="38">Tamanho 38</option>
@@ -481,7 +481,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
 
                         <div class="uniforme_calcado">
                             <label for="uniforme_calcado" class="left">Tamanho calçado:</label>
-                            <select name="tam_calcado" id="uniforme_calcado" required>
+                            <select class="select-funcionario validate" name="tam_calcado" id="uniforme_calcado" required>
                                 <option value="" disabled selected>Selecione...</option>
                                 <option value="35">Tamanho 35</option>
                                 <option value="36">Tamanho 36</option>
@@ -532,6 +532,20 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
                             function anteriorEtapa() {
                                 if (etapaAtual > 1) {
                                     etapaAtual--;
+                                    atualizarEtapa();
+                                }
+                            }
+
+                            function avancaDuas() {
+                                if (etapaAtual == 1) {
+                                    etapaAtual = etapaAtual + 2;
+                                    atualizarEtapa();
+                                }
+                            }
+
+                            function retornaDuas() {
+                                if (etapaAtual == 3) {
+                                    etapaAtual = etapaAtual - 2;
                                     atualizarEtapa();
                                 }
                             }

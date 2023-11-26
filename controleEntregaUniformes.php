@@ -76,11 +76,16 @@ if (isset($_GET["id"])) {
 
     }
 
-    $chamaAsEntregas = "SELECT funcionarios.nome, controleentregauniformes.* 
+    $chamaAsEntregas = "SELECT funcionarios.nome, controleentregauniformes.*
                     FROM funcionarios
                     LEFT JOIN controleentregauniformes ON funcionarios.idFuncionario = controleentregauniformes.funcionarioID
                     WHERE controleentregauniformes.status = 1 AND idFuncionario = $id ORDER BY dataEntregaUniforme ASC";
     $resultado = $mysqli->query($chamaAsEntregas);
+
+
+    $chamaUniformes = "SELECT * FROM uniformes WHERE status = 1";
+    $resultado2 = $mysqli->query($chamaUniformes);
+
 
     $mysqli->close();
 
@@ -90,7 +95,7 @@ if (isset($_GET["id"])) {
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE><?php echo $_SESSION['nomeEmpresa']; ?> | CONTROLE UNIFORMES </TITLE>
+        <TITLE><?php echo NOME_EMPRESA; ?> | CONTROLE UNIFORMES </TITLE>
 
         <script>
 
@@ -158,57 +163,33 @@ if (isset($_GET["id"])) {
                                 
                         <fieldset>
 
-                        <br>
+                    <?php
+                        if ($resultado2->num_rows > 0):
+                            while ($row = $resultado2->fetch_assoc()):
+                    ?>
+                            <p>
+                                <div class="uniforme-content">
+                                    <label>
+                                        <input type="checkbox" class="uniforme-check checkbox filled-in" value="1">
+                                        <span class="uniforme-nome"><?php echo $row['nomeUniforme'];?></span>
+                                    </label>
+                                    <input type="number" 
+                                    name="<?php echo $row['nomeVariavel'];?>_quantidade" 
+                                    class="quantity" style="display: none;" 
+                                    placeholder="quantidade (1 a <?php echo $row['maxEntrega'];?>)" 
+                                    min="1" 
+                                    max="<?php echo $row['maxEntrega'];?>">
+                                    <img src="<?php echo $row['caminhoIcone'];?>" class="ico" alt="icone-<?php echo $row['nomeUniforme'];?>">
+                                </div>
+                            </p>
+                    <?php   
+                            endwhile;
+                        endif;
+                    ?>
 
-                            <p>
-                                <label>
-                                    <input type="checkbox" class="checkbox" value="1">
-                                    <span>Camisa</span>
-                                </label>
-                                <input type="number" name="camisa_quantidade" class="quantity" style="display: none;" placeholder="quantidade (1 a 3)" min="1" max="3">
-                            </p>
-                            <p>
-                                <label>
-                                    <input type="checkbox" class="checkbox" value="1">
-                                    <span>Calça</span>
-                                </label>
-                                <input type="number" name="calca_quantidade" class="quantity" style="display: none;" placeholder="quantidade (1 a 3)" min="1" max="3">
-                            </p>
-                            <p>
-                                <label>
-                                    <input type="checkbox" class="checkbox" value="1">
-                                    <span>Sapato</span>
-                                </label>
-                                <input type="number" name="sapato_quantidade" class="quantity" style="display: none;" placeholder="quantidade (1 a 3)" min="1" max="3">
-                            </p>
-                            <p>
-                                <label>
-                                    <input type="checkbox" class="checkbox" value="1">
-                                    <span>Bota</span>
-                                </label>
-                                <input type="number" name="bota_quantidade" class="quantity" style="display: none;" placeholder="quantidade (1 a 3)" min="1" max="3">
-                            </p>
-                            <p>
-                                <label>
-                                    <input type="checkbox" class="checkbox" value="1">
-                                    <span>Jaqueta</span>
-                                </label>
-                                <input type="number" name="jaqueta_quantidade" class="quantity" style="display: none;" placeholder="quantidade (1 a 3)" min="1" max="3">
-                            </p>
-                            <p>
-                                <label>
-                                    <input type="checkbox" class="checkbox" value="1">
-                                    <span>Touca</span>
-                                </label>
-                                <input type="number" name="touca_quantidade" class="quantity" style="display: none;" placeholder="quantidade (1 a 3)" min="1" max="3">
-                            </p>
-                            <p>
-                                <label>
-                                    <input type="checkbox" class="checkbox" value="1">
-                                    <span>Gravata</span>
-                                </label>
-                                <input type="number" name="gravata_quantidade" class="quantity" style="display: none;" placeholder="quantidade (1 a 3)" min="1" max="3">
-                            </p>
+
+
+
                             
                             <script>//script para aparecer o input apenas quando o checkbox é marcado
                                 const checkboxes = document.querySelectorAll('.checkbox');
@@ -286,7 +267,7 @@ if (isset($_GET["id"])) {
                                             echo '<tr>';
                                             echo '<td><p>' . $dataEntregaUniforme . '</p></td>';
                                             echo '<td><h5>' . $totalUniformes . '</h5></td>';
-                                            echo '<td><textarea disabled>' . $unifObs . '</textarea></td>';
+                                            echo '<td><p>' . $unifObs . '</p></td>';
                                             echo '<td><button class="search modal-trigger" href="#'. $modalId .'"><i class="material-icons">search</i></button></td>';
                                             echo '</tr>';
 
@@ -311,7 +292,7 @@ if (isset($_GET["id"])) {
                                             echo '<label for="gravata">Gravata(s) entregues:</label>';
                                             echo '<p>' . $quantidade_gravata . '</p>';
                                             echo '<label for="obs">Observações:</label>';
-                                            echo '<textarea readonly>' . $unifObs . '</textarea>';
+                                            echo '<p>' . $unifObs . '</p>';
                                             echo '<label for="responsavel">Responsavel cadastro:</label>';
                                             echo '<p id="responsavel">' . $responsavelCadastro . '</p>';
                                             echo '</div>';

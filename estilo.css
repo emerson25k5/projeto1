@@ -36,6 +36,8 @@ table {
 }
 /* fim botões de opção da lista de funcionários*/
 
+
+
 .logo {
     width: 40px;
     height: auto;
@@ -47,6 +49,40 @@ table {
     height: 50%;
 }
 
+
+
+/*########### CONTROLE ENTREGA UNIFORMES ###########*/
+.uniforme-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.uniforme-check {
+  font-size: 33px;
+}
+
+.uniforme-nome {
+  font-size: 20px !important;
+  width: 40%;
+}
+
+.quantity {
+  font-size: 20px;
+  text-align: center;
+  width: 45% !important;
+}
+
+.ico {
+  width: 30px;
+  height: max-content;
+  float: right !important;
+}
+/*---------------- CONTROLE ENTREGA UNIFORMES ---------------*/
+
+
+
+
+/*########### CADASTRO FUNCIONÁRIOS ###########*/
 .barra_etapa {
     background-color: #000000 !important;
     border-radius: 10px;
@@ -60,11 +96,18 @@ table {
     color: rgb(255, 196, 0);
 }
 
+.select-funcionario, .dropdown-content {
+  background-color: #0000009a !important;
+  color: white !important;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+/*---------------- CADASTRO FUNCIONÁRIOS ---------------*/
+
 .footer {
     bottom: 0;
     width: 100%;
 }
-
 
 
 /* floating button */
@@ -212,9 +255,6 @@ table {
   border-radius: 5px !important;
 }
 
-label {
-  font-weight: bold;
-}
 h5 {
   color: grey;
 }
@@ -251,15 +291,6 @@ h5 {
   .patrolSideNavImage {
     height: auto;
     width: 70% !important;
-  }
-
-  label {
-    font-size: 15px !important;
-    font-weight: bold !important;
-  }
-
-  label:hover {
-    font-size: 15px !important;
   }
 
   .menu-perfil {
