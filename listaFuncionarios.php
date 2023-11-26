@@ -1,8 +1,7 @@
 <?php
-
+include("configuracoes.php");
 include("autenticaContent.php");
 include("conecta.php");
-require "configuracoes.php";
 
 if($_SESSION['nivelAcesso'] != 2) {
     echo "Acesso negado!";
@@ -52,6 +51,8 @@ $mysqli->close();
         
 
         <main class="box container">
+
+        <br>
 
         <?php require "campoBuscaFuncionarioContent.php"; ?>
 

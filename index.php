@@ -1,5 +1,5 @@
 <?php
-require "configuracoes.php";
+include("configuracoes.php");
 use Detection\MobileDetect;
 if (isset($_SESSION["authenticated"]) && $_SESSION["authenticated"] == true) {
     header("Location: home.php");
@@ -50,8 +50,6 @@ if (isset($_POST['entrar'])) {
             $_SESSION['nivelAcesso'] = $nivelAcesso;
             $_SESSION['idFuncionarioLogado'] = $idFunc;
             $_SESSION['idUsuarioLogado'] = $idSessao;
-            $_SESSION['nomeEmpresa'] = NOME_EMPRESA;
-            $_SESSION['versao'] = VERSAO_ATUAL;
 
             if($nivelAcesso == 2){
 
@@ -157,7 +155,7 @@ if (isset($_POST['entrar'])) {
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE>LOGIN</TITLE>
+        <TITLE><?php echo NOME_EMPRESA;?> | LOGIN</TITLE>
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">

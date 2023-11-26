@@ -1,8 +1,7 @@
 <?php
+include("configuracoes.php");
 require "autenticaContent.php";
 require "conecta.php";
-require("configuracoes.php");
-
 
 if($_SESSION['nivelAcesso'] != 2) {
     echo "Acesso negado!";
@@ -128,7 +127,7 @@ $mysqli->close();
 <!DOCTYPE html>
 <HTML lang="pt-BR">
     <HEAD>
-        <TITLE><?php echo $_SESSION['nomeEmpresa'];?> | Cadastro Cargo</TITLE>
+        <TITLE><?php echo NOME_EMPRESA;?> | Cadastro Cargo</TITLE>
 
         <?php 
 

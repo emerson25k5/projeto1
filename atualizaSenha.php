@@ -1,6 +1,6 @@
 <?php
+include("configuracoes.php");
 require "autenticaContent.php";
-require "configuracoes.php";
 
 if (isset($_SESSION['login'])) {
   $login = $_SESSION['login'];

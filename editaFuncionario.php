@@ -1,9 +1,8 @@
 <?php
-
+include("configuracoes.php");
 require "autenticaContent.php";
 require "conecta.php";
 require "funcoes.php";
-require "configuracoes.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 	// Recupere o ID do registro a ser exibido

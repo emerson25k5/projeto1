@@ -1,8 +1,7 @@
 <?php 
-
+include("configuracoes.php");
 include("autenticaContent.php");
 include("conecta.php");
-require "configuracoes.php";
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
