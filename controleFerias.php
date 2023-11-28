@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 include("autenticaContent.php");
 include("conecta.php");
 include("config.php");
