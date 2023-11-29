@@ -116,6 +116,7 @@ $mysqli->close();
                                             echo '</tr>';
 
                                             echo '<div id="'. $modalId . '" class="modal" style="border-radius: 10px">';
+                                            echo '<a class="modal-close"><i class="botao-fechar material-icons right">cancel</i></a>';
                                             echo '<div class="modal-content">';
                                             echo '<p class="center"><b>REPONSÁVEL</b></p>';
                                             echo '<p><b>Data e hora alteração:</b> '.date('d/m/Y H:i:s', strtotime($dataLogAlteracao)).'</p>';
@@ -136,7 +137,6 @@ $mysqli->close();
                                                 echo '</fieldset>';
                                                 echo '</div>';
                                                 echo '<div class="modal-footer">';
-                                                echo '<button class="search modal-close">Fechar</button>';
                                                 echo '</div>';
                                                 echo '</div>';
                                             }else{
@@ -147,7 +147,6 @@ $mysqli->close();
                                                 echo '</fieldset>';
                                                 echo '</div>';
                                                 echo '<div class="modal-footer">';
-                                                echo '<button class="search modal-close">Fechar</button>';
                                                 echo '</div>';
                                                 echo '</div>';
                                             }

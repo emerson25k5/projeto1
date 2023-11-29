@@ -308,7 +308,7 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
 
                         <br><br><br><br>
 
-                        <button class="butao btn right col s6" id="proximo" onclick="proximaEtapa()">Próximo<i class="material-icons prefix">keyboard_arrow_right</i></button>
+                        <button class="botoa-cad-funcionario btn right col s6" id="proximo" onclick="proximaEtapa()">Próximo<i class="material-icons prefix">keyboard_arrow_right</i></button>
 
                         
 
@@ -371,8 +371,8 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
 
                         <br><br><br><br><br><br><br><br><br><br>
 
-                        <button class="butao btn left col s6" id="anterior" onclick="anteriorEtapa()"><i class="material-icons prefix">keyboard_arrow_left</i>Anterior</button>
-                        <button class="butao btn right col s6" id="proximo" onclick="proximaEtapa()">Próximo<i class="material-icons prefix">keyboard_arrow_right</i></button>
+                        <button class="botoa-cad-funcionario btn left col s6" id="anterior" onclick="anteriorEtapa()"><i class="material-icons prefix">keyboard_arrow_left</i>Anterior</button>
+                        <button class="botoa-cad-funcionario btn right col s6" id="proximo" onclick="proximaEtapa()">Próximo<i class="material-icons prefix">keyboard_arrow_right</i></button>
 
                         <br><br><br><br>
 
@@ -498,8 +498,8 @@ $tam_calcado_selecionado = $_POST["tam_calcado"];
                         <br><br><br><br><br>
                         
                         <div class="row col s12">
-                        <button class="butao btn left col s6" id="anterior" onclick="anteriorEtapa()"><i class="material-icons prefix">keyboard_arrow_left</i>Anterior</button> 
-                        <button type="submit" name="entrar" value="Finalizar cadastro" class="butao btn right col s6"><i class="material-icons prefix">how_to_reg</i>Concluir</button>
+                        <button class="botoa-cad-funcionario btn left col s6" id="anterior" onclick="anteriorEtapa()"><i class="material-icons prefix">keyboard_arrow_left</i>Anterior</button> 
+                        <button type="submit" name="entrar" value="Finalizar cadastro" class="botoa-cad-funcionario btn right col s6"><i class="material-icons prefix">how_to_reg</i>Concluir</button>
                         </div>
                         <br><br><br><br><br><br>
 

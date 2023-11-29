@@ -1,7 +1,8 @@
 <?php
+include("config.php");
 include("autenticaContent.php");
 include("conecta.php");
-include("config.php");
+
 
 //verifica se o nivel de acesso é de adm, se n for é exibida mensagem de erro e o resto da página não carrega
 if($_SESSION['nivelAcesso'] != 2) {
@@ -207,6 +208,7 @@ $mysqli->close();
 
                                                                                 #modal para exibir as informações de forma individual
                                             echo '<div id="'. $modalId . '" class="modal" style="border-radius: 10px">';
+                                            echo '<a class="modal-close"><i class="botao-fechar material-icons right">cancel</i></a>';
                                             echo '<div class="modal-content">';
                                             echo '<h5>' . $nomeFuncionario . '</h5>';
                                             echo '<form method="post" id="form" action="">';

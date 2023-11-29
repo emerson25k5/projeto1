@@ -50,7 +50,7 @@ $mysqli->close();
     <body>
         
 
-        <main class="box container">
+        <main class="container">
 
         <br>
 
@@ -81,7 +81,7 @@ $mysqli->close();
 
                         //exibe os dados
                         echo '<tr>';
-                        echo '<td><a class="dropdown-trigger" href="#" data-target="drop'.$idFuncionario.'"><i class="btnopcao material-icons">more_vert</i></a></td>';
+                        echo '<td><a class="dropdown-trigger" href="#" data-target="drop'.$idFuncionario.'"><i class="botao-menu-vertical material-icons">more_vert</i></a></td>';
                         echo '<td>'. $nome .'</td>';
                         echo '<td>'. $cargo .'</td>';
                         echo '<td>'. $unidade .'</td>';

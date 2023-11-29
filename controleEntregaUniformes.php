@@ -270,6 +270,7 @@ if (isset($_GET["id"])) {
                                             echo '</tr>';
 
                                             echo '<div id="'. $modalId . '" class="modal" style="border-radius: 10px">';
+                                            echo '<a class="modal-close"><i class="botao-fechar material-icons right">cancel</i></a>';
                                             echo '<div class="modal-content">';
                                             echo '<h6>' . $nome . '</h6><br>';
                                             echo '<div class="divider"></div><br>';
@@ -295,7 +296,6 @@ if (isset($_GET["id"])) {
                                             echo '<p id="responsavel">' . $responsavelCadastro . '</p>';
                                             echo '</div>';
                                             echo '<div class="modal-footer">';
-                                            echo '<button href="#!" class="search modal-close">Fechar</button>';
                                             echo '</div>';
                                             echo '</div>';
                                             

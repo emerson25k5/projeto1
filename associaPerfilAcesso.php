@@ -103,7 +103,7 @@ $mysqli->close();
 
     </HEAD>
     <body>
-        <main class="box container">
+        <main class="container">
 
 
             <div class="container col s12">
@@ -218,6 +218,7 @@ $mysqli->close();
 
                                     #modal para exibir mais informações
                                     echo '<div id="'. $modalId . '" class="modal" style="border-radius: 10px">';
+                                    echo '<a class="modal-close"><i class="botao-fechar material-icons right">cancel</i></a>';
                                     echo '<div class="modal-content">';
                                     echo '<h6>' . $nomeUsuario . '</h6><br>';
                                     echo '<div class="divider"></div><br>';
@@ -232,8 +233,7 @@ $mysqli->close();
                                     echo '<p>' . date('d/m/Y H:i:s', strtotime($dataCadNivelPerfil)) . '</p>';
                                     echo '</div>';
                                     echo '<div class="modal-footer">';
-                                    echo '<a class="waves-effect waves-light modal-trigger left" href="#'.$modalIdEx.'"><i class="btnopcao material-icons">delete</i></a>';
-                                    echo '<button href="#!" class="search modal-close">Fechar</button>';
+                                    echo '<button class="botao-excluir modal-trigger" href="#'.$modalIdEx.'">Excluir</button>';
                                     echo '</div>';
                                     echo '</div>';
 

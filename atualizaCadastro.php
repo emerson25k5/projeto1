@@ -1,5 +1,5 @@
 <?php
-
+require "config.php";
 require "autenticaContent.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {

@@ -143,30 +143,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 			require "mascaraContent.php";
 		?>
 
-		<style>
-			h5 {
-				color: grey;
-			}
-		</style>
 
-		<script>
-			document.addEventListener('DOMContentLoaded', function() {
-			// Inicialize as tabs
-			M.Tabs.init(document.querySelector('.tabs'));
-		});
-
-		//JS para inicializar das listas suspensas SELECT (uniformes, cargos e unidade)
-		document.addEventListener('DOMContentLoaded', function() {
-									var elems = document.querySelectorAll('select');
-									var instances = M.FormSelect.init(elems);
-								});
-		</script>
 
 
 	</HEAD>
 	<body>
 
-		<main class="box container">
+		<main class="container">
 
 						<!--exibe e edita dados gerais-->
 						<h4><?php echo $nome ?></h4>
@@ -227,7 +210,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 							<input type="text" name="responsavelCadastro" id="responsavelCadastro" value="<?php echo $responsavelCadastro;?>"  readonly><br>
 
 							<label>Observações:</label>
-							<textarea name="funcObservacoes" data-length="500" class="textarea"><?php echo $funcObservacoes;?></textarea>
+							<textarea name="funcObservacoes" data-length="500" class="textarea-info-funcionario"><?php echo $funcObservacoes;?></textarea>
 
 						</div>
 
@@ -427,6 +410,19 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
 				</div>
 
 		</main>
+
+		<script>
+			// js para inicializar as tabs
+			document.addEventListener('DOMContentLoaded', function() {
+				M.Tabs.init(document.querySelector('.tabs'));
+			});
+
+		//JS para inicializar das listas suspensas SELECT (uniformes, cargos e unidade)
+			document.addEventListener('DOMContentLoaded', function() {
+				var elems = document.querySelectorAll('select');
+				var instances = M.FormSelect.init(elems);
+			});
+		</script>
 
 		<?php require "footerContent.php";?> <!--adiciona o conteúdo do rodapé de modo modular usando o INCLUDE em PHP-->
 

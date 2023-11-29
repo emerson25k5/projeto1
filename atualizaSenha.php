@@ -86,7 +86,7 @@ if (isset($_SESSION['login'])) {
 <br><br>
 
 <div class="container">
-<div class="box container center" style="width:60% !important;">
+<div class="container center" style="width:60% !important;">
     <form class="col s12" action="" method="POST">
 
       <div class="input-field col s12">

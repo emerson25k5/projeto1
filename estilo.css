@@ -2,19 +2,104 @@
     background-color: #000000;
 }
 
-
 .finin{
     background-color:rgb(255, 196, 0) !important;
     height: 4px;
 }
 
-table {
-    font-size: 12px;
+.footer {
+  bottom: 0;
+  width: 100%;
 }
 
-/* botões de opção da lista de funcionários*/
+h5 {
+  color: grey;
+}
+
+.logo {
+  width: 40px;
+  height: auto;
+  margin-top: 7px;
+}
+
+
+
+
+/* ------ estilo das TABELAS ----*/
+table {
+  font-size: 12px;
+}
+/* ------------------------------*/
+
+
+
+
+
+/* ----------- BOTÃO FECHAR MODAL-----------*/
+.botao-fechar {
+  color: rgba(207, 16, 16, 0.705);
+  margin: 10px;
+  font-size: 30px !important;
+}
+.botao-fechar:hover {
+  color: rgba(207, 16, 16, 0.822);
+  margin: 10px;
+  font-size: 30px !important;
+}
+/*------------------------------------------------*/
+
+
+
+
+
+/*------ ESTILO BOTAO EXCLUIR (EXCRITO EXCLUIR)----*/
+.botao-excluir {
+  background-color: rgb(129, 17, 17) !important;
+  color: white;
+  border-radius: 5px !important;
+  height: 45px;
+  border: none;
+  margin-right:  10px;
+}
+.botao-excluir:hover {
+  background-color: rgb(201, 19, 19) !important;
+  color: white;
+  border-radius: 5px !important;
+  height: 45px;
+  border: none;
+  margin-right:  10px;
+}
+/*------------------------------------------------*/
+
+
+
+
+
+
+/*--------- ESTILO MAIORIA DOS BOTÕES------------*/
+.search {
+  background-color: #000000 !important;
+  color: white;
+  border-radius: 5px !important;
+  height: 45px;
+  border: none;
+}
+.search:hover {
+background-color: #000000 !important;
+color: rgb(255, 196, 0) !important;
+border-radius: 5px !important;
+}
+/*------------------------------------------------*/
+
+
+
+
+/* ------botões de opção da lista de funcionários-----*/
+.botao-menu-vertical {
+  color: rgba(0, 0, 0, 0.74);
+}
 .options_list_user {
-    background-color: #000000d3 !important;
+    background-color: #000000de !important;
     border-radius: 20px !important;
     padding: 7px;
     padding-left: 10px !important;
@@ -22,37 +107,25 @@ table {
     height: auto !important;
     font-size: 25px !important;
 }
-
 .opt {
   padding: 10px;
   font-size: 30px !important;
   color: rgb(255, 255, 255);
 }
-
 .opt:hover{
   padding: 10px;
   font-size: 30px !important;
   color: rgb(255, 196, 0) !important;
   font-weight: bold !important;
 }
-/* fim botões de opção da lista de funcionários*/
+/*---------------------------------------------------------*/
 
 
 
-.logo {
-    width: 40px;
-    height: auto;
-    margin-top: 7px;
-}
-
-.box {
-    width: 90% !important;
-    height: 50%;
-}
 
 
 
-/*########### CONTROLE ENTREGA UNIFORMES ###########*/
+/*------CONTROLE ENTREGA UNIFORMES --------*/
 .uniforme-content {
   display: flex;
   justify-content: space-between;
@@ -78,40 +151,36 @@ table {
   height: max-content;
   float: right !important;
 }
-/*---------------- CONTROLE ENTREGA UNIFORMES ---------------*/
+/*---------------------------------------------------------*/
 
 
 
 
-/*########### CADASTRO FUNCIONÁRIOS ###########*/
+
+
+/*-------------- CADASTRO FUNCIONÁRIOS ---------------------*/
 .barra_etapa {
     background-color: #000000 !important;
     border-radius: 10px;
     font-size: 15px !important;
 
 }
-
 #here {
     font-weight: bold;
     font-size: 25px !important;
     color: rgb(255, 196, 0);
 }
-
 .select-funcionario, .dropdown-content {
   background-color: #0000009a !important;
   color: white !important;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
 }
-/*---------------- CADASTRO FUNCIONÁRIOS ---------------*/
-
-.footer {
-    bottom: 0;
-    width: 100%;
-}
+/*---------------------------------------------------------*/
 
 
-/* floating button */
+
+/*----------------------FLOATING BUTTON ----------------- */
 .haha {
   background-color: rgba(0, 0, 0, 0.493);
   padding: 3px !important;
@@ -124,13 +193,12 @@ table {
 .fixed-action-btn {
   user-select: none;
 }
-/* fim floating button */
+/* ------------------------------------------------------- */
 
 
 
 
-/* inicio estilo menu-home */
-
+/* ----------------inicio estilo menu-home ----------------*/
 .menu-inicial-content {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Cada coluna tem no mínimo 100px de largura, mas pode se expandir conforme necessário */
@@ -138,7 +206,6 @@ table {
   max-width: 800px; /* Largura máxima do contêiner */
   margin: 0 auto; /* Centralizar o contêiner na página */
 }
-
 .menu-home-item {
   background-color: #233c4d; /* Cor de fundo das divs */
   color: #fff; /* Cor do texto nas divs */
@@ -146,33 +213,28 @@ table {
   text-align: center; /* Centralizar texto */
   border-radius: 8px;
 }
-
 .titulo-content {
   text-align: left;
   font-weight: bold;
 }
-
 .icone-content {
   float: left;
   user-select: none;
 }
-
 .item-icone {
   font-size: 80px !important;
   user-select: none;
 
 }
-
-/* inicio estilo menu-home */
-
+/* -------------------------------------------------------*/
 
 
 
-/*inicio Estilo do campo de busca da tela listaFuncionarios */
+
+/*----------------------CAMPO DE BUSCA--------------------*/
 .search-bar {
   margin-left: 14px !important;
 }
-
 .input-search  {
   width: 150px !important;
   height: 30px;
@@ -181,7 +243,6 @@ table {
   border-radius: 8px !important;
   float: left;
 }
-
 .busca-func {
   height: 28px !important;
   width: 55px !important;
@@ -192,24 +253,28 @@ table {
   border-radius: 5px;
   margin-left: 5px !important;
 }
-
 .button.butao-limpa, .close-input  {
   color: grey !important;
 }
-
 .butao-limpa, .butao-limpa:active, .butao-limpa:focus, .butao-limpa:hover  {
   background-color: rgba(107, 107, 107, 0);
   border: none;
   font-size: 25px !important;
   margin-left: -5px !important;
 }
-
-/*fim Estilo do campo de busca da tela listarFuncionarios*/
-
+/*---------------------------------------------------------*/
 
 
 
-.butao {
+
+
+
+
+
+
+
+
+.botoa-cad-funcionario {
     background-color: #000000 !important;
     color: #fff !important;
     padding: 5px 5px !important;
@@ -232,67 +297,44 @@ table {
     color:rgb(255, 196, 0) !important;
 }
 
-.btnopcao {
-    color: grey !important;
-    font-size: 30px !important;
-    text-align: center !important;
-}
-.btnopcao:hover {
-    color: rgb(255, 196, 0) !important;
-    font-size: 30px !important;
-    text-align: center;
-}
 
-.search {
-    background-color: #000000 !important;
-    color: white;
-    border-radius: 5px !important;
-    height: 45px;
-}
 
-.search:hover {
-  background-color: #000000 !important;
-  color: rgb(255, 196, 0) !important;
-  border-radius: 5px !important;
-}
 
-h5 {
-  color: grey;
-}
 
+
+
+
+/*-------------------INFO FUNCIOÁRIOS   &    EDITA FUNCIONARIOS-------------*/
 .tabs .tab a {
     color: #ffffff !important; /* Cor do texto quando não selecionado */
     background-color: #000000;
   }
-  
   .tabs .tab a:hover {
     background-color: #000000 !important; /* Cor de fundo ao passar o mouse */
     font-weight: bold !important;
   }
-  
   .tabs .tab a.active {
     background-color: #000000 !important; /* Cor de fundo quando selecionado */
     font-weight: bold !important; /* Cor do texto quando selecionado */
     color: rgb(255, 196, 0) !important;
   }
-
   .tabs .indicator {
     background-color: rgb(255, 196, 0) !important;
   }
-
-  .textarea {
-    height: 180px;
-    font-size: 20px;
-  }
-
   .menu:hover{
     color: rgb(255, 196, 0) !important;
   }
-
   .patrolSideNavImage {
     height: auto;
     width: 70% !important;
   }
+  .textarea-info-funcionario {
+    height: 180px;
+  }
+/*---------------------------------------------------------------------------------*/
+
+
+
 
 
   /* -------- ESTILO MENU SUSPENDO OPT USUÁRIOS (LOGOUT) -----*/
@@ -300,7 +342,6 @@ h5 {
     display: flex;
     justify-content: end;
   }
-
   .menu-perfil {
     background-color: #000000d3 !important;
     width: 175px !important;
@@ -308,48 +349,40 @@ h5 {
     border-bottom-left-radius: 7px !important;
     border-bottom-right-radius: 7px !important;
   }
-
   .lista-menu-suspenso-opt:active {
     background-color: #000000f3 !important;
   }
-
   .lista-menu-suspenso-opt:hover {
     background-color: #000000f3 !important;
   }
-
   .a-menu-suspenso-opt {
     color: white !important;
   }
-  /* -------- ESTILO MENU SUSPENDO OPT USUÁRIOS (LOGOUT) -----*/
+  /* -------------------------------------------------------------*/
 
 
 
-  li:hover {
-    color:rgb(255, 196, 0) !important;
-  }
 
-  legend {
-    color: #000000 !important;
-    font-weight: bold !important;
-  }
 
-  /* estilo da tela de login*/
 
+
+
+
+
+
+  /* ------------estilo da tela de login-------------*/
   .todo-login {
     width: 80%;
   }
-
   .input-login {
     height: 40px;
     width: 80%;
     border-radius: 7px;
     font-size: 25px;
   }
-
   .recupera-senha {
     color: rgb(255, 196, 0);
   }
-
   .submitLogin {
     width: 25%;
     height: 40px;
@@ -358,7 +391,6 @@ h5 {
     font-weight: bold;
     border-radius: 8px;
   }
-
   .submitLogin:active {
     width: 25%;
     height: 40px;
@@ -367,7 +399,6 @@ h5 {
     font-weight: bold;
     border-radius: 7px;
   }
-
-  /* fim dos estilos da tela de login*/
+  /* --------------------------------------------------*/
 
   

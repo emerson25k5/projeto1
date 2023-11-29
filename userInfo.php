@@ -142,7 +142,7 @@ $mysqli->close();
 
     </HEAD>
     <body>
-        <main class="box container">
+        <main class="container">
 
             <div>
                 
@@ -187,7 +187,7 @@ $mysqli->close();
 
                         <?php if ($_SESSION['nivelAcesso'] == 2){
                         echo '<label>Observações:</label>
-                            <textarea name="funcObservacoes" data-length="500" class="textarea" readonly>'.$funcObservacoes.'</textarea>';
+                            <textarea name="funcObservacoes" data-length="500" class="textarea-info-funcionario" readonly>'.$funcObservacoes.'</textarea>';
                         }
                         ?>
 
