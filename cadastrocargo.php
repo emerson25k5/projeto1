@@ -56,7 +56,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $idCargo = $_POST['idCargo'];
                 $novoNomeCargo = $_POST['novoNomeCargo'];
 
-                if(isset($_POST['novoStatus'])){    //verifica o valor enviado pelo check box (switch) se for checked, envia 1 para o banco, se não envia 0 para o banco na coluna status
+                //verifica o valor enviado pelo check box (switch) se for checked, envia 1 para o banco, se não envia 0 para o banco na coluna status
+                if(isset($_POST['novoStatus'])){    
                     if($_POST['novoStatus'] == "on"){
                         $novoStatus = 1;
                     }else{
@@ -66,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
                 
-                // Executar a atualização no banco de dados
+                //Executar a atualização no banco de dados
                 $sql = "UPDATE cargos SET nomeCargo=?, status=? WHERE idCargo = $idCargo";
 
                 $stmt = $mysqli->prepare($sql);
@@ -90,10 +91,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             }
 
-        }catch (mysqli_sql_exception $e) {//catch para exibir alert caso tenha cargo com o mesmo nome cadastrada
+        //catch para exibir alert caso tenha cargo com o mesmo nome cadastrada
+        }catch (mysqli_sql_exception $e) {
             if ($e->getCode() == 1062) {
                 echo '<script>alert("Já existe um cargo com este nome!");</script>';
-                echo "<script>setTimeout(function(){ window.location.href = 'cadastroCargo.php'; }, 100);</script>";
+                echo "<script>setTimeout(function(){ window.location.href = 'cadastroCargo.php'; }, 1000);</script>";
             } else {
                 echo '<script>alert("Falha ao atualizar dados: "</script>'.$e->getMessage();
             }
@@ -138,7 +140,7 @@ $mysqli->close();
 
     </HEAD>
     <body>
-        <main class="box container">
+        <main class="container">
 
 
             <div class="container center">

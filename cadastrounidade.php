@@ -140,7 +140,7 @@ $mysqli->close();
 
     </HEAD>
     <body>
-        <main class="box container">
+        <main class="container">
 
 
             <div class="container center">
